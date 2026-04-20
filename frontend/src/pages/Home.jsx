@@ -17,7 +17,7 @@ const Home = () => {
           with guided steps.
         </p>
 
-        <Link to="/AadhaarForm">
+        <Link to="/adharform">
           <button className="mt-8 px-8 py-3 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700 transition">
             Get Started
           </button>
@@ -94,11 +94,12 @@ const Home = () => {
 const services = [
   {
     title: "Aadhaar Card",
-    link: "/AadhaarForm",
+    link: "/adharform",
     desc: "Apply, update or correct your Aadhaar details easily with guided steps.",
   },
   {
     title: "Voter ID",
+    link: "/voterform",
     desc: "Register or update your Voter ID quickly without complicated procedures.",
   },
   {
