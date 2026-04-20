@@ -16,12 +16,6 @@ const Home = () => {
           Aadhaar Card, Voter ID, Driving License and more — all in one place 
           with guided steps.
         </p>
-
-        <Link to="/adharform">
-          <button className="mt-8 px-8 py-3 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700 transition">
-            Get Started
-          </button>
-        </Link>
       </section>
 
       {/* SERVICES */}
