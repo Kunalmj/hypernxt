@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -16,9 +17,11 @@ const Home = () => {
           with guided steps.
         </p>
 
-        <button className="mt-8 px-8 py-3 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700 transition">
-          Get Started
-        </button>
+        <Link to="/AadhaarForm">
+          <button className="mt-8 px-8 py-3 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700 transition">
+            Get Started
+          </button>
+        </Link>
       </section>
 
       {/* SERVICES */}
@@ -34,15 +37,27 @@ const Home = () => {
 
         <div className="grid md:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <div
-              key={index}
-              className="bg-blue-50 border border-blue-100 rounded-2xl p-8 hover:shadow-lg transition transform hover:-translate-y-1 min-h-65"
-            >
-              <h3 className="text-xl font-semibold text-blue-600 mb-4">
-                {service.title}
-              </h3>
-              <p className="text-gray-600">{service.desc}</p>
-            </div>
+            service.link ? (
+              <Link key={index} to={service.link}>
+                <div className="bg-blue-50 border border-blue-100 rounded-2xl p-8 hover:shadow-lg hover:border-blue-300 transition transform hover:-translate-y-1 min-h-65 cursor-pointer">
+                  <h3 className="text-xl font-semibold text-blue-600 mb-4">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600">{service.desc}</p>
+                  <p className="mt-4 text-sm text-blue-500 font-medium">Apply now →</p>
+                </div>
+              </Link>
+            ) : (
+              <div
+                key={index}
+                className="bg-blue-50 border border-blue-100 rounded-2xl p-8 hover:shadow-lg transition transform hover:-translate-y-1 min-h-65"
+              >
+                <h3 className="text-xl font-semibold text-blue-600 mb-4">
+                  {service.title}
+                </h3>
+                <p className="text-gray-600">{service.desc}</p>
+              </div>
+            )
           ))}
         </div>
       </section>
@@ -83,6 +98,7 @@ const Home = () => {
 const services = [
   {
     title: "Aadhaar Card",
+    link: "/AadhaarForm",
     desc: "Apply, update or correct your Aadhaar details easily with guided steps.",
   },
   {
