@@ -22,6 +22,20 @@ function Navbar() {
             Home
           </Link>
 
+          <Link
+            to="/AadhaarForm"
+            className="text-gray-700 hover:text-blue-600 transition font-medium"
+          >
+            Aadhaar
+          </Link>
+
+          <Link
+            to="/VoterIDForm"
+            className="text-gray-700 hover:text-blue-600 transition font-medium"
+          >
+            Voter ID
+          </Link>
+
           {/* SEARCH */}
           <div className="flex items-center border border-gray-300 rounded-lg px-3 py-1 focus-within:ring-2 focus-within:ring-blue-500">
             <input
@@ -56,6 +70,22 @@ function Navbar() {
             onClick={() => setOpen(false)}
           >
             Home
+          </Link>
+
+          <Link
+            to="/AadhaarForm"
+            className="block text-gray-700 hover:text-blue-600"
+            onClick={() => setOpen(false)}
+          >
+            Aadhaar
+          </Link>
+
+          <Link
+            to="/VoterIDForm"
+            className="block text-gray-700 hover:text-blue-600"
+            onClick={() => setOpen(false)}
+          >
+            Voter ID
           </Link>
 
           <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2">
