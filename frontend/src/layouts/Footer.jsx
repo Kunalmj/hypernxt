@@ -1,6 +1,6 @@
 function Footer(){
     return (
-        <footer className="bg-secondary text-white text-center py-3">
+        <footer className="bg-gray-800 text-white text-center py-5">
             <p>Copyright 2026 &copy; Make your paper</p>
         </footer>
     )

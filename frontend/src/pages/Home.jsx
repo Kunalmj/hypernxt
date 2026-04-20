@@ -72,10 +72,6 @@ const Home = () => {
         </button>
       </section>
 
-      {/* FOOTER */}
-      <footer className="text-center py-6 text-gray-500 border-t">
-        © 2026 LegalDoc Hub. All rights reserved.
-      </footer>
     </div>
   );
 };
