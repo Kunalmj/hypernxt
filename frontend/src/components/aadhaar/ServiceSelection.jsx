@@ -1,9 +1,9 @@
 const SERVICES = [
-  { id: "name",    label: "Name Correction",      icon: "✏️" },
-  { id: "address", label: "Address Update",        icon: "🏠" },
-  { id: "mobile",  label: "Mobile Number Update",  icon: "📱" },
-  { id: "lost",    label: "Lost Aadhaar",          icon: "🔍" },
-  { id: "other",   label: "Other Issue",           icon: "💬" },
+  { id: "name", label: "Name Correction", icon: "" },
+  { id: "address", label: "Address Update", icon: "" },
+  { id: "mobile", label: "Mobile Number Update", icon: "" },
+  { id: "lost", label: "Lost Aadhaar", icon: "" },
+  { id: "other", label: "Other Issue", icon: "" },
 ];
 
 const ServiceSelection = ({ value, onChange }) => {
@@ -16,11 +16,10 @@ const ServiceSelection = ({ value, onChange }) => {
         {SERVICES.map((s) => (
           <label
             key={s.id}
-            className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition ${
-              value === s.id
+            className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition ${value === s.id
                 ? "border-blue-500 bg-white shadow-sm"
                 : "border-blue-100 bg-white hover:border-blue-300"
-            }`}
+              }`}
           >
             <input
               type="radio"

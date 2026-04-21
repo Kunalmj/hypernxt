@@ -35,7 +35,7 @@ const AadhaarForm = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="max-w-2xl mx-auto px-6 py-12">
+      <div className="max-w-5xl mx-auto px-6 py-12">
 
         {/* Page Header */}
         <div className="text-center mb-10">
@@ -48,16 +48,28 @@ const AadhaarForm = () => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
-          <ServiceSelection      value={form.service}          onChange={handleChange} />
-          <PersonalDetails       values={form}                 onChange={handleChange} />
-          <AadhaarIdentification value={form.aadhaarNumber}    onChange={handleChange} />
-          <IssueDetails          values={form}                 onChange={handleChange} />
-          <ContactInfo           values={form}                 onChange={handleChange} />
-          <DeclarationConsent    checked={form.consent}        onChange={handleChange} />
+        <form onSubmit={handleSubmit} className="space-y-6">
+
+          {/* Row 1 — Service Selection + Personal Details */}
+          <div className="grid md:grid-cols-2 gap-6 items-start">
+            <ServiceSelection value={form.service}  onChange={handleChange} />
+            <PersonalDetails  values={form}         onChange={handleChange} />
+          </div>
+
+          {/* Row 2 — Aadhaar Identification + Issue Details */}
+          <div className="grid md:grid-cols-2 gap-6 items-start">
+            <AadhaarIdentification value={form.aadhaarNumber} onChange={handleChange} />
+            <IssueDetails          values={form}              onChange={handleChange} />
+          </div>
+
+          {/* Row 3 — Contact Information (full width) */}
+          <ContactInfo values={form} onChange={handleChange} />
+
+          {/* Row 4 — Declaration & Consent (full width) */}
+          <DeclarationConsent checked={form.consent} onChange={handleChange} />
 
           {/* Form Actions */}
-          <div className="flex gap-4 justify-end">
+          <div className="flex gap-4 justify-center pt-2">
             <button
               type="button"
               onClick={handleReset}
@@ -72,8 +84,8 @@ const AadhaarForm = () => {
               Submit Request →
             </button>
           </div>
-        </form>
 
+        </form>
       </div>
     </div>
   );
