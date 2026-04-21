@@ -7,7 +7,7 @@ function Navbar() {
   return (
     <nav className="bg-white border-b border-gray-200 shadow-sm">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        
+
         {/* LOGO */}
         <Link to="/" className="text-2xl font-bold text-blue-600">
           LegalDoc
@@ -22,6 +22,27 @@ function Navbar() {
             Home
           </Link>
 
+          <Link
+            to="/Services"
+            className="text-gray-700 hover:text-blue-600 transition font-medium"
+          >
+            Services
+          </Link>
+
+          <Link
+            to="/AboutUs"
+            className="text-gray-700 hover:text-blue-600 transition font-medium"
+          >
+            About Us
+          </Link>
+
+          <Link
+            to="/Contact Us"
+            className="text-gray-700 hover:text-blue-600 transition font-medium"
+          >
+            Contact Us
+          </Link>
+
           {/* SEARCH */}
           <div className="flex items-center border border-gray-300 rounded-lg px-3 py-1 focus-within:ring-2 focus-within:ring-blue-500">
             <input
@@ -33,9 +54,16 @@ function Navbar() {
           </div>
 
           {/* CTA BUTTON */}
-          <button className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">
-            Get Started
-          </button>
+          <div className="flex gap-3">
+            <button className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">
+              LOGIN
+            </button>
+
+            <button className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">
+              SIGN UP
+            </button>
+          </div>
+
         </div>
 
         {/* MOBILE BUTTON */}
