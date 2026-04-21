@@ -7,7 +7,7 @@ import ContactInfo          from "../components/aadhaar/ContactInfo";
 import DeclarationConsent   from "../components/aadhaar/DeclarationConsent";
 import SuccessScreen, { INITIAL_FORM } from "../components/aadhaar/SuccessScreen";
 
-const AadhaarForm = () => {
+const AadharForm = () => {
   const [form, setForm] = useState(INITIAL_FORM);
   const [submitted, setSubmitted] = useState(false);
 
@@ -91,4 +91,4 @@ const AadhaarForm = () => {
   );
 };
 
-export default AadhaarForm;
+export default AadharForm;

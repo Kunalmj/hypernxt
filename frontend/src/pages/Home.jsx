@@ -1,7 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import VoterForm from "./VoterForm";
-import DrivingForm from "./DrivingForm"
 
 const Home = () => {
   const navigate = useNavigate();
@@ -38,14 +36,14 @@ const Home = () => {
           <div className="bg-blue-50 border border-blue-100 rounded-2xl p-8 hover:shadow-lg transition transform hover:-translate-y-1 flex flex-col justify-between min-h-65">
             <div>
               <h3 className="text-xl font-semibold text-blue-600 mb-4">
-                Aadhaar Card
+                Aadhar Card
               </h3>
               <p className="text-gray-600">
-                Apply or update your Aadhaar details with step-by-step guidance.
+                Apply or update your Aadhar details with step-by-step guidance.
               </p>
             </div>
             <button
-              onClick={() => navigate("/aadhaar")}
+              onClick={() => navigate("/aadharform")}
               className="mt-6 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
             >
               Apply Now
@@ -63,7 +61,7 @@ const Home = () => {
               </p>
             </div>
             <button
-              onClick={() => navigate("/VoterForm")}
+              onClick={() => navigate("/voterform")}
               className="mt-6 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
             >
               Apply Now
@@ -81,7 +79,7 @@ const Home = () => {
               </p>
             </div>
             <button
-              onClick={() => navigate("/DrivingForm")}
+              onClick={() => navigate("/drivingform")}
               className="mt-6 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
             >
               Apply Now
