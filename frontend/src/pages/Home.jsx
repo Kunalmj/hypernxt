@@ -19,10 +19,6 @@ const Home = () => {
           Generate essential documents like Aadhaar Card, Voter ID, and Driving License 
           quickly with a simple and guided process.
         </p>
-
-        <button className="mt-8 px-8 py-3 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700 transition">
-          Get Started
-        </button>
       </section>
 
       {/* SERVICES */}
