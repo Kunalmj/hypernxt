@@ -1,51 +1,103 @@
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function Footer() {
-  return (
-    <footer className="bg-white border-t border-gray-200 mt-16">
-      <div className="max-w-7xl mx-auto px-6 py-10">
+  const [email, setEmail] = useState("");
 
-        {/* TOP SECTION */}
-        <div className="grid md:grid-cols-3 gap-8 text-center md:text-left">
-          
+  return (
+    <footer className="bg-gray-900 text-gray-300">
+      <div className="max-w-7xl mx-auto px-6 py-14">
+
+        {/* TOP GRID */}
+        <div className="grid md:grid-cols-4 gap-10">
+
           {/* BRAND */}
-          <div>
-            <h2 className="text-xl font-bold text-blue-600">LegalDoc</h2>
-            <p className="text-gray-500 mt-2 text-sm">
-              Simplifying legal document creation with a fast and secure process.
+          <div className="md:col-span-1">
+            <div className="flex items-center gap-2 text-xl font-extrabold text-white mb-3">
+              <span className="bg-blue-500 text-white text-sm font-bold px-2 py-1 rounded-lg">LD</span>
+              LegalDoc
+            </div>
+            <p className="text-sm text-gray-400 leading-relaxed">
+              India's trusted portal for Aadhaar Cards, Voter IDs, and Driving
+              License applications — simple, secure, and guided.
             </p>
           </div>
 
-          {/* LINKS */}
+          {/* QUICK LINKS */}
           <div>
-            <h3 className="font-semibold text-gray-800 mb-2">Quick Links</h3>
-            <ul className="space-y-1 text-gray-500 text-sm">
-              <li className="hover:text-blue-600 cursor-pointer">Home</li>
-              <li className="hover:text-blue-600 cursor-pointer">Services</li>
-              <li className="hover:text-blue-600 cursor-pointer">Contact</li>
+            <h3 className="text-white font-semibold mb-4">Quick Links</h3>
+            <ul className="space-y-2 text-sm text-gray-400">
+              {["Home", "About Us", "Services", "Contact Us"].map((item) => (
+                <li key={item} className="hover:text-blue-400 cursor-pointer transition">
+                  {item}
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* SERVICES */}
           <div>
-            <h3 className="font-semibold text-gray-800 mb-2">Services</h3>
-            <ul className="space-y-1 text-gray-500 text-sm">
-              <li>Aadhaar Card</li>
-              <li>Voter ID</li>
-              <li>Driving License</li>
+            <h3 className="text-white font-semibold mb-4">Services</h3>
+            <ul className="space-y-2 text-sm text-gray-400">
+              {[
+                { label: "Aadhaar Card", to: "/aadharform" },
+                { label: "Voter ID", to: "/voterform" },
+                { label: "Driving License", to: "/drivingform" },
+                { label: "Status Tracking", to: "/" },
+                { label: "Corrections", to: "/" },
+              ].map((item) => (
+                <li key={item.label}>
+                  <Link
+                    to={item.to}
+                    className="hover:text-blue-400 transition"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
+          {/* NEWSLETTER */}
+          <div>
+            <h3 className="text-white font-semibold mb-4">Stay Updated</h3>
+            <p className="text-sm text-gray-400 mb-3">
+              Get the latest updates on new services and features.
+            </p>
+            <div className="flex rounded-lg overflow-hidden border border-gray-700">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                className="flex-1 bg-gray-800 text-sm text-gray-200 px-3 py-2.5 outline-none placeholder-gray-500"
+              />
+              <button className="bg-blue-600 text-white text-sm font-semibold px-4 hover:bg-blue-700 transition">
+                Subscribe
+              </button>
+            </div>
+            <div className="mt-5 space-y-1.5 text-sm text-gray-400">
+              <div>📧 support@legaldoc.in</div>
+              <div>📞 +91 1800-XXX-XXXX</div>
+              <div>🕐 Mon–Sat, 9:00 AM – 6:00 PM</div>
+            </div>
+          </div>
         </div>
 
-        {/* BOTTOM */}
-        <div className="border-t border-gray-200 mt-8 pt-4 text-center text-sm text-gray-400">
-          © 2026 LegalDoc Hub. All rights reserved.
+        {/* BOTTOM BAR */}
+        <div className="border-t border-gray-800 mt-12 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-gray-500">
+          <span>© 2026 LegalDoc Hub. All rights reserved.</span>
+          <div className="flex gap-5">
+            {["Privacy Policy", "Terms of Service", "Disclaimer"].map((item) => (
+              <span key={item} className="hover:text-blue-400 cursor-pointer transition">
+                {item}
+              </span>
+            ))}
+          </div>
         </div>
-
       </div>
     </footer>
   );
-
 }
 
 export default Footer;
