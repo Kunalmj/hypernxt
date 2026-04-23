@@ -1,9 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./layouts/Layout";
 import Home from "./pages/Home";
-import VoterForm from "./pages/VoterForm";
-import DrivingForm from "./pages/DrivingForm";
-import AadharForm from "./pages/AadharForm";
+import ScholarshipPortal from "./pages/ScholarshipPortal";
+import StartupMSMEPortal from "./pages/StartupMSMEPortal";
+import AgriculturePortal from "./pages/AgriculturePortal";
+import WomenPortal from "./pages/WomenPortal";
+import ResearchPortal from "./pages/ResearchPortal";
+import TenderPortal from "./pages/TenderPortal";
 
 const router = createBrowserRouter([
   {
@@ -11,10 +14,12 @@ const router = createBrowserRouter([
     element: <Layout />,   
     children: [
       { index: true, element: <Home /> },   
-      { path: "voterform", element: <VoterForm /> },
-      { path: "aadharform", element: <AadharForm/>},
-      { path: "drivingform", element: <DrivingForm /> },
-      
+      { path: "scholarships", element: <ScholarshipPortal /> },
+      { path: "startup-msme", element: <StartupMSMEPortal /> },
+      { path: "agriculture", element: <AgriculturePortal /> },
+      { path: "women-programs", element: <WomenPortal /> },
+      { path: "research-grants", element: <ResearchPortal /> },
+      { path: "tenders", element: <TenderPortal /> },
     ],
   },
 ]);   

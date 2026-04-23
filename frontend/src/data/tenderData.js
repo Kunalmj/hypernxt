@@ -1,0 +1,72 @@
+export const tenders = [
+  {
+    id: 1,
+    tenderId: "TND/2026/MUM/8821",
+    title: "Supply & Installation of Solar Street Lights",
+    org: "Municipal Corporation of Mumbai (BMC)",
+    value: "₹85.50 Lakhs",
+    emd: "₹1,71,000",
+    deadline: "May 15, 2026",
+    type: "Supply",
+    industry: "Renewable Energy",
+    location: "Maharashtra",
+    description: "Design, supply, testing, and commissioning of integrated solar LED street lights with Li-ion batteries across various wards in Mumbai.",
+    tags: ["Solar", "LED", "Green Energy"]
+  },
+  {
+    id: 2,
+    tenderId: "NIT/2026/CPWD/9930",
+    title: "Construction of Academic Block (Phase II)",
+    org: "CPWD - North Zone",
+    value: "₹12.20 Crores",
+    emd: "₹24,40,000",
+    deadline: "Jun 10, 2026",
+    type: "Works",
+    industry: "Construction",
+    location: "Delhi",
+    description: "Construction of RCC framed academic block including electrical, plumbing, and firefighting works for a central university.",
+    tags: ["Civil", "Infrastructure", "Building"]
+  },
+  {
+    id: 3,
+    tenderId: "GEM/2026/B/882190",
+    title: "Cloud Hosting & Managed IT Services",
+    org: "NIC - Data Center Division",
+    value: "₹45.00 Lakhs",
+    emd: "₹90,000",
+    deadline: "May 28, 2026",
+    type: "Services",
+    industry: "Information Technology",
+    location: "National",
+    description: "Prequalification of vendors for providing managed cloud services and disaster recovery for national portal hosting.",
+    tags: ["IT", "Cloud", "SaaS"]
+  },
+  {
+    id: 4,
+    tenderId: "TND/SK/2026/0012",
+    title: "Empanelment of Content Creation Agencies",
+    org: "Startup India Hub",
+    value: "Rate Contract",
+    emd: "₹50,000",
+    deadline: "Jun 05, 2026",
+    type: "Empanelment",
+    industry: "Marketing",
+    location: "National",
+    description: "Empanelment of creative agencies for video production, social media management, and newsletter design for Startup India.",
+    tags: ["Creative", "Agency", "Marketing"]
+  },
+  {
+    id: 5,
+    tenderId: "MED/2026/MH/0042",
+    title: "Supply of Diagnostic Lab Equipment",
+    org: "Haffkine Bio-Pharma Corportion Ltd.",
+    value: "₹1.40 Crores",
+    emd: "₹2,80,000",
+    deadline: "May 20, 2026",
+    type: "Supply",
+    industry: "Healthcare",
+    location: "Maharashtra",
+    description: "Procurement of PCR machines, refrigerated centrifuges, and other diagnostic equipment for district hospitals.",
+    tags: ["Medical", "Pharma", "Equipments"]
+  }
+];

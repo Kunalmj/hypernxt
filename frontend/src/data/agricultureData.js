@@ -1,0 +1,72 @@
+export const agricultureSchemes = [
+  {
+    id: 1,
+    title: "PM-KISAN (Pradhan Mantri Kisan Samman Nidhi)",
+    provider: "Ministry of Agriculture & Farmers Welfare",
+    amount: "₹6,000 per year",
+    deadline: "Open All Year",
+    type: "Financial Support",
+    farmerType: "Small & Marginal",
+    landSize: "1-2 hectares",
+    state: "General",
+    eligibility: "Landholding farmer families with cultivable land up to 2 hectares.",
+    description: "Direct income support of ₹6,000 per annum to all landholding farmer families in three equal installments.",
+    tags: ["Income Support", "Govt Scheme", "Direct Benefit"]
+  },
+  {
+    id: 2,
+    title: "PMFBY (Pradhan Mantri Fasal Bima Yojana)",
+    provider: "Ministry of Agriculture",
+    amount: "Insurance Coverage",
+    deadline: "Major Sowing Seasons",
+    type: "Insurance",
+    farmerType: "General",
+    landSize: "Any",
+    state: "Maharashtra",
+    eligibility: "Farmers including sharecroppers and tenant farmers growing notified crops.",
+    description: "Crop insurance scheme to provide financial support to farmers suffering crop loss/damage arising out of unforeseen events.",
+    tags: ["Crop Insurance", "Risk Mitigation", "Farmers"]
+  },
+  {
+    id: 3,
+    title: "Soil Health Card Scheme",
+    provider: "Dept. of Agriculture",
+    amount: "Free Soil Testing",
+    deadline: "Regular Intervals",
+    type: "Technical Support",
+    farmerType: "Small & Marginal",
+    landSize: "Any",
+    state: "Punjab",
+    eligibility: "All farmers having land titles.",
+    description: "Helps farmers to know the nutrient status of their soil and receive recommendations on dosage of nutrients.",
+    tags: ["Soil Health", "Sustainability", "Scientific Farming"]
+  },
+  {
+    id: 4,
+    title: "Paramparagat Krishi Vikas Yojana (PKVY)",
+    provider: "Govt of India",
+    amount: "₹50,000 per hectare",
+    deadline: "Seasonal Selection",
+    type: "Organic Farming",
+    farmerType: "General",
+    landSize: "1-2 hectares",
+    state: "General",
+    eligibility: "Farmers willing to adopt organic farming practices.",
+    description: "Supports organic farming through a cluster approach and PGS certification.",
+    tags: ["Organic", "Sustainability", "Cluster Support"]
+  },
+  {
+    id: 5,
+    title: "Kisan Credit Card (KCC)",
+    provider: "State Bank of India",
+    amount: "Up to ₹3,00,000 Loan",
+    deadline: "Open All Year",
+    type: "Financial Support",
+    farmerType: "Large Farmer",
+    landSize: "Above 5 hectares",
+    state: "General",
+    eligibility: "Farmers, Individuals/Joint borrowers, Tenant Farmers.",
+    description: "Provision of adequate and timely credit support from the banking system under a single window.",
+    tags: ["Credit", "Loan", "Banking"]
+  }
+];

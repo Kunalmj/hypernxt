@@ -5,20 +5,42 @@ function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav style={{ background:"white", borderBottom:"1px solid #e5e7eb", position:"sticky", top:0, zIndex:50 }}>
-      <div style={{ maxWidth:"1280px", margin:"0 auto", padding:"0 24px", height:"64px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+    <nav style={{
+      position: "sticky",
+      top: 0,
+      zIndex: 50,
+      padding: "12px 24px",
+      display: "flex",
+      justifyContent: "center",
+      pointerEvents: "none",
+    }}>
+      <div style={{ 
+        pointerEvents: "auto",
+        maxWidth:"1000px", 
+        width: "100%", 
+        height:"64px", 
+        display:"flex", 
+        alignItems:"center", 
+        justifyContent:"space-between",
+        padding: "0 12px 0 24px",
+        background: "rgba(255,255,255,0.9)",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
+        border: "1px solid rgba(191,219,254,0.6)",
+        boxShadow: "0 10px 40px rgba(30,58,138,0.08), 0 1px 3px rgba(0,0,0,0.05)",
+        borderRadius: "9999px"
+      }}>
 
         {/* LOGO */}
         <Link to="/" style={{ textDecoration:"none", display:"flex", alignItems:"center", gap:"10px" }}>
-          <div style={{ width:"42px", height:"42px", background:"linear-gradient(135deg, #4f46e5, #7c3aed)", borderRadius:"10px", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <circle cx="11" cy="11" r="8" stroke="white" strokeWidth="1.5" />
-              <path d="M7 11 L10 14 L15 8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <div style={{ width:"40px", height:"40px", background:"#1e3a8a", borderRadius:"10px", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, boxShadow:"0 2px 10px rgba(30,58,138,0.25)" }}>
+            <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
+              <path d="M6 5h10M6 9h7M6 13h10M6 17h5" stroke="white" strokeWidth="2" strokeLinecap="round"/>
             </svg>
           </div>
           <div>
-            <div style={{ fontSize:"1.05rem", fontWeight:"800", color:"#111827", lineHeight:"1.1" }}>LegalDoc</div>
-            <div style={{ fontSize:"0.65rem", color:"#6b7280", fontWeight:"500", lineHeight:"1" }}>India's Document Portal</div>
+            <div style={{ fontSize:"1.05rem", fontWeight:"800", lineHeight:"1.1", color:"#1e3a8a" }}>OpportunityHub</div>
+            <div style={{ fontSize:"0.65rem", color:"#6b7280", fontWeight:"500", lineHeight:"1" }}>India's Opportunity Portal</div>
           </div>
         </Link>
 
@@ -37,8 +59,8 @@ function Navbar() {
                 textDecoration: "none",
                 fontSize: "0.9rem",
                 fontWeight: "600",
-                color: isActive ? "#4f46e5" : "#374151",
-                borderBottom: isActive ? "2px solid #4f46e5" : "2px solid transparent",
+                color: isActive ? "#1d4ed8" : "#374151",
+                borderBottom: isActive ? "2px solid #1d4ed8" : "2px solid transparent",
                 paddingBottom: "4px",
                 transition: "all 0.2s",
               })}
@@ -50,30 +72,22 @@ function Navbar() {
 
         {/* RIGHT SIDE */}
         <div style={{ display:"flex", alignItems:"center", gap:"12px" }} className="hide-mobile">
-          {/* Saved */}
-          <button style={{ display:"flex", alignItems:"center", gap:"5px", background:"none", border:"none", cursor:"pointer", color:"#6b7280", fontSize:"0.85rem", fontWeight:"500" }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-            </svg>
-            Saved
-          </button>
-
-          {/* Bell */}
-          <button style={{ position:"relative", background:"none", border:"none", cursor:"pointer", color:"#6b7280", padding:"4px" }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-              <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-            </svg>
-            <span style={{ position:"absolute", top:"2px", right:"2px", width:"8px", height:"8px", background:"#ef4444", borderRadius:"50%", border:"1.5px solid white" }} />
-          </button>
-
-          {/* Sign In */}
+          {/* Log In */}
           <button
-            style={{ background:"#4f46e5", color:"white", border:"none", padding:"9px 22px", borderRadius:"8px", fontSize:"0.875rem", fontWeight:"700", cursor:"pointer", transition:"background 0.2s", boxShadow:"0 2px 8px rgba(79,70,229,0.25)" }}
-            onMouseEnter={e => e.target.style.background="#4338ca"}
-            onMouseLeave={e => e.target.style.background="#4f46e5"}
+            style={{ background:"transparent", color:"#1e3a8a", border:"none", padding:"9px 16px", borderRadius:"8px", fontSize:"0.875rem", fontWeight:"700", cursor:"pointer", transition:"opacity 0.2s" }}
+            onMouseEnter={e => e.currentTarget.style.opacity="0.8"}
+            onMouseLeave={e => e.currentTarget.style.opacity="1"}
           >
-            Sign In
+            Log In
+          </button>
+
+          {/* Sign Up */}
+          <button
+            style={{ background:"#1e3a8a", color:"white", border:"none", padding:"10px 24px", borderRadius:"9999px", fontSize:"0.875rem", fontWeight:"700", cursor:"pointer", transition:"background 0.2s", boxShadow:"0 2px 8px rgba(30,58,138,0.25)" }}
+            onMouseEnter={e => e.currentTarget.style.background="#1e40af"}
+            onMouseLeave={e => e.currentTarget.style.background="#1e3a8a"}
+          >
+            Sign Up
           </button>
         </div>
 
@@ -89,25 +103,31 @@ function Navbar() {
 
       {/* MOBILE MENU */}
       {open && (
-        <div style={{ background:"white", borderTop:"1px solid #f3f4f6", padding:"16px 24px 20px" }}>
+        <div style={{ pointerEvents:"auto", position: "absolute", top: "90px", left: "24px", right: "24px", background:"rgba(255,255,255,0.96)", backdropFilter:"blur(16px)", border:"1px solid rgba(191,219,254,0.5)", borderRadius:"24px", padding:"16px 24px 20px", boxShadow:"0 20px 40px rgba(0,0,0,0.1)" }}>
           {[
             { to: "/", label: "🏠 Home" },
-            { to: "/aadharform", label: "🪪 Aadhaar Card" },
-            { to: "/voterform", label: "🗳️ Voter ID" },
-            { to: "/drivingform", label: "🚗 Driving License" },
+            { to: "/scholarships", label: "🎓 Scholarships" },
+            { to: "/startup-msme", label: "💼 Startup & MSME" },
+            { to: "/agriculture", label: "🌾 Agriculture" },
+            { to: "/tenders", label: "📄 Tenders" },
           ].map((link) => (
             <Link
               key={link.to}
               to={link.to}
-              style={{ display:"block", padding:"10px 0", color:"#374151", textDecoration:"none", fontSize:"0.9rem", fontWeight:"500", borderBottom:"1px solid #f9fafb" }}
+              style={{ display:"block", padding:"10px 0", color:"#374151", textDecoration:"none", fontSize:"0.9rem", fontWeight:"500", borderBottom:"1px solid #f0f4ff" }}
               onClick={() => setOpen(false)}
             >
               {link.label}
             </Link>
           ))}
-          <button style={{ marginTop:"12px", width:"100%", background:"#4f46e5", color:"white", border:"none", padding:"11px", borderRadius:"8px", fontWeight:"700", fontSize:"0.9rem", cursor:"pointer" }}>
-            Sign In
-          </button>
+          <div style={{ display:"flex", gap:"10px", marginTop:"12px" }}>
+            <button style={{ flex:1, background:"transparent", color:"#1e3a8a", border:"1px solid #1e3a8a", padding:"11px", borderRadius:"8px", fontWeight:"700", fontSize:"0.9rem", cursor:"pointer" }}>
+              Log In
+            </button>
+            <button style={{ flex:1, background:"#1e3a8a", color:"white", border:"none", padding:"11px", borderRadius:"8px", fontWeight:"700", fontSize:"0.9rem", cursor:"pointer" }}>
+              Sign Up
+            </button>
+          </div>
         </div>
       )}
 

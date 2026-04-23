@@ -1,13 +1,13 @@
 import React from "react";
-import { IconAadhaar, IconVoter, IconDL, IconStatus, IconRefresh, IconPhone } from "./Icons";
+import { IconScholarship, IconStartup, IconAgriculture, IconStatus, IconRefresh, IconPhone } from "./Icons";
 
 const helpServices = [
-  { Icon: IconAadhaar, title: "Aadhaar Assistance",  desc: "Form guidance & slot booking support" },
-  { Icon: IconVoter,   title: "Voter ID Help",        desc: "Registration and eligibility check" },
-  { Icon: IconDL,      title: "DL Application",       desc: "Document checklist and test prep" },
+  { Icon: IconScholarship, title: "Scholarship Assistance",  desc: "Profile matching & application support" },
+  { Icon: IconStartup,   title: "Startup & MSME Help",        desc: "Grant application and eligibility check" },
+  { Icon: IconAgriculture,      title: "Agriculture Subsidies",       desc: "Document checklist and farm registration" },
   { Icon: IconStatus,  title: "Status Tracking",      desc: "Track your application in real-time" },
-  { Icon: IconRefresh, title: "Correction Services",  desc: "Update errors in existing documents" },
-  { Icon: IconPhone,   title: "Expert Support",       desc: "Talk to a document expert live" },
+  { Icon: IconRefresh, title: "Correction Services",  desc: "Update errors in existing applications" },
+  { Icon: IconPhone,   title: "Expert Support",       desc: "Talk to an application expert live" },
 ];
 
 const NeedHelp = () => {
@@ -24,7 +24,7 @@ const NeedHelp = () => {
         <div className="max-w-[1100px] mx-auto">
           <div className="text-center mb-10 md:mb-12">
             <h2 className="text-[1.6rem] md:text-[1.9rem] font-extrabold text-[#0f172a] mb-2">Need Help with Applications?</h2>
-            <p className="text-[#64748b] text-[0.85rem] md:text-[0.93rem] max-w-lg mx-auto">Our expert team provides professional assistance for all legal document applications</p>
+            <p className="text-[#64748b] text-[0.85rem] md:text-[0.93rem] max-w-lg mx-auto">Our expert team provides professional assistance for all scheme applications</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">

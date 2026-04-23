@@ -1,0 +1,70 @@
+export const scholarships = [
+  {
+    id: 1,
+    title: "Bharat Petroleum Scholarship",
+    provider: "Bharat Petroleum",
+    amount: "₹2,50,000",
+    deadline: "20 Nov 2026",
+    type: "National",
+    level: "Undergraduate",
+    field: "Engineering",
+    eligibility: "Min 85% in Class 12",
+    description: "Supports meritorious students pursuing technical education in prestigious institutions across India.",
+    tags: ["Merit-based", "Technical", "Govt-funded"]
+  },
+  {
+    id: 2,
+    title: "Gates Cambridge Scholarship",
+    provider: "University of Cambridge",
+    amount: "Full Tuition + Stipend",
+    deadline: "15 Oct 2026",
+    type: "International",
+    country: "UK",
+    level: "Master's",
+    field: "General",
+    eligibility: "Citizens of any country outside the UK",
+    description: "One of the most prestigious international scholarships for postgraduate study at Cambridge.",
+    tags: ["Postgraduate", "Prestigious", "Full-funding"]
+  },
+  {
+    id: 3,
+    title: "Fullbright-Nehru Master's Fellowship",
+    provider: "USIEF",
+    amount: "$75,000 + Travel",
+    deadline: "15 Jun 2026",
+    type: "International",
+    country: "USA",
+    level: "Master's",
+    field: "Engineering",
+    eligibility: "Indian citizen with 3 years work experience",
+    description: "Designed for highly motivated individuals who demonstrate leadership qualities.",
+    tags: ["Leadership", "Exchange", "Full-funding"]
+  },
+  {
+    id: 4,
+    title: "HDFC Badhte Kadam Scholarship",
+    provider: "HDFC Bank",
+    amount: "₹1,00,000",
+    deadline: "30 Dec 2026",
+    type: "National",
+    level: "Undergraduate",
+    field: "General",
+    eligibility: "Family income < ₹6 LPA",
+    description: "Provides financial assistance to students with high academic potential from low-income families.",
+    tags: ["Need-based", "Financial Aid"]
+  },
+  {
+    id: 5,
+    title: "DAAD In-Country Scholarships",
+    provider: "DAAD Germany",
+    amount: "€12,000",
+    deadline: "31 Aug 2026",
+    type: "International",
+    country: "Germany",
+    level: "PhD",
+    field: "Engineering",
+    eligibility: "Master's degree with 1st class",
+    description: "Scholarships for pursuing doctoral studies in Germany with focus on research excellence.",
+    tags: ["Research", "STEM", "PhD"]
+  }
+];

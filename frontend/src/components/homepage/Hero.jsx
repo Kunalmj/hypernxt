@@ -1,13 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { IconSearch, IconAadhaar, IconVoter, IconDL, IconStatus, IconEdit } from "./Icons";
+import { IconSearch, IconScholarship, IconStartup, IconAgriculture, IconTender, IconWomen } from "./Icons";
 
 const pills = [
-  { label: "Aadhaar", Icon: IconAadhaar, route: "/aadharform" },
-  { label: "Voter ID", Icon: IconVoter, route: "/voterform" },
-  { label: "Driving License", Icon: IconDL, route: "/drivingform" },
-  { label: "Status Check", Icon: IconStatus, route: null },
-  { label: "Corrections", Icon: IconEdit, route: null },
+  { label: "Scholarships", Icon: IconScholarship, route: "/scholarships" },
+  { label: "Startup MSME", Icon: IconStartup, route: "/startup-msme" },
+  { label: "Agriculture", Icon: IconAgriculture, route: "/agriculture" },
+  { label: "Tenders", Icon: IconTender, route: "/tenders" },
+  { label: "Women Programs", Icon: IconWomen, route: "/women-programs" },
 ];
 
 const Hero = ({ query, setQuery }) => {
@@ -15,7 +15,7 @@ const Hero = ({ query, setQuery }) => {
 
   return (
     <section
-      className="relative overflow-hidden flex items-center bg-gradient-to-br from-[#ece9ff] via-[#e8f0ff] to-[#f0eeff] min-h-[500px] md:min-h-[575px]"
+      className="relative overflow-hidden flex items-center bg-gradient-to-br from-[#ece9ff] via-[#e8f0ff] to-[#f0eeff] min-h-[500px] md:min-h-[575px] -mt-[88px] pt-[88px]"
     >
       {/* Blob glows (Hidden/Simplified on mobile for performance) */}
       <div className="absolute top-[-100px] left-[-100px] w-[520px] h-[520px] rounded-full bg-radial-gradient from-[#a5b4fc]/45 to-transparent pointer-events-none z-0 hidden md:block" style={{ background: "radial-gradient(circle at 40% 40%, #a5b4fc 0%, transparent 65%)", opacity: 0.45 }} />
@@ -38,19 +38,19 @@ const Hero = ({ query, setQuery }) => {
       {/* CENTER CONTENT */}
       <div className="relative z-10 w-full flex flex-col items-center px-6 py-12 md:py-20">
         <span className="inline-flex items-center gap-1.5 bg-white/88 border border-[#bfdbfe] text-[#1d4ed8] text-[0.7rem] md:text-[0.78rem] font-bold px-4 md:px-5 py-2 rounded-full backdrop-blur-md shadow-md mb-6 tracking-wide uppercase">
-          India's Largest Legal Document Platform
+          Welcome to OpportunityHub
         </span>
 
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#0f172a] leading-[1.2] mb-5 tracking-tight text-center max-w-4xl">
-          Apply for Aadhaar, Voter ID,<br className="hidden md:block" />
-          Driving License &{" "}
+          Discover Scholarships, Grants,<br className="hidden md:block" />
+          Tenders &{" "}
           <span className="text-[#1d4ed8] inline border-b-[3px] border-[#3b82f6] pb-0.5">
-            Legal Documents
+            Opportunities
           </span>
         </h1>
 
         <p className="text-[#64748b] text-[0.85rem] md:text-[0.95rem] max-w-md mb-10 leading-relaxed text-center">
-          Apply or update your Aadhaar, Voter ID, and Driving License through a simple, guided process — all at one place.
+          Find and apply for government schemes, startup funding, agriculture subsidies, and legal documents in one unified platform.
         </p>
 
         {/* Search */}
