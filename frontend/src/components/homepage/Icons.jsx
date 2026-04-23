@@ -94,3 +94,49 @@ export const IconSearch = ({ size = 18, color = "#9ca3af" }) => (
     <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
   </svg>
 );
+
+export const IconScholarship = ({ size = 22, color = "#000000" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+    <path d="M6 12v5c0 2 2.7 3.5 6 3.5s6-1.5 6-3.5v-5" />
+  </svg>
+);
+
+export const IconStartup = ({ size = 22, color = "#000000" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.71-2.13.71-2.13l-3.71-.87z" />
+    <path d="M12 5.094l-3.078 6.906c-.461 1.036-.341 2.234.316 3.161l.93.131c.277.039.559-.062.771-.274l3.07-3.07a1.09 1.09 0 011.54 0c.426.426.426 1.116 0 1.542l-3.07 3.07c-.212.212-.313.494-.274.771l.131.93c.927.657 2.125.777 3.161.316l6.906-3.078V5.094H12z" />
+    <path d="M19 8.094a1 1 0 11-2 0 1 1 0 012 0z" />
+  </svg>
+);
+
+export const IconAgriculture = ({ size = 22, color = "#000000" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M7 20h10" />
+    <path d="M10 20v-5a2 2 0 0 1 4 0v5" />
+    <path d="M4 11a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3z" />
+    <path d="M9 10V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v5" />
+  </svg>
+);
+
+export const IconWomen = ({ size = 22, color = "#000000" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.72-8.72 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+  </svg>
+);
+
+export const IconResearch = ({ size = 22, color = "#000000" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M6 18h8" /><path d="M3 22h18" /><path d="M14 22V10a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v12" />
+    <path d="M9 14h2" /><path d="M9 11h2" /><path d="M17 18a3 3 0 0 0-3-3h-1v6a3 3 0 0 0 3-3z" />
+    <circle cx="9" cy="4" r="2" />
+  </svg>
+);
+
+export const IconTender = ({ size = 22, color = "#000000" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+    <path d="M15 2H9a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z" />
+    <path d="M12 11h4" /><path d="M12 16h4" /><path d="M8 11h.01" /><path d="M8 16h.01" />
+  </svg>
+);

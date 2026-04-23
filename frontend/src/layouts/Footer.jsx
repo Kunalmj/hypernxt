@@ -14,12 +14,12 @@ function Footer() {
           {/* BRAND */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 text-xl font-extrabold text-white mb-3">
-              <span className="bg-blue-500 text-white text-sm font-bold px-2 py-1 rounded-lg">LD</span>
-              LegalDoc
+              <span className="bg-blue-500 text-white text-sm font-bold px-2 py-1 rounded-lg">OH</span>
+              OpportunityHub
             </div>
             <p className="text-sm text-gray-400 leading-relaxed">
-              India's trusted portal for Aadhaar Cards, Voter IDs, and Driving
-              License applications — simple, secure, and guided.
+              India's trusted portal for Scholarships, Grants, Tenders, and
+              Startup opportunities — simple, secure, and guided.
             </p>
           </div>
 
@@ -40,11 +40,11 @@ function Footer() {
             <h3 className="text-white font-semibold mb-4">Services</h3>
             <ul className="space-y-2 text-sm text-gray-400">
               {[
-                { label: "Aadhaar Card", to: "/aadharform" },
-                { label: "Voter ID", to: "/voterform" },
-                { label: "Driving License", to: "/drivingform" },
-                { label: "Status Tracking", to: "/" },
-                { label: "Corrections", to: "/" },
+                { label: "Scholarships", to: "/scholarships" },
+                { label: "Startup & MSME", to: "/startup-msme" },
+                { label: "Agriculture", to: "/agriculture" },
+                { label: "Tenders", to: "/tenders" },
+                { label: "Women Programs", to: "/women-programs" },
               ].map((item) => (
                 <li key={item.label}>
                   <Link
@@ -77,7 +77,7 @@ function Footer() {
               </button>
             </div>
             <div className="mt-5 space-y-1.5 text-sm text-gray-400">
-              <div>📧 support@legaldoc.in</div>
+              <div>📧 support@opportunityhub.in</div>
               <div>📞 +91 1800-XXX-XXXX</div>
               <div>🕐 Mon–Sat, 9:00 AM – 6:00 PM</div>
             </div>
@@ -86,7 +86,7 @@ function Footer() {
 
         {/* BOTTOM BAR */}
         <div className="border-t border-gray-800 mt-12 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-gray-500">
-          <span>© 2026 LegalDoc Hub. All rights reserved.</span>
+          <span>© 2026 OpportunityHub. All rights reserved.</span>
           <div className="flex gap-5">
             {["Privacy Policy", "Terms of Service", "Disclaimer"].map((item) => (
               <span key={item} className="hover:text-blue-400 cursor-pointer transition">

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
 const testimonials = [
-  { name: "Priya Sharma",  location: "Mumbai, Maharashtra", tag: "Aadhaar User",  text: "The Aadhaar form was filled in under 10 minutes. The step-by-step process was incredibly clear and made the whole experience stress-free.", doc: "Aadhaar Card",     img: "https://i.pravatar.cc/80?img=47" },
-  { name: "Rahul Verma",   location: "Delhi, NCR",          tag: "DL Applicant",  text: "I got my Driving License application submitted without any hassle. The checklist made sure I had everything ready before I even went to the RTO.", doc: "Driving License", img: "https://i.pravatar.cc/80?img=12" },
-  { name: "Anita Patel",   location: "Ahmedabad, Gujarat",  tag: "Voter ID User", text: "Voter ID registration was a breeze. I was worried it would be complicated but the guided form took all the confusion away.", doc: "Voter ID",         img: "https://i.pravatar.cc/80?img=32" },
+  { name: "Priya Sharma",  location: "Mumbai, Maharashtra", tag: "Student",  text: "Finding the right scholarship felt impossible until I used OpportunityHub. The guided form helped me secure funding for my masters.", doc: "Scholarship",     img: "https://i.pravatar.cc/80?img=47" },
+  { name: "Rahul Verma",   location: "Delhi, NCR",          tag: "Founder",  text: "As an early-stage founder, MSME grants were very confusing. The portal simplified the entire process and I successfully received my seed fund.", doc: "Startup Grant", img: "https://i.pravatar.cc/80?img=12" },
+  { name: "Anita Patel",   location: "Ahmedabad, Gujarat",  tag: "Farmer", text: "The agriculture subsidy portal is a lifesaver. I applied for the solar pump scheme and the step-by-step checklist was perfectly clear.", doc: "Agri Subsidy",         img: "https://i.pravatar.cc/80?img=32" },
 ];
 
 const Testimonials = () => {
@@ -22,7 +22,7 @@ const Testimonials = () => {
         <div className="max-w-[1100px] mx-auto">
           <div className="text-center mb-10 md:mb-14">
             <h2 className="text-[1.6rem] md:text-[1.9rem] font-extrabold text-[#0f172a] mb-2">Real People, Real Results</h2>
-            <p className="text-[#64748b] text-[0.85rem] md:text-[0.93rem] max-w-md mx-auto">Thousands of Indians have successfully applied through LegalDoc</p>
+            <p className="text-[#64748b] text-[0.85rem] md:text-[0.93rem] max-w-md mx-auto">Thousands of Indians have successfully applied through OpportunityHub</p>
           </div>
 
           <div className="bg-white rounded-3xl border border-[#e2e8f0] shadow-lg p-7 md:p-10 lg:p-12 max-w-[800px] mx-auto relative">
