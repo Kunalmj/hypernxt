@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { IconScholarship, IconStartup, IconAgriculture, IconWomen, IconResearch, IconTender } from "./Icons";
+import { IconScholarship, IconStartup, IconAgriculture, IconWomen, IconResearch, IconTender, IconCitizen } from "./Icons";
 
 const services = [
   { Icon: IconScholarship, title: "Scholarships",   desc: "Find and apply for national and international scholarships matching your profile.", count: "3 Steps", route: "/scholarships" },
@@ -9,6 +9,7 @@ const services = [
   { Icon: IconWomen, title: "Women Programs", desc: "Empowering opportunities in entrepreneurship, education, and skill growth.", count: "3 Steps", route: "/women-programs" },
   { Icon: IconResearch, title: "Research Grants", desc: "Scientific and academic funding for researchers, PhDs, and professors.", count: "5 Steps", route: "/research-grants" },
   { Icon: IconTender, title: "Tenders/RFPs", desc: "Global and domestic business opportunities, procurement, and contracts.", count: "5 Steps", route: "/tenders" },
+  { Icon: IconCitizen, title: "Citizen Schemes", desc: "Explore 3,000+ government welfare schemes across 12 categories — banking, health, housing, and more.", count: "12 Categories", route: "/citizen-schemes" },
 ];
 
 const BrowseServices = () => {
