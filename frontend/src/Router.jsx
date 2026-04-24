@@ -1,6 +1,21 @@
 import { createBrowserRouter } from "react-router-dom";
+import AuthLayout from "./layouts/AuthLayout";
 import Layout from "./layouts/Layout";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import About from "./pages/About";
+import Services from "./pages/Services";
+import AllServices from "./pages/AllServices";
+import BrowseAllServices from "./pages/BrowseAllServices";
+import AIHelper from "./pages/AIHelper";
+import ContactSupport from "./pages/ContactSupport";
+import ScholarshipAssistance from "./pages/help/ScholarshipAssistance";
+import StartupHelp from "./pages/help/StartupHelp";
+import AgricultureHelp from "./pages/help/AgricultureHelp";
+import StatusTracking from "./pages/help/StatusTracking";
+import CorrectionServices from "./pages/help/CorrectionServices";
+import ExpertSupport from "./pages/help/ExpertSupport";
 import ScholarshipPortal from "./pages/ScholarshipPortal";
 import StartupMSMEPortal from "./pages/StartupMSMEPortal";
 import AgriculturePortal from "./pages/AgriculturePortal";
@@ -23,10 +38,29 @@ import WomenChildSchemes from "./pages/WomenChildSchemes";
 
 const router = createBrowserRouter([
   {
+    element: <AuthLayout />,
+    children: [
+      { path: "/login", element: <Login /> },
+      { path: "/signup", element: <Signup /> },
+    ],
+  },
+  {
     path: "/",
     element: <Layout />,
     children: [
       { index: true, element: <Home /> },
+      { path: "about", element: <About /> },
+      { path: "services", element: <Services /> },
+      { path: "all-services", element: <AllServices /> },
+      { path: "browse-all", element: <BrowseAllServices /> },
+      { path: "ai-helper", element: <AIHelper /> },
+      { path: "contact", element: <ContactSupport /> },
+      { path: "help/scholarship", element: <ScholarshipAssistance /> },
+      { path: "help/msme", element: <StartupHelp /> },
+      { path: "help/agriculture", element: <AgricultureHelp /> },
+      { path: "help/status", element: <StatusTracking /> },
+      { path: "help/correction", element: <CorrectionServices /> },
+      { path: "help/expert", element: <ExpertSupport /> },
       { path: "scholarships", element: <ScholarshipPortal /> },
       { path: "startup-msme", element: <StartupMSMEPortal /> },
       { path: "agriculture", element: <AgriculturePortal /> },

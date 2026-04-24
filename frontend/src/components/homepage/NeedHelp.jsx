@@ -1,13 +1,13 @@
-import React from "react";
 import { IconScholarship, IconStartup, IconAgriculture, IconStatus, IconRefresh, IconPhone } from "./Icons";
+import { Link } from "react-router-dom";
 
 const helpServices = [
-  { Icon: IconScholarship, title: "Scholarship Assistance",  desc: "Profile matching & application support" },
-  { Icon: IconStartup,   title: "Startup & MSME Help",        desc: "Grant application and eligibility check" },
-  { Icon: IconAgriculture,      title: "Agriculture Subsidies",       desc: "Document checklist and farm registration" },
-  { Icon: IconStatus,  title: "Status Tracking",      desc: "Track your application in real-time" },
-  { Icon: IconRefresh, title: "Correction Services",  desc: "Update errors in existing applications" },
-  { Icon: IconPhone,   title: "Expert Support",       desc: "Talk to an application expert live" },
+  { Icon: IconScholarship, title: "Scholarship Assistance",  desc: "Profile matching & application support", path: "/help/scholarship" },
+  { Icon: IconStartup,   title: "Startup & MSME Help",        desc: "Grant application and eligibility check", path: "/help/msme" },
+  { Icon: IconAgriculture,      title: "Agriculture Subsidies",       desc: "Document checklist and farm registration", path: "/help/agriculture" },
+  { Icon: IconStatus,  title: "Status Tracking",      desc: "Track your application in real-time", path: "/help/status" },
+  { Icon: IconRefresh, title: "Correction Services",  desc: "Update errors in existing applications", path: "/help/correction" },
+  { Icon: IconPhone,   title: "Expert Support",       desc: "Talk to an application expert live", path: "/help/expert" },
 ];
 
 const NeedHelp = () => {
@@ -28,7 +28,7 @@ const NeedHelp = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-            {helpServices.map(({ Icon: HIcon, title, desc }) => (
+            {helpServices.map(({ Icon: HIcon, title, desc, path }) => (
               <div 
                 key={title}
                 className="bg-white border border-[#e2e8f0] rounded-2xl p-6 shadow-sm transition-all hover:shadow-lg hover:-translate-y-1 hover:border-[#bfdbfe]"
@@ -39,17 +39,17 @@ const NeedHelp = () => {
                 </div>
                 <h4 className="font-bold text-[#0f172a] mb-2 text-[0.95rem]">{title}</h4>
                 <p className="text-[0.83rem] text-[#64748b] leading-relaxed mb-4">{desc}</p>
-                <button className="text-[0.82rem] text-[#1d4ed8] font-bold bg-transparent border-none cursor-pointer p-0 inline-flex items-center gap-1 group">
+                <Link to={path} className="text-[0.82rem] text-[#1d4ed8] font-bold bg-transparent border-none cursor-pointer p-0 inline-flex items-center gap-1 group text-decoration-none">
                   Learn More <span className="transition-transform group-hover:translate-x-1">→</span>
-                </button>
+                </Link>
               </div>
             ))}
           </div>
 
           <div className="text-center mt-10 md:mt-12">
-            <button className="bg-[#1e3a8a] text-white border-none px-8 py-3.5 rounded-xl font-bold text-sm cursor-pointer shadow-md transition-colors hover:bg-[#1e40af]">
+            <Link to="/all-services" className="inline-block bg-[#1e3a8a] text-white border-none px-8 py-3.5 rounded-xl font-bold text-sm cursor-pointer shadow-md transition-colors hover:bg-[#1e40af] text-decoration-none">
               View All Services →
-            </button>
+            </Link>
           </div>
         </div>
       </section>

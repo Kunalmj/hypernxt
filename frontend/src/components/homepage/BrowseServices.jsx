@@ -1,5 +1,4 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { IconScholarship, IconStartup, IconAgriculture, IconWomen, IconResearch, IconTender, IconCitizen } from "./Icons";
 
 const services = [
@@ -76,9 +75,9 @@ const BrowseServices = () => {
           </div>
 
           <div className="text-center mt-10 md:mt-12">
-            <button className="bg-[#1e3a8a] text-white border-none px-8 py-3.5 rounded-xl font-bold text-sm cursor-pointer shadow-md transition-colors hover:bg-[#1e40af]">
+            <Link to="/browse-all" className="inline-block bg-[#1e3a8a] text-white border-none px-8 py-3.5 rounded-xl font-bold text-sm cursor-pointer shadow-md transition-colors hover:bg-[#1e40af] text-decoration-none">
               View All Services →
-            </button>
+            </Link>
           </div>
         </div>
       </section>
