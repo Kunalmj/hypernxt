@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import { IconBot } from "./Icons";
 
 const AIBanner = () => {
@@ -31,12 +31,12 @@ const AIBanner = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:justify-center lg:justify-end z-10">
-              <button className="bg-white text-[#1e3a8a] border-none px-6 py-3.5 rounded-xl font-bold text-sm cursor-pointer flex items-center justify-center gap-2 transition-opacity hover:opacity-90">
+              <Link to="/ai-helper" className="bg-white text-[#1e3a8a] border-none px-6 py-3.5 rounded-xl font-bold text-sm cursor-pointer flex items-center justify-center gap-2 transition-opacity hover:opacity-90 text-decoration-none">
                 <IconBot size={16} color="#1e3a8a" /> Try AI Helper
-              </button>
-              <button className="bg-white/10 text-white/90 border border-white/25 px-6 py-3.5 rounded-xl font-bold text-sm cursor-pointer transition-colors hover:bg-white/15">
+              </Link>
+              <Link to="/contact" className="bg-white/10 text-white/90 border border-white/25 px-6 py-3.5 rounded-xl font-bold text-sm cursor-pointer transition-colors hover:bg-white/15 text-decoration-none flex items-center justify-center">
                 Contact Support
-              </button>
+              </Link>
             </div>
           </div>
         </div>

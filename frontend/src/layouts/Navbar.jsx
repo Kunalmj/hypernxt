@@ -73,22 +73,24 @@ function Navbar() {
         {/* RIGHT SIDE */}
         <div style={{ display:"flex", alignItems:"center", gap:"12px" }} className="hide-mobile">
           {/* Log In */}
-          <button
-            style={{ background:"transparent", color:"#1e3a8a", border:"none", padding:"9px 16px", borderRadius:"8px", fontSize:"0.875rem", fontWeight:"700", cursor:"pointer", transition:"opacity 0.2s" }}
+          <Link
+            to="/login"
+            style={{ background:"transparent", color:"#1e3a8a", border:"none", padding:"9px 16px", borderRadius:"8px", fontSize:"0.875rem", fontWeight:"700", cursor:"pointer", textDecoration:"none", transition:"opacity 0.2s" }}
             onMouseEnter={e => e.currentTarget.style.opacity="0.8"}
             onMouseLeave={e => e.currentTarget.style.opacity="1"}
           >
             Log In
-          </button>
+          </Link>
 
           {/* Sign Up */}
-          <button
-            style={{ background:"#1e3a8a", color:"white", border:"none", padding:"10px 24px", borderRadius:"9999px", fontSize:"0.875rem", fontWeight:"700", cursor:"pointer", transition:"background 0.2s", boxShadow:"0 2px 8px rgba(30,58,138,0.25)" }}
+          <Link
+            to="/signup"
+            style={{ background:"#1e3a8a", color:"white", border:"none", padding:"10px 24px", borderRadius:"9999px", fontSize:"0.875rem", fontWeight:"700", cursor:"pointer", textDecoration:"none", transition:"background 0.2s", boxShadow:"0 2px 8px rgba(30,58,138,0.25)", display:"inline-block" }}
             onMouseEnter={e => e.currentTarget.style.background="#1e40af"}
             onMouseLeave={e => e.currentTarget.style.background="#1e3a8a"}
           >
             Sign Up
-          </button>
+          </Link>
         </div>
 
         {/* MOBILE BUTTON */}
@@ -121,12 +123,12 @@ function Navbar() {
             </Link>
           ))}
           <div style={{ display:"flex", gap:"10px", marginTop:"12px" }}>
-            <button style={{ flex:1, background:"transparent", color:"#1e3a8a", border:"1px solid #1e3a8a", padding:"11px", borderRadius:"8px", fontWeight:"700", fontSize:"0.9rem", cursor:"pointer" }}>
+            <Link to="/login" style={{ flex:1, background:"transparent", color:"#1e3a8a", border:"1px solid #1e3a8a", padding:"11px", borderRadius:"8px", fontWeight:"700", fontSize:"0.9rem", cursor:"pointer", textDecoration:"none", textAlign:"center" }}>
               Log In
-            </button>
-            <button style={{ flex:1, background:"#1e3a8a", color:"white", border:"none", padding:"11px", borderRadius:"8px", fontWeight:"700", fontSize:"0.9rem", cursor:"pointer" }}>
+            </Link>
+            <Link to="/signup" style={{ flex:1, background:"#1e3a8a", color:"white", border:"none", padding:"11px", borderRadius:"8px", fontWeight:"700", fontSize:"0.9rem", cursor:"pointer", textDecoration:"none", textAlign:"center" }}>
               Sign Up
-            </button>
+            </Link>
           </div>
         </div>
       )}
