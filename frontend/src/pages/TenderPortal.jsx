@@ -55,13 +55,7 @@ const TenderPortal = () => {
 
   // 🔥 Submit
   const handleSubmit = () => {
-    const filtered = tenders.filter((t) => {
-      if (data.type && t.type !== data.type) return false;
-      if (data.industry && t.industry !== "General" && t.industry !== data.industry) return false;
-      return true;
-    });
-
-    navigate("/tender-results", { state: { results: filtered } });
+    navigate("/tender-results", { state: { query: data } });
   };
 
   return (
@@ -119,7 +113,7 @@ const TenderPortal = () => {
 
         {/* ================= MAIN ================= */}
         <main className="flex-1 px-16 py-12 overflow-y-auto">
-          <div className="max-w-4xl mx-auto space-y-24 pb-32">
+          <div className="max-w-4xl mx-auto space-y-12 pb-24">
 
             {/* ================= SECTION 1 ================= */}
             <section ref={(el) => (sectionRefs.current[1] = el)} data-step="1">
@@ -182,7 +176,7 @@ const TenderPortal = () => {
                 Budget & Preferences
               </h2>
 
-              <div className="space-y-16">
+              <div className="space-y-8">
 
                 {/* 🔹 Budget */}
                 <div>
@@ -216,7 +210,7 @@ const TenderPortal = () => {
 
             {/* ================= SECTION 4 ================= */}
             <section ref={(el) => (sectionRefs.current[4] = el)} data-step="4" className="pt-8 border-t border-slate-100">
-              <div className="space-y-16">
+              <div className="space-y-8">
                 {/* 🔹 Location */}
                 <div>
                   <h3 className="text-lg font-semibold mb-6 text-gray-700">
@@ -253,7 +247,7 @@ const TenderPortal = () => {
 
             {/* ================= SECTION 5 ================= */}
             <section ref={(el) => (sectionRefs.current[5] = el)} data-step="5" className="pt-8 border-t border-slate-100">
-              <div className="space-y-16">
+              <div className="space-y-8">
                 {/* 🔹 Organization */}
                 <div>
                   <h3 className="text-lg font-semibold mb-6 text-gray-700">

@@ -56,16 +56,9 @@ const AgriculturePortal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const filtered = agricultureSchemes.filter((s) => {
-      if (s.farmerType !== "General" && s.farmerType !== data.farmerType) return false;
-      if (s.landSize !== "Any" && s.landSize !== data.landSize) return false;
-      if (s.state !== "General" && s.state !== data.state) return false;
-      return true;
+    navigate("/agri-results", {
+      state: { query: data },
     });
-
-    // navigate("/agri-results", {
-    //   state: { results: filtered },
-    // });
   };
 
   return (

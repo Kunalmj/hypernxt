@@ -55,13 +55,7 @@ const ResearchPortal = () => {
 
   // 🔥 Submit
   const handleSubmit = () => {
-    const filtered = researchGrants.filter((g) => {
-      if (g.type !== data.type) return false;
-      if (g.field !== data.field) return false;
-      return true;
-    });
-
-    navigate("/research-results", { state: { results: filtered } });
+    navigate("/research-results", { state: { query: data } });
   };
 
   return (
@@ -119,7 +113,7 @@ const ResearchPortal = () => {
 
         {/* MAIN */}
         <main className="flex-1 px-16 py-12 overflow-y-auto">
-          <div className="max-w-4xl mx-auto space-y-24 pb-32">
+          <div className="max-w-4xl mx-auto space-y-12 pb-24">
 
             {/* SECTION 1 */}
             <section ref={(el) => (sectionRefs.current[1] = el)} data-step="1">

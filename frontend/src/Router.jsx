@@ -17,11 +17,17 @@ import StatusTracking from "./pages/help/StatusTracking";
 import CorrectionServices from "./pages/help/CorrectionServices";
 import ExpertSupport from "./pages/help/ExpertSupport";
 import ScholarshipPortal from "./pages/ScholarshipPortal";
+import ScholarshipResults from "./pages/ScholarshipResults";
 import StartupMSMEPortal from "./pages/StartupMSMEPortal";
+import StartupGrantResults from "./pages/StartupGrantResults";
 import AgriculturePortal from "./pages/AgriculturePortal";
+import AgricultureResults from "./pages/AgricultureResults";
 import WomenPortal from "./pages/WomenPortal";
+import WomenResults from "./pages/WomenResults";
 import ResearchPortal from "./pages/ResearchPortal";
+import ResearchResults from "./pages/ResearchResults";
 import TenderPortal from "./pages/TenderPortal";
+import TenderResults from "./pages/TenderResults";
 import CitizenSchemesPortal from "./pages/CitizenSchemesPortal";
 import BankingSchemes from "./pages/BankingSchemes";
 import HealthSchemes from "./pages/HealthSchemes";
@@ -62,11 +68,17 @@ const router = createBrowserRouter([
       { path: "help/correction", element: <CorrectionServices /> },
       { path: "help/expert", element: <ExpertSupport /> },
       { path: "scholarships", element: <ScholarshipPortal /> },
+      { path: "scholarship-results", element: <ScholarshipResults /> },
       { path: "startup-msme", element: <StartupMSMEPortal /> },
+      { path: "startup-grant-results", element: <StartupGrantResults /> },
       { path: "agriculture", element: <AgriculturePortal /> },
+      { path: "agri-results", element: <AgricultureResults /> },
       { path: "women-programs", element: <WomenPortal /> },
+      { path: "women-results", element: <WomenResults /> },
       { path: "research-grants", element: <ResearchPortal /> },
+      { path: "research-results", element: <ResearchResults /> },
       { path: "tenders", element: <TenderPortal /> },
+      { path: "tender-results", element: <TenderResults /> },
       { path: "citizen-schemes", element: <CitizenSchemesPortal /> },
       { path: "citizen-schemes/banking", element: <BankingSchemes /> },
       { path: "citizen-schemes/health", element: <HealthSchemes /> },

@@ -8,12 +8,28 @@ export const scholarships = [
     type: "National",
     level: "Undergraduate",
     field: "Engineering",
+    region: "All India",
     eligibility: "Min 85% in Class 12",
     description: "Supports meritorious students pursuing technical education in prestigious institutions across India.",
     tags: ["Merit-based", "Technical", "Govt-funded"]
   },
   {
     id: 2,
+    title: "Delhi Chief Minister's Super Scholarship",
+    provider: "Delhi Government",
+    amount: "100% Tuition Fee Waiver",
+    deadline: "10 Aug 2026",
+    type: "National",
+    country: "India",
+    region: "Delhi",
+    level: "Undergraduate",
+    field: "Engineering",
+    eligibility: "Resident of Delhi studying in NCT of Delhi",
+    description: "Full tuition waiver for engineering students enrolled in top Delhi institutions.",
+    tags: ["Merit-based", "State-funded", "Delhi"]
+  },
+  {
+    id: 3,
     title: "Gates Cambridge Scholarship",
     provider: "University of Cambridge",
     amount: "Full Tuition + Stipend",
@@ -27,7 +43,7 @@ export const scholarships = [
     tags: ["Postgraduate", "Prestigious", "Full-funding"]
   },
   {
-    id: 3,
+    id: 4,
     title: "Fullbright-Nehru Master's Fellowship",
     provider: "USIEF",
     amount: "$75,000 + Travel",
@@ -41,12 +57,13 @@ export const scholarships = [
     tags: ["Leadership", "Exchange", "Full-funding"]
   },
   {
-    id: 4,
+    id: 5,
     title: "HDFC Badhte Kadam Scholarship",
     provider: "HDFC Bank",
     amount: "₹1,00,000",
     deadline: "30 Dec 2026",
     type: "National",
+    region: "Maharashtra",
     level: "Undergraduate",
     field: "General",
     eligibility: "Family income < ₹6 LPA",
@@ -54,7 +71,7 @@ export const scholarships = [
     tags: ["Need-based", "Financial Aid"]
   },
   {
-    id: 5,
+    id: 6,
     title: "DAAD In-Country Scholarships",
     provider: "DAAD Germany",
     amount: "€12,000",
