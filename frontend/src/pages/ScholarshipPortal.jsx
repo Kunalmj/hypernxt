@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+﻿import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { scholarships } from "../data/scholarshipData";
 
@@ -30,15 +30,16 @@ const ScholarshipPortal = () => {
   });
 
   useEffect(() => {
+    const data = { profile, selectedType };
     localStorage.setItem("scholarshipSearchState", JSON.stringify(data));
-  }, [data]);
+  }, [profile, selectedType]);
 
   const steps = [
-    { id: 1, title: "Scope" },
-    { id: 2, title: "Citizenship" },
-    { id: 3, title: "Region" },
-    { id: 4, title: "Tier" },
-    { id: 5, title: "Field" },
+    { id: 1, title: "Scope", icon: Icons.Scope },
+    { id: 2, title: "Citizenship", icon: Icons.Citizenship },
+    { id: 3, title: "Region", icon: Icons.Region },
+    { id: 4, title: "Tier", icon: Icons.Tier },
+    { id: 5, title: "Field", icon: Icons.Field },
   ];
 
   const sectionRefs = useRef({});
@@ -85,7 +86,17 @@ const ScholarshipPortal = () => {
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      navigate("/scholarship-results", { state: { query: data } });
+      navigate("/scholarships-results", {
+        state: {
+          query: {
+            type: selectedType,
+            level: profile.level,
+            field: profile.field,
+            nationality: profile.nationality,
+            region: profile.region,
+          },
+        },
+      });
     }, 1500);
   };
 
@@ -298,7 +309,7 @@ const ScholarshipPortal = () => {
                 <h2 className="text-2xl font-bold text-slate-800 mb-2">Field of Study</h2>
                 <p className="text-slate-500 text-base">Select your primary area of academic interest.</p>
               </div>
-              
+
               <div className="bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm flex flex-wrap gap-4">
                 {[
                   "Engineering", "Medicine", "Business",
