@@ -2,6 +2,15 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { agricultureSchemes } from "../data/agricultureData";
 
+const Icons = {
+  Stage: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>,
+  Sector: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>,
+  Location: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>,
+  Funding: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>,
+  Registration: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>,
+  Exit: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+};
+
 const AgriculturePortal = () => {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(1);
@@ -58,35 +67,56 @@ const AgriculturePortal = () => {
   };
 
   return (
-    <div className="h-screen bg-[#f5f7fb] flex justify-center p-6 overflow-hidden">
-      <div className="w-full max-w-6xl h-full bg-white rounded-lg flex overflow-hidden" style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.06), 0 8px 32px rgba(37,99,235,0.09), 0 24px 64px rgba(37,99,235,0.06), inset 0 0 0 1px rgba(226,232,240,0.9)" }}>
+    <div className="h-screen bg-gradient-to-b from-white to-blue-100 flex justify-center p-6 font-sans overflow-hidden">
+      <div className="w-full max-w-7xl h-full flex overflow-hidden rounded-2xl bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
 
         {/* SIDEBAR */}
-        <aside className="w-80 bg-[#eaf2ff] p-10 flex-shrink-0">
-          <h2 className="text-lg font-semibold mb-10">Agriculture Portal</h2>
+        <aside className="w-[340px] bg-[#153e9c] p-10 hidden md:flex flex-col relative overflow-hidden shrink-0 rounded-l-2xl">
+          {/* Overlay gradient graphic to mimic the architecture building */}
+          <div 
+            className="absolute bottom-0 left-0 right-0 h-[400px] opacity-20 pointer-events-none"
+            style={{ 
+              background: "radial-gradient(circle at bottom, rgba(255,255,255,0.8) 0%, transparent 70%)",
+              clipPath: "polygon(50% 10%, 100% 100%, 0% 100%)" 
+            }}
+          ></div>
+          <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-[#0b2259]/80 to-transparent pointer-events-none"></div>
 
-          <div className="relative flex flex-col gap-12">
-            <div className="absolute left-[18px] top-6 bottom-6 w-[2px] bg-blue-200"></div>
+          <h2 className="text-3xl mb-12 text-white flex items-center relative z-10 tracking-tight">
+            <span className="font-extrabold mr-1.5">Agriculture</span> <span className="font-light opacity-80">Portal</span>
+          </h2>
 
-            {steps.map((s) => (
-              <div key={s.id} className="flex items-center gap-4 relative z-10">
-                <div
-                  className={`w-10 h-10 flex items-center justify-center rounded-full transition-all duration-500
-                  ${activeStep === s.id
-                      ? "bg-blue-600 text-white"
-                      : activeStep > s.id
-                        ? "bg-blue-100 text-blue-600"
-                        : "bg-white border border-gray-300 text-gray-400"
-                    }`}
+          <div className="flex flex-col gap-2 relative z-10">
+            {steps.map((s) => {
+              const isActive = activeStep === s.id;
+              const Icon = s.id === 1 ? Icons.Sector : s.id === 2 ? Icons.Stage : s.id === 3 ? Icons.Location : s.id === 4 ? Icons.Funding : Icons.Registration;
+              
+              return (
+                <div 
+                  key={s.id} 
+                  className={`flex items-center gap-4 p-3 rounded-2xl cursor-pointer transition-all duration-300 ${isActive ? 'bg-[#2954b8]' : 'hover:bg-white/5'}`} 
+                  onClick={() => {
+                    const el = sectionRefs.current[s.id];
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }}
                 >
-                  {activeStep > s.id ? "✓" : s.id}
+                  <div className={`w-[52px] h-[52px] rounded-[14px] flex items-center justify-center transition-all duration-300 ${isActive ? 'bg-white text-[#153e9c] shadow-md' : 'bg-white/10 text-white/70'}`}>
+                    <Icon />
+                  </div>
+                  <span className={`flex-1 text-[16px] transition-all duration-300 ${isActive ? 'text-white font-semibold' : 'text-white/70 font-medium'}`}>
+                    {s.title}
+                  </span>
+                  {isActive && <div className="w-2 h-2 bg-white rounded-full mr-1"></div>}
                 </div>
+              );
+            })}
+          </div>
 
-                <span className={`${activeStep === s.id ? "text-black" : "text-gray-400"}`}>
-                  {s.title}
-                </span>
-              </div>
-            ))}
+          <div className="mt-auto relative z-10 pt-10 pb-4">
+            <button className="flex items-center gap-3 text-white/80 hover:text-white transition-colors font-semibold text-[15px]" onClick={() => navigate('/')}>
+              <Icons.Exit />
+              Exit Portal
+            </button>
           </div>
         </aside>
 
@@ -103,29 +133,24 @@ const AgriculturePortal = () => {
                 Select based on your land holding size
               </p>
 
-              <div className="grid grid-cols-3 gap-6">
-                {[
-                  { id: "Small & Marginal", sub: "Up to 2 hectares" },
-                  { id: "Medium Farmer", sub: "2-10 hectares" },
-                  { id: "Large Farmer", sub: "Above 10 hectares" },
-                ].map((f) => (
-                  <div
-                    key={f.id}
-                    onClick={() => setData({ ...data, farmerType: f.id })}
-                    className={`p-8 border rounded-xl text-center cursor-pointer transition-all duration-200
-                      ${data.farmerType === f.id
-                        ? "border-blue-500 bg-blue-50"
-                        : "border-gray-200 hover:border-blue-300"
-                      }`}
-                    style={data.farmerType === f.id
-                      ? { boxShadow: "0 0 0 1px #3b82f6, 0 4px 16px rgba(37,99,235,0.15), inset 0 1px 0 rgba(255,255,255,0.9)" }
-                      : { boxShadow: "0 1px 3px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.8)" }
-                    }
-                  >
-                    <h3 className="text-lg font-semibold">{f.id}</h3>
-                    <p className="text-sm text-gray-500">{f.sub}</p>
-                  </div>
-                ))}
+              <div className="relative max-w-xl mx-auto mt-6">
+                <select 
+                  value={data.farmerType}
+                  onChange={(e) => setData({ ...data, farmerType: e.target.value })}
+                  className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
+                >
+                  <option value="" disabled>Select farmer category</option>
+                  {[
+                    { id: "Small & Marginal", sub: "Up to 2 hectares" },
+                    { id: "Medium Farmer", sub: "2-10 hectares" },
+                    { id: "Large Farmer", sub: "Above 10 hectares" },
+                  ].map(f => (
+                    <option key={f.id} value={f.id}>{f.id} ({f.sub})</option>
+                  ))}
+                </select>
+                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                </div>
               </div>
             </section>
 
@@ -138,27 +163,27 @@ const AgriculturePortal = () => {
               {/* LAND SIZE */}
               <div className="mb-10">
                 <label className="font-medium">Land Size</label>
-                <div className="grid grid-cols-4 gap-4 mt-4">
-                  {[
-                    "Less than 1 hectare",
-                    "1-2 hectares",
-                    "2-5 hectares",
-                    "5-10 hectares",
-                    "10-20 hectares",
-                    "Above 20 hectares",
-                  ].map((l) => (
-                    <button
-                      key={l}
-                      onClick={() => setData({ ...data, landSize: l })}
-                      className={`p-3 border rounded-lg
-                        ${data.landSize === l
-                          ? "border-blue-600 bg-blue-50"
-                          : "border-gray-200"
-                        }`}
-                    >
-                      {l}
-                    </button>
-                  ))}
+                <div className="relative mt-4">
+                  <select 
+                    value={data.landSize}
+                    onChange={(e) => setData({ ...data, landSize: e.target.value })}
+                    className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
+                  >
+                    <option value="" disabled>Select land size</option>
+                    {[
+                      "Less than 1 hectare",
+                      "1-2 hectares",
+                      "2-5 hectares",
+                      "5-10 hectares",
+                      "10-20 hectares",
+                      "Above 20 hectares",
+                    ].map(l => (
+                      <option key={l} value={l}>{l}</option>
+                    ))}
+                  </select>
+                  <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                  </div>
                 </div>
               </div>
             </section>
@@ -167,23 +192,23 @@ const AgriculturePortal = () => {
             <section ref={(el) => (sectionRefs.current[3] = el)} data-step="3" className="pt-8 border-t border-slate-100">
               <div>
                 <label className="font-medium text-xl mb-4 block">State / Region</label>
-                <div className="grid grid-cols-4 gap-4 mt-4">
-                  {[
-                    "Punjab", "Haryana", "Uttar Pradesh", "Maharashtra",
-                    "Karnataka", "Tamil Nadu", "West Bengal", "All India"
-                  ].map((s) => (
-                    <button
-                      key={s}
-                      onClick={() => setData({ ...data, state: s })}
-                      className={`p-3 border rounded-lg
-                        ${data.state === s
-                          ? "border-blue-600 bg-blue-50"
-                          : "border-gray-200"
-                        }`}
-                    >
-                      {s}
-                    </button>
-                  ))}
+                <div className="relative mt-4">
+                  <select 
+                    value={data.state}
+                    onChange={(e) => setData({ ...data, state: e.target.value })}
+                    className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
+                  >
+                    <option value="" disabled>Select state</option>
+                    {[
+                      "Punjab", "Haryana", "Uttar Pradesh", "Maharashtra",
+                      "Karnataka", "Tamil Nadu", "West Bengal", "All India"
+                    ].map(s => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
+                  </select>
+                  <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                  </div>
                 </div>
               </div>
             </section>
@@ -194,27 +219,27 @@ const AgriculturePortal = () => {
                 What type of support do you need?
               </h2>
 
-              <div className="grid grid-cols-3 gap-6">
-                {[
-                  "Financial Support",
-                  "Crop Insurance",
-                  "Irrigation",
-                  "Organic Farming",
-                  "Solar/Energy",
-                  "Credit/Loan",
-                ].map((s) => (
-                  <button
-                    key={s}
-                    onClick={() => setData({ ...data, support: s })}
-                    className={`p-8 border rounded-xl
-                      ${data.support === s
-                        ? "border-blue-600 bg-blue-50"
-                        : "border-gray-200"
-                      }`}
-                  >
-                    {s}
-                  </button>
-                ))}
+              <div className="relative mt-4 max-w-xl mx-auto">
+                <select 
+                  value={data.support}
+                  onChange={(e) => setData({ ...data, support: e.target.value })}
+                  className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
+                >
+                  <option value="" disabled>Select support required</option>
+                  {[
+                    "Financial Support",
+                    "Crop Insurance",
+                    "Irrigation",
+                    "Organic Farming",
+                    "Solar/Energy",
+                    "Credit/Loan",
+                  ].map(s => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
+                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                </div>
               </div>
             </section>
 
@@ -226,7 +251,7 @@ const AgriculturePortal = () => {
               <div className="flex justify-center mt-10">
                 <button
                   onClick={handleSubmit}
-                  className="px-10 py-3 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 transition"
+                  className="px-10 py-3 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-200"
                 >
                   Find Schemes →
                 </button>

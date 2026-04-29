@@ -125,8 +125,8 @@ const StartupGrantMatching = () => {
   };
 
   return (
-    <div className="h-screen bg-[#f8fafc] flex justify-center p-6 font-sans overflow-hidden">
-      <div className="w-full max-w-6xl h-full flex overflow-hidden rounded-2xl bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
+    <div className="h-screen bg-gradient-to-b from-white to-blue-100 flex justify-center p-6 font-sans overflow-hidden">
+      <div className="w-full max-w-7xl h-full flex overflow-hidden rounded-2xl bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
         
         {/* Left Sidebar (Stepper) */}
         <aside className="w-[340px] bg-[#153e9c] p-10 hidden md:flex flex-col relative overflow-hidden shrink-0 rounded-l-2xl">
