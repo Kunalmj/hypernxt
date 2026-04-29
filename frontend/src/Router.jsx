@@ -35,8 +35,6 @@ import TransportSchemes from "./pages/TransportSchemes";
 import TravelSchemes from "./pages/TravelSchemes";
 import UtilitySchemes from "./pages/UtilitySchemes";
 import WomenChildSchemes from "./pages/WomenChildSchemes";
-import StartupGrantMatching from "./pages/StartupGrantMatching";
-import StartupGrantResults from "./pages/StartupGrantResults";
 
 const router = createBrowserRouter([
   {
@@ -82,8 +80,6 @@ const router = createBrowserRouter([
       { path: "citizen-schemes/travel", element: <TravelSchemes /> },
       { path: "citizen-schemes/utility", element: <UtilitySchemes /> },
       { path: "citizen-schemes/women", element: <WomenChildSchemes /> },
-      { path: "startup-grant", element: <StartupGrantMatching /> },
-      { path: "startup-grant-results", element: <StartupGrantResults /> },
     ],
   },
 ]);
