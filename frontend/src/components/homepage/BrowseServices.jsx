@@ -3,7 +3,7 @@ import { IconScholarship, IconStartup, IconAgriculture, IconWomen, IconResearch,
 
 const services = [
   { Icon: IconScholarship, title: "Scholarships",   desc: "Find and apply for national and international scholarships matching your profile.", count: "3 Steps", route: "/scholarships" },
-  { Icon: IconStartup, title: "Startup/MSME",   desc: "Explore grants, subsidies, and funding opportunities for your business venture.", count: "3 Steps", route: "/startup-msme" },
+  { Icon: IconStartup, title: "Startup/MSME",   desc: "Explore grants, subsidies, and funding opportunities for your business venture.", count: "5 Steps", route: "/startup-grant" },
   { Icon: IconAgriculture, title: "Agriculture",   desc: "Discover government schemes, crop insurance, and subsidies for farmers.", count: "3 Steps", route: "/agriculture" },
   { Icon: IconWomen, title: "Women Programs", desc: "Empowering opportunities in entrepreneurship, education, and skill growth.", count: "3 Steps", route: "/women-programs" },
   { Icon: IconResearch, title: "Research Grants", desc: "Scientific and academic funding for researchers, PhDs, and professors.", count: "5 Steps", route: "/research-grants" },
