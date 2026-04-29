@@ -55,13 +55,7 @@ const WomenPortal = () => {
 
   // 🔥 Submit → navigate
   const handleSubmit = () => {
-    const filtered = womenPrograms.filter((p) => {
-      if (p.type !== data.type) return false;
-      if (p.need !== data.need && p.need !== "Financial Support") return false;
-      return true;
-    });
-
-    navigate("/women-results", { state: { results: filtered } });
+    navigate("/women-results", { state: { query: data } });
   };
 
   return (
@@ -119,7 +113,7 @@ const WomenPortal = () => {
 
         {/* MAIN CONTENT */}
         <main className="flex-1 px-16 py-12 overflow-y-auto scroll-smooth">
-          <div className="max-w-4xl mx-auto space-y-24 pb-32">
+          <div className="max-w-4xl mx-auto space-y-12 pb-24">
 
             {/* 1️⃣ CATEGORY */}
             <section ref={(el) => (sectionRefs.current[1] = el)} data-step="1">

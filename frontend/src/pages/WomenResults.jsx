@@ -1,51 +1,34 @@
 import React, { useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { womenPrograms as mockPrograms } from "../data/womenData";
 
-import { startupSchemes as mockGrants } from "../data/startupData";
-
-const StartupGrantResults = () => {
-  const location = useLocation();
+const WomenResults = () => {
+  const { state } = useLocation();
   const navigate = useNavigate();
-  const query = location.state?.query || null;
 
-  const { filteredGrants, isExactMatch } = useMemo(() => {
-    if (!query) return { filteredGrants: mockGrants, isExactMatch: false };
+  const query = state?.query || null;
 
-    const matches = mockGrants.filter(grant => {
-      // 1. Sector
-      if (query.sectors && query.sectors.length > 0) {
-        const sectorMatch = grant.sector.some(s => query.sectors.includes(s));
-        if (!sectorMatch) return false;
-      }
-      
-      // 2. Stage
-      if (query.stage) {
-        if (!grant.stage.includes(query.stage)) return false;
-      }
+  const { filteredPrograms, isExactMatch } = useMemo(() => {
+    if (!query) return { filteredPrograms: mockPrograms, isExactMatch: false };
 
-      // 3. Location
-      if (query.location && !query.location.panIndia) {
-        if (grant.location !== "PAN India" && query.location.state && grant.location !== query.location.state) return false;
-      }
-
-      // 4. Funding
-      if (query.funding && query.funding.max > 0) {
-        // overlap logic: grant.min <= user.max && grant.max >= user.min
-        if (grant.minFunding > query.funding.max || grant.maxFunding < query.funding.min) return false;
-      }
-
+    const matches = mockPrograms.filter(p => {
+      if (query.type && p.type !== "Any" && p.type !== query.type) return false;
+      if (query.age && p.age !== "Any" && p.age !== query.age) return false;
+      if (query.education && p.education !== "Any" && p.education !== query.education) return false;
+      if (query.location && p.location !== "Any" && p.location !== "All India" && p.location !== query.location) return false;
+      if (query.need && p.need !== "Any" && p.need !== query.need) return false;
       return true;
     });
 
     if (matches.length > 0) {
-      return { filteredGrants: matches, isExactMatch: true };
+      return { filteredPrograms: matches, isExactMatch: true };
     } else {
-      return { filteredGrants: mockGrants, isExactMatch: false };
+      return { filteredPrograms: mockPrograms, isExactMatch: false };
     }
   }, [query]);
 
   const handleNewSearch = () => {
-    navigate("/startup-msme");
+    navigate("/women-programs");
   };
 
   return (
@@ -61,32 +44,31 @@ const StartupGrantResults = () => {
             Back to Search
           </button>
           
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Your Grant Matches</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Your Program Matches</h1>
           <p className="text-lg text-blue-100 max-w-2xl opacity-90">
             {isExactMatch 
-              ? `We found ${filteredGrants.length} tailored opportunities based on your startup profile.`
-              : "No exact matches found for your highly specific criteria. Showing all available opportunities instead."}
+              ? `We found ${filteredPrograms.length} tailored opportunities based on your profile.`
+              : "No exact matches found for your highly specific criteria. Showing all available programs instead."}
           </p>
 
           {/* Applied Filters Tags */}
           {query && (
             <div className="mt-8 flex flex-wrap gap-2">
               <span className="px-3 py-1 bg-white/10 rounded-md text-sm border border-white/20 backdrop-blur-sm">
-                Stage: <span className="font-semibold text-white">{query.stage || "Any"}</span>
+                <span className="font-semibold text-white">{query.type || "Any Category"}</span>
               </span>
-              {query.sectors.map(s => (
-                <span key={s} className="px-3 py-1 bg-white/10 rounded-md text-sm border border-white/20 backdrop-blur-sm">
-                  <span className="font-semibold text-white">{s}</span>
-                </span>
-              ))}
               <span className="px-3 py-1 bg-white/10 rounded-md text-sm border border-white/20 backdrop-blur-sm">
-                Loc: <span className="font-semibold text-white">{query.location.panIndia ? "PAN India" : query.location.state || "Any"}</span>
+                <span className="font-semibold text-white">{query.age || "Any Age"}</span>
               </span>
-              {query.funding.label && (
-                <span className="px-3 py-1 bg-white/10 rounded-md text-sm border border-white/20 backdrop-blur-sm">
-                  Funding: <span className="font-semibold text-white">{query.funding.label}</span>
-                </span>
-              )}
+              <span className="px-3 py-1 bg-white/10 rounded-md text-sm border border-white/20 backdrop-blur-sm">
+                <span className="font-semibold text-white">{query.education || "Any Education"}</span>
+              </span>
+              <span className="px-3 py-1 bg-white/10 rounded-md text-sm border border-white/20 backdrop-blur-sm">
+                <span className="font-semibold text-white">{query.location || "Any Location"}</span>
+              </span>
+              <span className="px-3 py-1 bg-white/10 rounded-md text-sm border border-white/20 backdrop-blur-sm">
+                <span className="font-semibold text-white">{query.need || "Any Need"}</span>
+              </span>
             </div>
           )}
         </div>
@@ -100,44 +82,51 @@ const StartupGrantResults = () => {
               <svg className="w-6 h-6 text-amber-500 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
               <div>
                 <h3 className="text-amber-800 font-semibold">No exact matches</h3>
-                <p className="text-amber-700 text-sm mt-1">We couldn't find grants matching all your criteria. Here are other opportunities you might consider.</p>
+                <p className="text-amber-700 text-sm mt-1">We couldn't find programs perfectly matching all your criteria. Here are other opportunities you might consider.</p>
               </div>
            </div>
         )}
 
         <div className="grid gap-6">
-          {filteredGrants.map(grant => (
-            <div key={grant.id} className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 hover:shadow-md transition-shadow flex flex-col md:flex-row gap-6 md:items-center">
+          {filteredPrograms.map((p) => (
+            <div key={p.id} className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 hover:shadow-md transition-shadow flex flex-col md:flex-row gap-6 md:items-center">
               
               <div className="flex-1 space-y-4">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-xs font-bold uppercase tracking-wider border border-emerald-100">
-                    {grant.amount}
+                    {p.benefit || p.amount}
                   </span>
                   <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wider border border-blue-100">
-                    {grant.deadline}
+                    {p.deadline}
                   </span>
                 </div>
                 
-                <h2 className="text-2xl font-bold text-slate-800">{grant.title}</h2>
+                <h2 className="text-2xl font-bold text-slate-800">{p.title}</h2>
+                <p className="text-sm text-slate-500 font-medium">{p.provider}</p>
+                <p className="text-slate-600 text-sm">{p.description}</p>
                 
                 <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600">
                   <div className="flex items-center gap-1.5">
                     <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                    {grant.location}
+                    {p.location === "Any" ? "All India" : p.location}
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    {grant.eligibility}
+                    <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                    {p.age === "Any" ? "All Ages" : p.age}
                   </div>
                 </div>
 
                 <div className="flex flex-wrap gap-2 pt-2">
-                  {grant.sector.map(s => (
-                    <span key={s} className="px-2.5 py-1 bg-slate-100 text-slate-600 rounded text-xs font-medium">{s}</span>
-                  ))}
-                  {grant.tags.map(t => (
-                    <span key={t} className="px-2.5 py-1 bg-purple-50 text-purple-700 rounded text-xs font-medium border border-purple-100">{t}</span>
+                  <span className="px-2.5 py-1 bg-slate-100 text-slate-600 rounded text-xs font-medium">
+                    {p.type}
+                  </span>
+                  <span className="px-2.5 py-1 bg-slate-100 text-slate-600 rounded text-xs font-medium">
+                    {p.education === "Any" ? "Any Education" : p.education}
+                  </span>
+                  {p.tags?.map((t) => (
+                    <span key={t} className="px-2.5 py-1 bg-purple-50 text-purple-700 rounded text-xs font-medium border border-purple-100">
+                      {t}
+                    </span>
                   ))}
                 </div>
               </div>
@@ -159,4 +148,4 @@ const StartupGrantResults = () => {
   );
 };
 
-export default StartupGrantResults;
+export default WomenResults;
