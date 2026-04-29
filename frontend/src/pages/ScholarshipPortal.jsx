@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { scholarships } from "../data/scholarshipData";
+  
 
 const Icons = {
   Pencil: () => (
@@ -30,313 +34,353 @@ const Icons = {
   Check: () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
 };
 
-const TERRITORY_OPTIONS = [
-  { id: 'dl', name: 'Delhi' },
-  { id: 'mh', name: 'Maharashtra' },
-  { id: 'ka', name: 'Karnataka' },
-  { id: 'tn', name: 'Tamil Nadu' },
-  { id: 'gj', name: 'Gujarat' },
-  { id: 'pb', name: 'Punjab' },
-  { id: 'wb', name: 'West Bengal' },
-  { id: 'ai', name: 'All India' }
-];
 
-export default function ScholarshipPortal() {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState({
-    country: 'India',
-    territory: ['dl'],
-    plan: 'International',
-    tier: 'Undergraduate',
-    domain: ['Engineering']
+  const [selectedType, setSelectedType] = useState("");
+  const [profile, setProfile] = useState({
+    nationality: "India",
+    region: "",
+    level: "",
+    field: "",
   });
 
-  const handleNext = () => {
-    if (currentStep < 5) setCurrentStep(currentStep + 1);
-  };
-
-  const handlePrev = () => {
-    if (currentStep > 1) setCurrentStep(currentStep - 1);
-  };
-
-  const toggleTerritory = (id) => {
-    setFormData(prev => ({
-      ...prev,
-      territory: prev.territory.includes(id) 
-        ? prev.territory.filter(t => t !== id)
-        : [...prev.territory, id]
-    }));
-  };
-
-  const toggleDomain = (id) => {
-    setFormData(prev => ({
-      ...prev,
-      domain: prev.domain.includes(id) 
-        ? prev.domain.filter(d => d !== id)
-        : [...prev.domain, id]
-    }));
-  };
-
-  const renderStepContent = () => {
-    switch(currentStep) {
-      case 1:
-        return (
-          <div className="w-full max-w-[500px] animate-[fadeIn_0.3s_ease-in-out]">
-            <div className="flex justify-center mb-6">
-              <div className="w-20 h-20 flex items-center justify-center">
-                <Icons.Pencil />
-              </div>
-            </div>
-            <h1 className="text-3xl font-semibold text-slate-800 text-center mb-2">CITIZENSHIP</h1>
-            <p className="text-center text-slate-500 text-[15px] mb-10 mt-[-8px]">Select your country of origin.</p>
-            
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-slate-500 mb-2">Country</label>
-              <input 
-                type="text" 
-                className="w-full px-3.5 py-2.5 border border-slate-200 rounded-md text-slate-700 text-[14px] focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all" 
-                value={formData.country}
-                onChange={(e) => setFormData({...formData, country: e.target.value})}
-              />
-            </div>
-
-            <div className="mb-6 mt-8">
-              <h1 className="text-[20px] font-semibold text-slate-800 text-left mb-2">TERRITORY</h1>
-              <label className="block text-sm font-medium text-slate-500 mb-3">Preferred state or region.</label>
-              <div className="grid grid-cols-4 md:grid-cols-8 gap-3">
-                {TERRITORY_OPTIONS.map(opt => {
-                  const isSelected = formData.territory.includes(opt.id);
-                  return (
-                    <div 
-                      key={opt.id} 
-                      className={`flex flex-col items-center py-3 border rounded-lg cursor-pointer transition-all hover:bg-slate-50 ${isSelected ? 'border-blue-500' : 'border-slate-200'}`}
-                      onClick={() => toggleTerritory(opt.id)}
-                    >
-                      <div className="w-7 h-7 rounded mb-2.5 flex items-center justify-center font-bold text-lg" style={{ 
-                        backgroundColor: isSelected ? '#3b82f6' : '#f1f5f9',
-                        color: isSelected ? 'white' : '#94a3b8'
-                      }}>
-                        <div className="w-4 h-4 bg-current" style={{
-                          maskImage: "url('data:image/svg+xml;utf8,<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"black\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect></svg>')",
-                          WebkitMaskImage: "url('data:image/svg+xml;utf8,<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"black\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect></svg>')"
-                        }}></div>
-                      </div>
-                      <span className="text-[11px] font-medium" style={{
-                        color: isSelected ? '#1e293b' : '#64748b'
-                      }}>{opt.name}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        );
-      case 2:
-        return (
-          <div className="w-full max-w-[500px] animate-[fadeIn_0.3s_ease-in-out]">
-            <div className="flex justify-center mb-6">
-               <div className="w-20 h-20 flex items-center justify-center">
-                <Icons.Gear />
-              </div>
-            </div>
-            <h1 className="text-3xl font-semibold text-slate-800 text-center mb-2">Scholarship Plan</h1>
-            <p className="text-center text-slate-500 text-[15px] mb-10 mt-[-8px]">Choose the type of scholarship you want to apply for.</p>
-            
-            <div className="grid grid-cols-2 gap-4 mt-8">
-              <div 
-                className={`p-5 border rounded-lg cursor-pointer transition-all relative flex flex-col justify-center ${formData.plan === 'International' ? 'border-blue-500 bg-blue-50/50' : 'border-slate-200 hover:bg-slate-50'}`}
-                onClick={() => setFormData({...formData, plan: 'International'})}
-              >
-                <span className="absolute top-4 right-4 text-[10px] font-bold px-2 py-1 rounded-full bg-amber-100 text-amber-700">Premium</span>
-                <h3 className="text-lg font-semibold text-slate-800 mb-1 mt-2">International</h3>
-                <p className="text-sm text-slate-500 leading-relaxed">Global opportunities and study abroad programs</p>
-              </div>
-              <div 
-                className={`p-5 border rounded-lg cursor-pointer transition-all relative flex flex-col justify-center ${formData.plan === 'National' ? 'border-blue-500 bg-blue-50/50' : 'border-slate-200 hover:bg-slate-50'}`}
-                onClick={() => setFormData({...formData, plan: 'National'})}
-              >
-                <span className="absolute top-4 right-4 text-[10px] font-bold px-2 py-1 rounded-full bg-slate-100 text-slate-600">Standard</span>
-                <h3 className="text-lg font-semibold text-slate-800 mb-1 mt-2">National</h3>
-                <p className="text-sm text-slate-500 leading-relaxed">Scholarships within your country</p>
-              </div>
-            </div>
-          </div>
-        );
-      case 3:
-        return (
-          <div className="w-full max-w-[500px] animate-[fadeIn_0.3s_ease-in-out]">
-             <div className="flex justify-center mb-6">
-               <div className="w-20 h-20 flex items-center justify-center">
-                <Icons.Bell />
-              </div>
-            </div>
-            <h1 className="text-3xl font-semibold text-slate-800 text-center mb-2">ACADEMIC TIER</h1>
-            <p className="text-center text-slate-500 text-[15px] mb-10 mt-[-8px]">Current educational status.</p>
-            
-            <div className="grid grid-cols-2 gap-4 mt-8">
-               {[
-                 { id: 'Undergraduate', desc: 'Bachelor’s level' },
-                 { id: 'Master\'s', desc: 'Postgraduate level' },
-                 { id: 'PhD', desc: 'Doctorate level' },
-                 { id: 'Diploma', desc: 'Professional certification' }
-               ].map(tier => (
-                 <div 
-                   key={tier.id}
-                   className={`p-4 border rounded-lg cursor-pointer transition-all flex flex-col justify-center ${formData.tier === tier.id ? 'border-blue-500 bg-blue-50/50' : 'border-slate-200 hover:bg-slate-50'}`}
-                   onClick={() => setFormData({...formData, tier: tier.id})}
-                 >
-                   <span className="text-[15px] font-semibold text-slate-800 mb-1">{tier.id}</span>
-                   <span className="text-[13px] text-slate-500">{tier.desc}</span>
-                 </div>
-               ))}
-            </div>
-          </div>
-        );
-      case 4:
-        return (
-          <div className="w-full max-w-[600px] animate-[fadeIn_0.3s_ease-in-out]">
-             <div className="flex justify-center mb-6">
-               <div className="w-20 h-20 flex items-center justify-center">
-                <Icons.Megaphone />
-              </div>
-            </div>
-            <h1 className="text-3xl font-semibold text-slate-800 text-center mb-2">DOMAIN</h1>
-            <p className="text-center text-slate-500 text-[15px] mb-10 mt-[-8px]">Area of academic specialization.</p>
-            
-            <div className="mt-8 flex justify-center">
-              <div className="flex flex-wrap gap-3 justify-center max-w-[450px]">
-                {[
-                  "Engineering", "Medicine", "Business", 
-                  "Computer Science", "Arts", "Law", "All Fields"
-                ].map(domain => {
-                  const isSelected = formData.domain.includes(domain);
-                  return (
-                    <span 
-                      key={domain}
-                      className={`px-4 py-2 border rounded-md text-[14px] font-medium cursor-pointer transition-all ${isSelected ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-slate-200 text-slate-600 hover:bg-slate-50'}`}
-                      onClick={() => toggleDomain(domain)}
-                    >
-                      {domain}
-                    </span>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        );
-      case 5:
-        return (
-          <div className="w-full max-w-[500px] animate-[fadeIn_0.3s_ease-in-out]">
-             <div className="flex justify-center mb-6">
-               <div className="w-20 h-20 flex items-center justify-center">
-                <Icons.Check />
-              </div>
-            </div>
-            <h1 className="text-3xl font-semibold text-slate-800 text-center mb-2">Review and Continue</h1>
-            <p className="text-center text-slate-500 text-[15px] mb-10 mt-[-8px]">You’re almost done. Review your selections and continue to create your account.</p>
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
-
-  const stepsInfo = [
+  const steps = [
     {
-      num: 1,
-      title: 'Citizenship & Location',
-      desc: 'Select your country and preferred region.'
+      id: 1, title: "Scholarship Scope", icon: (color) => (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg>
+      )
     },
     {
-      num: 2,
-      title: 'Scholarship Plan',
-      desc: 'Choose national or international opportunities.'
+      id: 2, title: "Citizenship", icon: (color) => (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+      )
     },
     {
-      num: 3,
-      title: 'Academic Level',
-      desc: 'Select your current level of study.'
+      id: 3, title: "Region & Territory", icon: (color) => (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>
+      )
     },
     {
-      num: 4,
-      title: 'Field of Study',
-      desc: 'Pick your area of specialization.'
+      id: 4, title: "Academic Tier", icon: (color) => (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z" /><path d="M6 12v5c0 2 2.7 3.5 6 3.5s6-1.5 6-3.5v-5" /></svg>
+      )
     },
     {
-      num: 5,
-      title: 'Final Step',
-      desc: 'Review your details and continue.'
-    }
+      id: 5, title: "Field of Study", icon: (color) => (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M2 12h20" /><path d="m4.93 4.93 14.14 14.14M4.93 19.07 19.07 4.93" /></svg>
+      )
+    },
   ];
 
+  const handleNext = () => {
+    if (activeStep < steps.length) {
+      setActiveStep(activeStep + 1);
+    }
+  };
+
+  const handleBack = () => {
+    if (activeStep > 1) {
+      setActiveStep(activeStep - 1);
+    }
+  };
+
+  const handleSubmit = () => {
+    const filtered = scholarships.filter((s) => {
+      if (selectedType && s.type !== selectedType) return false;
+      if (profile.level && s.level !== profile.level) return false;
+      if (profile.field && s.field !== profile.field && s.field !== "General") return false;
+      return true;
+    });
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex w-screen h-screen bg-[#091125] font-['Inter',_sans-serif] overflow-hidden m-0 p-0">
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
-      
-      {/* Left White Area */}
-      <div className="w-[65%] h-full bg-white relative z-10 shadow-[20px_0_50px_rgba(0,0,0,0.2)] flex flex-col">
-        {/* Header */}
-        <div className="px-12 py-8 flex items-center">
-          <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center text-white font-bold text-sm mr-3">B</div>
-          <div className="font-bold text-xl text-slate-800">Benti</div>
-        </div>
+    <div
+      className="min-h-screen flex items-center justify-center p-4 font-['Inter']"
+      style={{ background: "linear-gradient(160deg, #f0f7ff 0%, #f5f8ff 40%, #fdf4fb 75%, #fff8f5 100%)" }}
+    >
+      <div className="w-full max-w-[950px] h-[620px] bg-white rounded-[2rem] shadow-[0_30px_80px_-15px_rgba(0,0,0,0.1)] flex overflow-hidden border border-white">
 
-        {/* Content */}
-        <div className="flex-1 flex flex-col items-center justify-center px-8 pb-24 overflow-y-auto">
-          {renderStepContent()}
-        </div>
+        {/* SIDEBAR - MATCHING REFERENCE IMAGE SHAPE */}
+        <aside className="hidden md:flex w-[260px] bg-blue-800 flex-col py-8 rounded-r-[3rem] relative overflow-hidden">
 
-        {/* Footer */}
-        <div className="absolute bottom-0 left-0 w-full px-12 py-6 flex justify-between items-center bg-white border-t border-slate-50 z-20">
-          <button className="text-blue-500 font-medium text-[15px] focus:outline-none">Cancel</button>
-          <div className="flex gap-4">
-            {currentStep > 1 && (
-              <button className="text-slate-400 font-medium text-[15px] flex items-center gap-2 focus:outline-none" onClick={handlePrev}>
-                <Icons.ChevronLeft /> Previous step
+          <div className="px-8 mb-10 relative z-10">
+            <h2 className="text-white text-xl font-black tracking-tighter flex items-center gap-2">
+              Scholarship<span className="opacity-70">Portal</span>
+            </h2>
+          </div>
+
+          <nav className="flex-1 px-3 space-y-1 relative z-10">
+            {steps.map((step) => (
+              <button
+                key={step.id}
+                onClick={() => setActiveStep(step.id)}
+                className={`w-full flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 group
+                  ${activeStep === step.id
+                    ? "bg-white/15 text-white shadow-lg"
+                    : "text-white/50 hover:text-white hover:bg-white/5"
+                  }`}
+              >
+                <div className={`p-2 rounded-lg transition-all ${activeStep === step.id ? "bg-white text-[#1d4ed8]" : "bg-white/10 text-white/70"}`}>
+                  {step.icon(activeStep === step.id ? "#1d4ed8" : "currentColor")}
+                </div>
+                <span className="text-xs font-bold tracking-tight">{step.title}</span>
+                {activeStep === step.id && (
+                  <div className="ml-auto w-1.5 h-1.5 bg-white rounded-full"></div>
+                )}
               </button>
-            )}
-            <button className="bg-blue-600 hover:bg-blue-700 text-white border-none rounded-md px-6 py-2.5 font-medium text-[15px] flex items-center gap-2 transition-colors focus:outline-none" onClick={handleNext}>
-              {currentStep === 5 ? 'Open Account' : 'Next step'} {currentStep < 5 && <Icons.ChevronRight />}
+            ))}
+          </nav>
+
+          <div className="px-8 mt-auto mb-8 relative z-10">
+            <button
+              onClick={() => navigate("/")}
+              className="flex items-center gap-3 text-white hover:cursor-pointer text-xs font-bold"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
+              Exit Portal
             </button>
           </div>
-        </div>
-      </div>
 
-      {/* Right Blue Area */}
-      <div className="w-[35%] h-full bg-[#091125] relative flex flex-col justify-center pr-16 py-8">
-        <div className="flex flex-col gap-12 relative">
-          {stepsInfo.map((step) => {
-            let status = 'inactive';
-            if (currentStep === step.num) status = 'active';
-            else if (currentStep > step.num) status = 'completed';
+          {/* Building Image at Bottom */}
+          <div className="absolute bottom-0 left-0 w-full h-[280px] pointer-events-none">
+            <div className="absolute inset-0 bg-blue-800"></div>
+            <img 
+              src="/building-scholar.png" 
+              alt="Building"
+              className="w-full h-full object-cover mix-blend-multiply opacity-90" 
+            />
+          </div>
+        </aside>
 
-            return (
-              <div key={step.num} className={`relative pl-12 transition-opacity duration-300 ${status === 'inactive' ? 'opacity-50' : status === 'active' ? 'opacity-100' : 'opacity-70'}`}>
-                {/* Circle exactly on boundary */}
-                <div className={`absolute -left-4 top-0 w-8 h-8 rounded-full flex items-center justify-center text-[13.5px] font-semibold z-20 transition-all duration-300 ${
-                  status === 'active' ? 'bg-blue-500 text-white shadow-[0_0_0_4px_rgba(59,130,246,0.2)]' :
-                  status === 'inactive' ? 'bg-slate-800 text-blue-500' :
-                  'bg-slate-800 text-white'
-                }`}>
-                  {status === 'completed' ? <Icons.Check /> : step.num}
+        {/* MAIN FORM AREA */}
+        <main className="flex-1 flex flex-col p-6 md:p-10 relative overflow-hidden bg-[#fafafa]">
+
+          <header className="mb-8">
+            <h1 className="text-3xl font-black text-slate-800 tracking-tight mb-1">
+              {steps.find(s => s.id === activeStep)?.title.split(" ")[0]}
+              <span className="text-[#1d4ed8] ml-2">{steps.find(s => s.id === activeStep)?.title.split(" ").slice(1).join(" ")}</span>
+            </h1>
+            <p className="text-slate-400 font-medium text-xs">Please provide accurate information for better matching.</p>
+          </header>
+
+          <div className="flex-1 overflow-y-auto pr-4 custom-scrollbar">
+            {activeStep === 1 && (
+              <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {[
+                    { id: "International", label: "International", desc: "Study abroad in global universities.", icon: "🌐" },
+                    { id: "National", label: "National", desc: "Pursue education in local institutions.", icon: "🏛️" }
+                  ].map((type) => (
+                    <div
+                      key={type.id}
+                      onClick={() => setSelectedType(type.id)}
+                      className={`p-6 rounded-[1.5rem] cursor-pointer transition-all border-2 flex flex-col gap-3 relative overflow-hidden group
+                         ${selectedType === type.id
+                          ? "bg-white border-[#1d4ed8] shadow-md"
+                          : "bg-white border-slate-100 hover:border-slate-200"
+                        }`}
+                    >
+                      <div className={`text-3xl transition-transform duration-500 ${selectedType === type.id ? "scale-110" : "grayscale"}`}>{type.icon}</div>
+                      <div>
+                        <h3 className={`text-base font-bold mb-0.5 ${selectedType === type.id ? "text-[#1d4ed8]" : "text-slate-800"}`}>{type.label}</h3>
+                        <p className="text-[0.7rem] text-slate-400 font-medium leading-tight">{type.desc}</p>
+                      </div>
+                      {selectedType === type.id && (
+                        <div className="absolute top-4 right-4 w-5 h-5 bg-[#1d4ed8] rounded-full flex items-center justify-center">
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
-                <h4 className="text-white font-semibold text-base mb-2 mt-1">{step.title}</h4>
-                <p className="text-slate-400 text-sm leading-relaxed m-0 pr-4">{step.desc}</p>
               </div>
-            );
-          })}
-        </div>
+            )}
 
-        <div className="absolute bottom-8 left-12 text-slate-500 text-[13px] leading-relaxed">
-          Need a helping hand?<br/>
-          Visit us at <a href="#" className="text-slate-400 hover:underline">help.bentiapp.com</a> or call +1 (202) 123 4567
-        </div>
+            {activeStep === 2 && (
+              <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="space-y-1.5">
+                    <label className="text-[0.65rem] font-bold text-slate-400 uppercase tracking-widest ml-3">Current Country</label>
+                    <select
+                      className="w-full bg-white border-2 border-slate-100 rounded-xl px-5 py-4 text-slate-700 font-bold outline-none focus:border-[#1d4ed8] transition-all appearance-none cursor-pointer text-sm"
+                      value={profile.nationality}
+                      onChange={(e) => setProfile({ ...profile, nationality: e.target.value })}
+                    >
+                      <option>India</option>
+                      <option>USA</option>
+                      <option>UK</option>
+                      <option>Canada</option>
+                      <option>Australia</option>
+                    </select>
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-[0.65rem] font-bold text-slate-400 uppercase tracking-widest ml-3">Passport Status</label>
+                    <div className="bg-white border-2 border-slate-100 rounded-xl px-5 py-4 text-slate-400 font-bold flex justify-between items-center text-sm">
+                      <span>Verified</span>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeStep === 3 && (
+              <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {["Delhi", "Maharashtra", "Karnataka", "Tamil Nadu", "Gujarat", "Punjab", "West Bengal", "All India"].map((r) => (
+                    <button
+                      key={r}
+                      onClick={() => setProfile({ ...profile, region: r })}
+                      className={`p-4 rounded-xl text-xs font-bold transition-all border-2
+                        ${profile.region === r
+                          ? "bg-[#1d4ed8] text-white border-transparent shadow-md scale-[1.02]"
+                          : "bg-white border-slate-100 text-slate-500 hover:border-slate-200"
+                        }`}
+                    >
+                      {r}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeStep === 4 && (
+              <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <div className="grid grid-cols-1 gap-4">
+                  {[
+                    { id: "Undergraduate", label: "Bachelor's Level", icon: "🎓" },
+                    { id: "Master's", label: "Post-Graduate", icon: "📜" },
+                    { id: "PhD", label: "Doctorate / Research", icon: "🔬" },
+                    { id: "Diploma", label: "Professional Training", icon: "📝" }
+                  ].map((l) => (
+                    <div
+                      key={l.id}
+                      onClick={() => setProfile({ ...profile, level: l.id })}
+                      className={`flex items-center justify-between p-4 rounded-xl cursor-pointer transition-all border-2
+                        ${profile.level === l.id
+                          ? "bg-white border-[#1d4ed8] shadow-sm scale-[1.01]"
+                          : "bg-white border-slate-100 hover:border-slate-200"
+                        }`}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${profile.level === l.id ? "border-[#1d4ed8] bg-[#1d4ed8]" : "border-slate-200"}`}>
+                          {profile.level === l.id && <div className="w-1.5 h-1.5 bg-white rounded-full"></div>}
+                        </div>
+                        <div>
+                          <p className={`font-bold text-sm ${profile.level === l.id ? "text-[#1d4ed8]" : "text-slate-700"}`}>{l.id}</p>
+                          <p className="text-[0.65rem] text-slate-400 font-medium">{l.label}</p>
+                        </div>
+                      </div>
+                      <span className="text-xl">{l.icon}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeStep === 5 && (
+              <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <div className="flex flex-wrap gap-3">
+                  {[
+                    "Engineering", "Medicine", "Business",
+                    "Computer Science", "Arts", "Law", "Social Sciences", "Pure Sciences"
+                  ].map((f) => (
+                    <button
+                      key={f}
+                      onClick={() => setProfile({ ...profile, field: f })}
+                      className={`px-8 py-4 rounded-full text-sm font-bold transition-all border-2
+                        ${profile.field === f
+                          ? "bg-[#1d4ed8] text-white border-transparent shadow-lg"
+                          : "bg-white border-slate-100 text-slate-500 hover:border-slate-200"
+                        }`}
+                    >
+                      {f}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* NAVIGATION FOOTER */}
+          <footer className="mt-auto pt-6 flex justify-between items-center border-t border-slate-100">
+            <button
+              onClick={handleBack}
+              disabled={activeStep === 1}
+              className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xs transition-all
+                 ${activeStep === 1
+                  ? "opacity-0 pointer-events-none"
+                  : "text-slate-400 hover:text-slate-600 hover:bg-slate-50"
+                }`}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
+              Previous
+            </button>
+
+            {activeStep < steps.length ? (
+              <button
+                onClick={handleNext}
+                className="bg-[#1d4ed8] text-white px-8 py-3 rounded-xl font-bold text-xs shadow-md hover:bg-[#1e40af] hover:scale-[1.02] transition-all active:scale-[0.98] flex items-center gap-2"
+              >
+                Next Section
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+              </button>
+            ) : (
+              <button
+                onClick={handleSubmit}
+                className="bg-[#1d4ed8] text-white px-10 py-3 rounded-xl font-bold text-xs shadow-md hover:bg-[#1e40af] hover:scale-[1.02] transition-all active:scale-[0.98] flex items-center gap-2"
+              >
+                Final Search
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg>
+              </button>
+            )}
+          </footer>
+        </main>
+
       </div>
+
+      {/* INLINE CSS FOR CUSTOM SCROLLBAR & ANIMATIONS */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: #e2e8f0;
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: #cbd5e1;
+        }
+
+        @keyframes fade-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes slide-in-from-bottom {
+          from { transform: translateY(20px); }
+          to { transform: translateY(0); }
+        }
+        .animate-in {
+          animation-duration: 0.5s;
+          animation-fill-mode: both;
+        }
+        .fade-in {
+          animation-name: fade-in;
+        }
+        .slide-in-from-bottom-4 {
+          animation-name: slide-in-from-bottom;
+        }
+      `}} />
     </div>
   );
-}
+
+};
+
+export default ScholarshipPortal;
+
+

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { agricultureSchemes } from "../data/agricultureData";
 
@@ -13,7 +13,6 @@ const Icons = {
 
 const AgriculturePortal = () => {
   const navigate = useNavigate();
-  const [activeStep, setActiveStep] = useState(1);
 
   const [data, setData] = useState({
     farmerType: "",
@@ -22,38 +21,8 @@ const AgriculturePortal = () => {
     support: "",
   });
 
-  const sectionRefs = useRef({});
-
-  // Smooth step detection
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveStep(Number(entry.target.dataset.step));
-          }
-        });
-      },
-      { threshold: 0.6, rootMargin: "-100px 0px -100px 0px" }
-    );
-
-    Object.values(sectionRefs.current).forEach((sec) => {
-      if (sec) observer.observe(sec);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const steps = [
-    { id: 1, title: "Farmer Type" },
-    { id: 2, title: "Land Size" },
-    { id: 3, title: "State / Region" },
-    { id: 4, title: "Support Required" },
-    { id: 5, title: "Submit" },
-  ];
-
-  // 🔥 SUBMIT → NAVIGATE
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const filtered = agricultureSchemes.filter((s) => {
       if (s.farmerType !== "General" && s.farmerType !== data.farmerType) return false;
       if (s.landSize !== "Any" && s.landSize !== data.landSize) return false;
@@ -61,12 +30,13 @@ const AgriculturePortal = () => {
       return true;
     });
 
-    navigate("/agri-results", {
-      state: { results: filtered },
-    });
+    // navigate("/agri-results", {
+    //   state: { results: filtered },
+    // });
   };
 
   return (
+
     <div className="h-screen bg-gradient-to-b from-white to-blue-100 flex justify-center p-6 font-sans overflow-hidden">
       <div className="w-full max-w-7xl h-full flex overflow-hidden rounded-2xl bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
 
@@ -240,8 +210,8 @@ const AgriculturePortal = () => {
                 <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                 </div>
+
               </div>
-            </section>
 
             {/* 5️⃣ SUBMIT */}
             <section ref={(el) => (sectionRefs.current[5] = el)} data-step="5" className="pt-8 border-t border-slate-100">
@@ -252,14 +222,68 @@ const AgriculturePortal = () => {
                 <button
                   onClick={handleSubmit}
                   className="px-10 py-3 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-200"
-                >
-                  Find Schemes →
-                </button>
-              </div>
-            </section>
 
-          </div>
-        </main>
+                >
+                  <option value="" disabled>Select size</option>
+                  <option value="Less than 1 hectare">Less than 1 hectare</option>
+                  <option value="1-2 hectares">1-2 hectares</option>
+                  <option value="2-5 hectares">2-5 hectares</option>
+                  <option value="5-10 hectares">5-10 hectares</option>
+                  <option value="10-20 hectares">10-20 hectares</option>
+                  <option value="Above 20 hectares">Above 20 hectares</option>
+                </select>
+              </div>
+            </div>
+
+            {/* State */}
+            <div className="flex flex-col pt-4">
+              <label className="text-sm font-semibold text-slate-700 mb-2">State / Region</label>
+              <select 
+                className="w-full border-b-2 border-slate-300 pb-2 bg-transparent outline-none focus:border-[#6366f1] text-slate-600 transition-colors appearance-none cursor-pointer text-sm"
+                value={data.state}
+                onChange={(e) => setData({...data, state: e.target.value})}
+                required
+              >
+                <option value="" disabled>Select state</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="West Bengal">West Bengal</option>
+                <option value="All India">All India</option>
+              </select>
+            </div>
+
+            {/* Support Required */}
+            <div className="flex flex-col pt-4 pb-8">
+              <label className="text-sm font-semibold text-slate-700 mb-2">How we can help you? Describe here your problem</label>
+              <select 
+                className="w-full border-b-2 border-slate-300 pb-2 bg-transparent outline-none focus:border-[#6366f1] text-slate-600 transition-colors appearance-none cursor-pointer text-sm"
+                value={data.support}
+                onChange={(e) => setData({...data, support: e.target.value})}
+                required
+              >
+                <option value="" disabled>Select support type</option>
+                <option value="Financial Support">Financial Support</option>
+                <option value="Crop Insurance">Crop Insurance</option>
+                <option value="Irrigation">Irrigation</option>
+                <option value="Organic Farming">Organic Farming</option>
+                <option value="Solar/Energy">Solar/Energy</option>
+                <option value="Credit/Loan">Credit/Loan</option>
+              </select>
+            </div>
+
+            <button 
+              type="submit"
+              className="bg-blue-800 text-white px-10 py-3 rounded-md font-bold text-sm shadow-md hover:bg-[#4f46e5] hover:-translate-y-0.5 transition-all w-max"
+            >
+              Find Schemes
+            </button>
+          </form>
+        </div>
+
       </div>
     </div>
   );
