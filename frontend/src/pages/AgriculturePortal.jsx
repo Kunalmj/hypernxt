@@ -1,10 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { agricultureSchemes } from "../data/agricultureData";
 
 const AgriculturePortal = () => {
   const navigate = useNavigate();
-  const [activeStep, setActiveStep] = useState(1);
 
   const [data, setData] = useState({
     farmerType: "",
@@ -13,38 +12,8 @@ const AgriculturePortal = () => {
     support: "",
   });
 
-  const sectionRefs = useRef({});
-
-  // Smooth step detection
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveStep(Number(entry.target.dataset.step));
-          }
-        });
-      },
-      { threshold: 0.6, rootMargin: "-100px 0px -100px 0px" }
-    );
-
-    Object.values(sectionRefs.current).forEach((sec) => {
-      if (sec) observer.observe(sec);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const steps = [
-    { id: 1, title: "Farmer Type" },
-    { id: 2, title: "Land Size" },
-    { id: 3, title: "State / Region" },
-    { id: 4, title: "Support Required" },
-    { id: 5, title: "Submit" },
-  ];
-
-  // 🔥 SUBMIT → NAVIGATE
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const filtered = agricultureSchemes.filter((s) => {
       if (s.farmerType !== "General" && s.farmerType !== data.farmerType) return false;
       if (s.landSize !== "Any" && s.landSize !== data.landSize) return false;
@@ -52,189 +21,128 @@ const AgriculturePortal = () => {
       return true;
     });
 
-    navigate("/agri-results", {
-      state: { results: filtered },
-    });
+    // navigate("/agri-results", {
+    //   state: { results: filtered },
+    // });
   };
 
   return (
-    <div className="h-screen bg-[#f5f7fb] flex justify-center p-6 overflow-hidden">
-      <div className="w-full max-w-6xl h-full bg-white rounded-lg flex overflow-hidden" style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.06), 0 8px 32px rgba(37,99,235,0.09), 0 24px 64px rgba(37,99,235,0.06), inset 0 0 0 1px rgba(226,232,240,0.9)" }}>
+    <div className="min-h-screen max-w-[90%] mx-auto bg-white relative overflow-hidden font-['Inter',sans-serif] rounded-2xl">
+      
+      {/* Decorative Wave Background (Top Right) */}
+      <svg 
+        viewBox="0 0 100 100" 
+        preserveAspectRatio="none" 
+        className="absolute top-0 right-0 w-[45vw] h-[75vh] md:h-[65vh] pointer-events-none z-0"
+      >
+        <path d="M0,0 C40,40 60,20 100,40 L100,0 Z" fill="#282be8ff" />
+        <path d="M0,15 C45,55 55,25 100,55" fill="none" stroke="#6366f1" strokeWidth="0.3" opacity="0.8"/>
+        <path d="M0,30 C50,70 50,30 100,70" fill="none" stroke="#181cedff" strokeWidth="0.3" opacity="0.6"/>
+      </svg>
 
-        {/* SIDEBAR */}
-        <aside className="w-80 bg-[#eaf2ff] p-10 flex-shrink-0">
-          <h2 className="text-lg font-semibold mb-10">Agriculture Portal</h2>
+      {/* Building Image (Bottom Right) */}
+      <img 
+        src="/agriculture-img.png" 
+        alt="Building" 
+        className="absolute bottom-0 right-0 md:w-[450px] md:h-[450px] object-cover pointer-events-none" 
+      />
 
-          <div className="relative flex flex-col gap-12">
-            <div className="absolute left-[18px] top-6 bottom-6 w-[2px] bg-blue-200"></div>
+      <div className="relative z-10 container mx-auto px-6 py-16 md:py-24 flex flex-col md:flex-row gap-16 min-h-screen items-center">
+        
+        {/* Left Side: Form */}
+        <div className="flex-1 max-w-xl md:pl-10">
+          <h1 className="text-5xl md:text-6xl font-extrabold text-slate-800 tracking-tight leading-tight mb-12">
+            Fill the form <br />
+            to <span className="text-blue-800">find schemes.</span>
+          </h1>
 
-            {steps.map((s) => (
-              <div key={s.id} className="flex items-center gap-4 relative z-10">
-                <div
-                  className={`w-10 h-10 flex items-center justify-center rounded-full transition-all duration-500
-                  ${activeStep === s.id
-                      ? "bg-blue-600 text-white"
-                      : activeStep > s.id
-                        ? "bg-blue-100 text-blue-600"
-                        : "bg-white border border-gray-300 text-gray-400"
-                    }`}
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+              {/* Farmer Type */}
+              <div className="flex flex-col">
+                <label className="text-sm font-semibold text-slate-700 mb-2">Farmer Type</label>
+                <select 
+                  className="w-full border-b-2 border-slate-300 pb-2 bg-transparent outline-none focus:border-[#6366f1] text-slate-600 transition-colors appearance-none cursor-pointer text-sm"
+                  value={data.farmerType}
+                  onChange={(e) => setData({...data, farmerType: e.target.value})}
+                  required
                 >
-                  {activeStep > s.id ? "✓" : s.id}
-                </div>
-
-                <span className={`${activeStep === s.id ? "text-black" : "text-gray-400"}`}>
-                  {s.title}
-                </span>
+                  <option value="" disabled>Select type</option>
+                  <option value="Small & Marginal">Small & Marginal</option>
+                  <option value="Medium Farmer">Medium Farmer</option>
+                  <option value="Large Farmer">Large Farmer</option>
+                </select>
               </div>
-            ))}
-          </div>
-        </aside>
 
-        {/* MAIN */}
-        <main className="flex-1 px-16 py-12 overflow-y-auto scroll-smooth">
-          <div className="max-w-4xl mx-auto space-y-24 pb-32">
-
-            {/* 1️⃣ FARMER TYPE */}
-            <section ref={(el) => (sectionRefs.current[1] = el)} data-step="1">
-              <h1 className="text-3xl font-semibold text-center mb-2">
-                What type of farmer are you?
-              </h1>
-              <p className="text-center text-gray-500 mb-10">
-                Select based on your land holding size
-              </p>
-
-              <div className="grid grid-cols-3 gap-6">
-                {[
-                  { id: "Small & Marginal", sub: "Up to 2 hectares" },
-                  { id: "Medium Farmer", sub: "2-10 hectares" },
-                  { id: "Large Farmer", sub: "Above 10 hectares" },
-                ].map((f) => (
-                  <div
-                    key={f.id}
-                    onClick={() => setData({ ...data, farmerType: f.id })}
-                    className={`p-8 border rounded-xl text-center cursor-pointer transition-all duration-200
-                      ${data.farmerType === f.id
-                        ? "border-blue-500 bg-blue-50"
-                        : "border-gray-200 hover:border-blue-300"
-                      }`}
-                    style={data.farmerType === f.id
-                      ? { boxShadow: "0 0 0 1px #3b82f6, 0 4px 16px rgba(37,99,235,0.15), inset 0 1px 0 rgba(255,255,255,0.9)" }
-                      : { boxShadow: "0 1px 3px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.8)" }
-                    }
-                  >
-                    <h3 className="text-lg font-semibold">{f.id}</h3>
-                    <p className="text-sm text-gray-500">{f.sub}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* 2️⃣ FARM DETAILS */}
-            <section ref={(el) => (sectionRefs.current[2] = el)} data-step="2">
-              <h2 className="text-2xl font-semibold mb-8 text-center">
-                Tell us about your farm
-              </h2>
-
-              {/* LAND SIZE */}
-              <div className="mb-10">
-                <label className="font-medium">Land Size</label>
-                <div className="grid grid-cols-4 gap-4 mt-4">
-                  {[
-                    "Less than 1 hectare",
-                    "1-2 hectares",
-                    "2-5 hectares",
-                    "5-10 hectares",
-                    "10-20 hectares",
-                    "Above 20 hectares",
-                  ].map((l) => (
-                    <button
-                      key={l}
-                      onClick={() => setData({ ...data, landSize: l })}
-                      className={`p-3 border rounded-lg
-                        ${data.landSize === l
-                          ? "border-blue-600 bg-blue-50"
-                          : "border-gray-200"
-                        }`}
-                    >
-                      {l}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {/* 3️⃣ STATE */}
-            <section ref={(el) => (sectionRefs.current[3] = el)} data-step="3" className="pt-8 border-t border-slate-100">
-              <div>
-                <label className="font-medium text-xl mb-4 block">State / Region</label>
-                <div className="grid grid-cols-4 gap-4 mt-4">
-                  {[
-                    "Punjab", "Haryana", "Uttar Pradesh", "Maharashtra",
-                    "Karnataka", "Tamil Nadu", "West Bengal", "All India"
-                  ].map((s) => (
-                    <button
-                      key={s}
-                      onClick={() => setData({ ...data, state: s })}
-                      className={`p-3 border rounded-lg
-                        ${data.state === s
-                          ? "border-blue-600 bg-blue-50"
-                          : "border-gray-200"
-                        }`}
-                    >
-                      {s}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {/* 4️⃣ SUPPORT */}
-            <section ref={(el) => (sectionRefs.current[4] = el)} data-step="4" className="pt-8 border-t border-slate-100">
-              <h2 className="text-3xl font-semibold text-center mb-10">
-                What type of support do you need?
-              </h2>
-
-              <div className="grid grid-cols-3 gap-6">
-                {[
-                  "Financial Support",
-                  "Crop Insurance",
-                  "Irrigation",
-                  "Organic Farming",
-                  "Solar/Energy",
-                  "Credit/Loan",
-                ].map((s) => (
-                  <button
-                    key={s}
-                    onClick={() => setData({ ...data, support: s })}
-                    className={`p-8 border rounded-xl
-                      ${data.support === s
-                        ? "border-blue-600 bg-blue-50"
-                        : "border-gray-200"
-                      }`}
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-            </section>
-
-            {/* 5️⃣ SUBMIT */}
-            <section ref={(el) => (sectionRefs.current[5] = el)} data-step="5" className="pt-8 border-t border-slate-100">
-              <h2 className="text-2xl font-semibold text-center mb-6">
-                Review and Find Schemes
-              </h2>
-              <div className="flex justify-center mt-10">
-                <button
-                  onClick={handleSubmit}
-                  className="px-10 py-3 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 transition"
+              {/* Land Size */}
+              <div className="flex flex-col">
+                <label className="text-sm font-semibold text-slate-700 mb-2">Land Size</label>
+                <select 
+                  className="w-full border-b-2 border-slate-300 pb-2 bg-transparent outline-none focus:border-[#6366f1] text-slate-600 transition-colors appearance-none cursor-pointer text-sm"
+                  value={data.landSize}
+                  onChange={(e) => setData({...data, landSize: e.target.value})}
+                  required
                 >
-                  Find Schemes →
-                </button>
+                  <option value="" disabled>Select size</option>
+                  <option value="Less than 1 hectare">Less than 1 hectare</option>
+                  <option value="1-2 hectares">1-2 hectares</option>
+                  <option value="2-5 hectares">2-5 hectares</option>
+                  <option value="5-10 hectares">5-10 hectares</option>
+                  <option value="10-20 hectares">10-20 hectares</option>
+                  <option value="Above 20 hectares">Above 20 hectares</option>
+                </select>
               </div>
-            </section>
+            </div>
 
-          </div>
-        </main>
+            {/* State */}
+            <div className="flex flex-col pt-4">
+              <label className="text-sm font-semibold text-slate-700 mb-2">State / Region</label>
+              <select 
+                className="w-full border-b-2 border-slate-300 pb-2 bg-transparent outline-none focus:border-[#6366f1] text-slate-600 transition-colors appearance-none cursor-pointer text-sm"
+                value={data.state}
+                onChange={(e) => setData({...data, state: e.target.value})}
+                required
+              >
+                <option value="" disabled>Select state</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="West Bengal">West Bengal</option>
+                <option value="All India">All India</option>
+              </select>
+            </div>
+
+            {/* Support Required */}
+            <div className="flex flex-col pt-4 pb-8">
+              <label className="text-sm font-semibold text-slate-700 mb-2">How we can help you? Describe here your problem</label>
+              <select 
+                className="w-full border-b-2 border-slate-300 pb-2 bg-transparent outline-none focus:border-[#6366f1] text-slate-600 transition-colors appearance-none cursor-pointer text-sm"
+                value={data.support}
+                onChange={(e) => setData({...data, support: e.target.value})}
+                required
+              >
+                <option value="" disabled>Select support type</option>
+                <option value="Financial Support">Financial Support</option>
+                <option value="Crop Insurance">Crop Insurance</option>
+                <option value="Irrigation">Irrigation</option>
+                <option value="Organic Farming">Organic Farming</option>
+                <option value="Solar/Energy">Solar/Energy</option>
+                <option value="Credit/Loan">Credit/Loan</option>
+              </select>
+            </div>
+
+            <button 
+              type="submit"
+              className="bg-blue-800 text-white px-10 py-3 rounded-md font-bold text-sm shadow-md hover:bg-[#4f46e5] hover:-translate-y-0.5 transition-all w-max"
+            >
+              Find Schemes
+            </button>
+          </form>
+        </div>
+
       </div>
     </div>
   );
