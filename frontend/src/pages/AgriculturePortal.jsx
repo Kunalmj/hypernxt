@@ -14,36 +14,6 @@ const Icons = {
 const AgriculturePortal = () => {
   const navigate = useNavigate();
 
-  const [activeStep, setActiveStep] = useState(1);
-  const sectionRefs = React.useRef({});
-
-  const steps = [
-    { id: 1, title: "Farmer Type" },
-    { id: 2, title: "Farm Details" },
-    { id: 3, title: "Location" },
-    { id: 4, title: "Support Type" },
-    { id: 5, title: "Find Schemes" }
-  ];
-
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveStep(Number(entry.target.getAttribute("data-step")));
-          }
-        });
-      },
-      { root: null, rootMargin: "-40% 0px -40% 0px", threshold: 0 }
-    );
-
-    const sections = Object.values(sectionRefs.current);
-    sections.forEach((s) => {
-      if (s) observer.observe(s);
-    });
-    return () => observer.disconnect();
-  }, []);
-
   const [data, setData] = useState({
     farmerType: "",
     landSize: "",
