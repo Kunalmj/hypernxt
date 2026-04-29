@@ -33,7 +33,7 @@ const extraTags = [
   "DeepTech"
 ];
 
-const StartupMSMEPortal = () => {
+const StartupGrantMatching = () => {
   const navigate = useNavigate();
 
   const [activeStep, setActiveStep] = useState(1);
@@ -393,4 +393,4 @@ const StartupMSMEPortal = () => {
   );
 };
 
-export default StartupMSMEPortal;
+export default StartupGrantMatching;
