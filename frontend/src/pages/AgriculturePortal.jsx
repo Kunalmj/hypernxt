@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { agricultureSchemes } from "../data/agricultureData";
 
@@ -13,7 +13,36 @@ const Icons = {
 
 const AgriculturePortal = () => {
   const navigate = useNavigate();
+
   const [activeStep, setActiveStep] = useState(1);
+  const sectionRefs = React.useRef({});
+
+  const steps = [
+    { id: 1, title: "Farmer Type" },
+    { id: 2, title: "Farm Details" },
+    { id: 3, title: "Location" },
+    { id: 4, title: "Support Type" },
+    { id: 5, title: "Find Schemes" }
+  ];
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveStep(Number(entry.target.getAttribute("data-step")));
+          }
+        });
+      },
+      { root: null, rootMargin: "-40% 0px -40% 0px", threshold: 0 }
+    );
+
+    const sections = Object.values(sectionRefs.current);
+    sections.forEach((s) => {
+      if (s) observer.observe(s);
+    });
+    return () => observer.disconnect();
+  }, []);
 
   const [data, setData] = useState({
     farmerType: "",
@@ -22,38 +51,8 @@ const AgriculturePortal = () => {
     support: "",
   });
 
-  const sectionRefs = useRef({});
-
-  // Smooth step detection
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveStep(Number(entry.target.dataset.step));
-          }
-        });
-      },
-      { threshold: 0.6, rootMargin: "-100px 0px -100px 0px" }
-    );
-
-    Object.values(sectionRefs.current).forEach((sec) => {
-      if (sec) observer.observe(sec);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const steps = [
-    { id: 1, title: "Farmer Type" },
-    { id: 2, title: "Land Size" },
-    { id: 3, title: "State / Region" },
-    { id: 4, title: "Support Required" },
-    { id: 5, title: "Submit" },
-  ];
-
-  // 🔥 SUBMIT → NAVIGATE
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const filtered = agricultureSchemes.filter((s) => {
       if (s.farmerType !== "General" && s.farmerType !== data.farmerType) return false;
       if (s.landSize !== "Any" && s.landSize !== data.landSize) return false;
@@ -61,23 +60,24 @@ const AgriculturePortal = () => {
       return true;
     });
 
-    navigate("/agri-results", {
-      state: { results: filtered },
-    });
+    // navigate("/agri-results", {
+    //   state: { results: filtered },
+    // });
   };
 
   return (
+
     <div className="h-screen bg-gradient-to-b from-white to-blue-100 flex justify-center p-6 font-sans overflow-hidden">
       <div className="w-full max-w-7xl h-full flex overflow-hidden rounded-2xl bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
 
         {/* SIDEBAR */}
         <aside className="w-[340px] bg-[#153e9c] p-10 hidden md:flex flex-col relative overflow-hidden shrink-0 rounded-l-2xl">
           {/* Overlay gradient graphic to mimic the architecture building */}
-          <div 
+          <div
             className="absolute bottom-0 left-0 right-0 h-[400px] opacity-20 pointer-events-none"
-            style={{ 
+            style={{
               background: "radial-gradient(circle at bottom, rgba(255,255,255,0.8) 0%, transparent 70%)",
-              clipPath: "polygon(50% 10%, 100% 100%, 0% 100%)" 
+              clipPath: "polygon(50% 10%, 100% 100%, 0% 100%)"
             }}
           ></div>
           <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-[#0b2259]/80 to-transparent pointer-events-none"></div>
@@ -90,11 +90,11 @@ const AgriculturePortal = () => {
             {steps.map((s) => {
               const isActive = activeStep === s.id;
               const Icon = s.id === 1 ? Icons.Sector : s.id === 2 ? Icons.Stage : s.id === 3 ? Icons.Location : s.id === 4 ? Icons.Funding : Icons.Registration;
-              
+
               return (
-                <div 
-                  key={s.id} 
-                  className={`flex items-center gap-4 p-3 rounded-2xl cursor-pointer transition-all duration-300 ${isActive ? 'bg-[#2954b8]' : 'hover:bg-white/5'}`} 
+                <div
+                  key={s.id}
+                  className={`flex items-center gap-4 p-3 rounded-2xl cursor-pointer transition-all duration-300 ${isActive ? 'bg-[#2954b8]' : 'hover:bg-white/5'}`}
                   onClick={() => {
                     const el = sectionRefs.current[s.id];
                     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -134,7 +134,7 @@ const AgriculturePortal = () => {
               </p>
 
               <div className="relative max-w-xl mx-auto mt-6">
-                <select 
+                <select
                   value={data.farmerType}
                   onChange={(e) => setData({ ...data, farmerType: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
@@ -164,7 +164,7 @@ const AgriculturePortal = () => {
               <div className="mb-10">
                 <label className="font-medium">Land Size</label>
                 <div className="relative mt-4">
-                  <select 
+                  <select
                     value={data.landSize}
                     onChange={(e) => setData({ ...data, landSize: e.target.value })}
                     className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
@@ -193,7 +193,7 @@ const AgriculturePortal = () => {
               <div>
                 <label className="font-medium text-xl mb-4 block">State / Region</label>
                 <div className="relative mt-4">
-                  <select 
+                  <select
                     value={data.state}
                     onChange={(e) => setData({ ...data, state: e.target.value })}
                     className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
@@ -220,7 +220,7 @@ const AgriculturePortal = () => {
               </h2>
 
               <div className="relative mt-4 max-w-xl mx-auto">
-                <select 
+                <select
                   value={data.support}
                   onChange={(e) => setData({ ...data, support: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
@@ -240,6 +240,7 @@ const AgriculturePortal = () => {
                 <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                 </div>
+
               </div>
             </section>
 
@@ -253,7 +254,7 @@ const AgriculturePortal = () => {
                   onClick={handleSubmit}
                   className="px-10 py-3 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-200"
                 >
-                  Find Schemes →
+                  Find Schemes
                 </button>
               </div>
             </section>
