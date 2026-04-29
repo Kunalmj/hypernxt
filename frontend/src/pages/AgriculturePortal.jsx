@@ -43,11 +43,11 @@ const AgriculturePortal = () => {
         {/* SIDEBAR */}
         <aside className="w-[340px] bg-[#153e9c] p-10 hidden md:flex flex-col relative overflow-hidden shrink-0 rounded-l-2xl">
           {/* Overlay gradient graphic to mimic the architecture building */}
-          <div 
+          <div
             className="absolute bottom-0 left-0 right-0 h-[400px] opacity-20 pointer-events-none"
-            style={{ 
+            style={{
               background: "radial-gradient(circle at bottom, rgba(255,255,255,0.8) 0%, transparent 70%)",
-              clipPath: "polygon(50% 10%, 100% 100%, 0% 100%)" 
+              clipPath: "polygon(50% 10%, 100% 100%, 0% 100%)"
             }}
           ></div>
           <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-[#0b2259]/80 to-transparent pointer-events-none"></div>
@@ -60,11 +60,11 @@ const AgriculturePortal = () => {
             {steps.map((s) => {
               const isActive = activeStep === s.id;
               const Icon = s.id === 1 ? Icons.Sector : s.id === 2 ? Icons.Stage : s.id === 3 ? Icons.Location : s.id === 4 ? Icons.Funding : Icons.Registration;
-              
+
               return (
-                <div 
-                  key={s.id} 
-                  className={`flex items-center gap-4 p-3 rounded-2xl cursor-pointer transition-all duration-300 ${isActive ? 'bg-[#2954b8]' : 'hover:bg-white/5'}`} 
+                <div
+                  key={s.id}
+                  className={`flex items-center gap-4 p-3 rounded-2xl cursor-pointer transition-all duration-300 ${isActive ? 'bg-[#2954b8]' : 'hover:bg-white/5'}`}
                   onClick={() => {
                     const el = sectionRefs.current[s.id];
                     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -104,7 +104,7 @@ const AgriculturePortal = () => {
               </p>
 
               <div className="relative max-w-xl mx-auto mt-6">
-                <select 
+                <select
                   value={data.farmerType}
                   onChange={(e) => setData({ ...data, farmerType: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
@@ -134,7 +134,7 @@ const AgriculturePortal = () => {
               <div className="mb-10">
                 <label className="font-medium">Land Size</label>
                 <div className="relative mt-4">
-                  <select 
+                  <select
                     value={data.landSize}
                     onChange={(e) => setData({ ...data, landSize: e.target.value })}
                     className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
@@ -163,7 +163,7 @@ const AgriculturePortal = () => {
               <div>
                 <label className="font-medium text-xl mb-4 block">State / Region</label>
                 <div className="relative mt-4">
-                  <select 
+                  <select
                     value={data.state}
                     onChange={(e) => setData({ ...data, state: e.target.value })}
                     className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
@@ -190,7 +190,7 @@ const AgriculturePortal = () => {
               </h2>
 
               <div className="relative mt-4 max-w-xl mx-auto">
-                <select 
+                <select
                   value={data.support}
                   onChange={(e) => setData({ ...data, support: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
@@ -212,6 +212,7 @@ const AgriculturePortal = () => {
                 </div>
 
               </div>
+            </section>
 
             {/* 5️⃣ SUBMIT */}
             <section ref={(el) => (sectionRefs.current[5] = el)} data-step="5" className="pt-8 border-t border-slate-100">
@@ -222,68 +223,14 @@ const AgriculturePortal = () => {
                 <button
                   onClick={handleSubmit}
                   className="px-10 py-3 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-200"
-
                 >
-                  <option value="" disabled>Select size</option>
-                  <option value="Less than 1 hectare">Less than 1 hectare</option>
-                  <option value="1-2 hectares">1-2 hectares</option>
-                  <option value="2-5 hectares">2-5 hectares</option>
-                  <option value="5-10 hectares">5-10 hectares</option>
-                  <option value="10-20 hectares">10-20 hectares</option>
-                  <option value="Above 20 hectares">Above 20 hectares</option>
-                </select>
+                  Find Schemes
+                </button>
               </div>
-            </div>
+            </section>
 
-            {/* State */}
-            <div className="flex flex-col pt-4">
-              <label className="text-sm font-semibold text-slate-700 mb-2">State / Region</label>
-              <select 
-                className="w-full border-b-2 border-slate-300 pb-2 bg-transparent outline-none focus:border-[#6366f1] text-slate-600 transition-colors appearance-none cursor-pointer text-sm"
-                value={data.state}
-                onChange={(e) => setData({...data, state: e.target.value})}
-                required
-              >
-                <option value="" disabled>Select state</option>
-                <option value="Punjab">Punjab</option>
-                <option value="Haryana">Haryana</option>
-                <option value="Uttar Pradesh">Uttar Pradesh</option>
-                <option value="Maharashtra">Maharashtra</option>
-                <option value="Karnataka">Karnataka</option>
-                <option value="Tamil Nadu">Tamil Nadu</option>
-                <option value="West Bengal">West Bengal</option>
-                <option value="All India">All India</option>
-              </select>
-            </div>
-
-            {/* Support Required */}
-            <div className="flex flex-col pt-4 pb-8">
-              <label className="text-sm font-semibold text-slate-700 mb-2">How we can help you? Describe here your problem</label>
-              <select 
-                className="w-full border-b-2 border-slate-300 pb-2 bg-transparent outline-none focus:border-[#6366f1] text-slate-600 transition-colors appearance-none cursor-pointer text-sm"
-                value={data.support}
-                onChange={(e) => setData({...data, support: e.target.value})}
-                required
-              >
-                <option value="" disabled>Select support type</option>
-                <option value="Financial Support">Financial Support</option>
-                <option value="Crop Insurance">Crop Insurance</option>
-                <option value="Irrigation">Irrigation</option>
-                <option value="Organic Farming">Organic Farming</option>
-                <option value="Solar/Energy">Solar/Energy</option>
-                <option value="Credit/Loan">Credit/Loan</option>
-              </select>
-            </div>
-
-            <button 
-              type="submit"
-              className="bg-blue-800 text-white px-10 py-3 rounded-md font-bold text-sm shadow-md hover:bg-[#4f46e5] hover:-translate-y-0.5 transition-all w-max"
-            >
-              Find Schemes
-            </button>
-          </form>
-        </div>
-
+          </div>
+        </main>
       </div>
     </div>
   );
