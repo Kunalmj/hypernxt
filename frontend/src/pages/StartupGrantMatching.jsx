@@ -11,9 +11,9 @@ const Icons = {
 };
 
 const IndianStates = [
-  "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana",
-  "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur",
-  "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu",
+  "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", 
+  "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", 
+  "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", 
   "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
 ];
 
@@ -33,7 +33,7 @@ const extraTags = [
   "DeepTech"
 ];
 
-const StartupMSMEPortal = () => {
+const StartupGrantMatching = () => {
   const navigate = useNavigate();
 
   const [activeStep, setActiveStep] = useState(1);
@@ -127,15 +127,15 @@ const StartupMSMEPortal = () => {
   return (
     <div className="h-screen bg-gradient-to-b from-white to-blue-100 flex justify-center p-6 font-sans overflow-hidden">
       <div className="w-full max-w-7xl h-full flex overflow-hidden rounded-2xl bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
-
+        
         {/* Left Sidebar (Stepper) */}
         <aside className="w-[340px] bg-[#153e9c] p-10 hidden md:flex flex-col relative overflow-hidden shrink-0 rounded-l-2xl">
           {/* Overlay gradient graphic to mimic the architecture building */}
-          <div
+          <div 
             className="absolute bottom-0 left-0 right-0 h-[400px] opacity-20 pointer-events-none"
-            style={{
+            style={{ 
               background: "radial-gradient(circle at bottom, rgba(255,255,255,0.8) 0%, transparent 70%)",
-              clipPath: "polygon(50% 10%, 100% 100%, 0% 100%)"
+              clipPath: "polygon(50% 10%, 100% 100%, 0% 100%)" 
             }}
           ></div>
           <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-[#0b2259]/80 to-transparent pointer-events-none"></div>
@@ -148,11 +148,11 @@ const StartupMSMEPortal = () => {
             {steps.map((s) => {
               const isActive = activeStep === s.id;
               const Icon = s.id === 1 ? Icons.Stage : s.id === 2 ? Icons.Sector : s.id === 3 ? Icons.Location : s.id === 4 ? Icons.Funding : Icons.Registration;
-
+              
               return (
-                <div
-                  key={s.id}
-                  className={`flex items-center gap-4 p-3 rounded-2xl cursor-pointer transition-all duration-300 ${isActive ? 'bg-[#2954b8]' : 'hover:bg-white/5'}`}
+                <div 
+                  key={s.id} 
+                  className={`flex items-center gap-4 p-3 rounded-2xl cursor-pointer transition-all duration-300 ${isActive ? 'bg-[#2954b8]' : 'hover:bg-white/5'}`} 
                   onClick={() => handleNextStep(s.id - 1)}
                 >
                   <div className={`w-[52px] h-[52px] rounded-[14px] flex items-center justify-center transition-all duration-300 ${isActive ? 'bg-white text-[#153e9c] shadow-md' : 'bg-white/10 text-white/70'}`}>
@@ -178,28 +178,26 @@ const StartupMSMEPortal = () => {
         {/* Main Form Flow */}
         <main className="flex-1 overflow-y-auto scroll-smooth">
           <div className="sticky top-0 bg-white/80 backdrop-blur-md z-20 border-b border-slate-100 p-6 shadow-sm">
-            <div className="max-w-3xl mx-auto flex items-center justify-between">
-              <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-600">
-                Find the Right Grant
-              </h1>
-              <div className="text-sm font-medium text-slate-500 bg-slate-100 px-4 py-1.5 rounded-full">
-                Step {activeStep} of 5
-              </div>
-            </div>
+             <div className="max-w-3xl mx-auto flex items-center justify-between">
+               <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-600">
+                 Find the Right Grant
+               </h1>
+               <div className="text-sm font-medium text-slate-500 bg-slate-100 px-4 py-1.5 rounded-full">
+                 Step {activeStep} of 5
+               </div>
+             </div>
           </div>
 
-          <div className="max-w-3xl mx-auto px-8 py-12 space-y-12 pb-24">
-
+          <div className="max-w-3xl mx-auto px-8 py-12 space-y-32 pb-40">
+            
             {/* STEP 1: Stage */}
             <section ref={(el) => (sectionRefs.current[1] = el)} data-step="1" className="scroll-mt-32">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold text-slate-800 mb-2">Startup Stage</h2>
-                <p className="text-slate-500 text-base">What stage is your startup currently in?</p>
+              <div className="mb-8">
+                <h2 className="text-3xl font-bold text-slate-800 mb-3">Startup Stage</h2>
+                <p className="text-slate-500 text-lg">What stage is your startup currently in?</p>
               </div>
-              <div className="bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm">
-                <label className="font-semibold mb-2 block text-slate-800">Current Stage</label>
-                <div className="relative">
-                <select
+              <div className="relative">
+                <select 
                   value={data.stage}
                   onChange={(e) => setData({ ...data, stage: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
@@ -212,17 +210,16 @@ const StartupMSMEPortal = () => {
                 <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                 </div>
-                </div>
               </div>
             </section>
 
             {/* STEP 2: Sector */}
-            <section ref={(el) => (sectionRefs.current[2] = el)} data-step="2" className="scroll-mt-32 pt-4">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold text-slate-800 mb-2">Sector & Industry</h2>
-                <p className="text-slate-500 text-base">Select all the sectors that apply to your startup.</p>
+            <section ref={(el) => (sectionRefs.current[2] = el)} data-step="2" className="scroll-mt-32">
+              <div className="mb-8">
+                <h2 className="text-3xl font-bold text-slate-800 mb-3">Sector & Industry</h2>
+                <p className="text-slate-500 text-lg">Select all the sectors that apply to your startup.</p>
               </div>
-              <div className="bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4">
                 {["AI / ML", "FinTech", "HealthTech", "EdTech", "AgriTech", "CleanTech", "SaaS"].map((s) => {
                   const isSelected = data.sectors.includes(s);
                   return (
@@ -230,8 +227,8 @@ const StartupMSMEPortal = () => {
                       key={s}
                       onClick={() => handleMultiSelect("sectors", s)}
                       className={`px-6 py-3 rounded-full text-base font-medium transition-all duration-200 border-2
-                        ${isSelected
-                          ? "border-blue-600 bg-blue-600 text-white shadow-md shadow-blue-200"
+                        ${isSelected 
+                          ? "border-blue-600 bg-blue-600 text-white shadow-md shadow-blue-200" 
                           : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
                         }`}
                     >
@@ -243,16 +240,16 @@ const StartupMSMEPortal = () => {
             </section>
 
             {/* STEP 3: Location */}
-            <section ref={(el) => (sectionRefs.current[3] = el)} data-step="3" className="scroll-mt-32 pt-4">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold text-slate-800 mb-2">Location</h2>
-                <p className="text-slate-500 text-base">Where is your startup headquartered?</p>
+            <section ref={(el) => (sectionRefs.current[3] = el)} data-step="3" className="scroll-mt-32">
+              <div className="mb-8">
+                <h2 className="text-3xl font-bold text-slate-800 mb-3">Location</h2>
+                <p className="text-slate-500 text-lg">Where is your startup headquartered?</p>
               </div>
-
-              <div className="bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm space-y-6">
+              
+              <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm space-y-6">
                 <label className="flex items-center gap-3 p-4 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition-colors">
-                  <input
-                    type="checkbox"
+                  <input 
+                    type="checkbox" 
                     checked={data.location.panIndia}
                     onChange={(e) => setData({ ...data, location: { ...data.location, panIndia: e.target.checked } })}
                     className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
@@ -264,7 +261,7 @@ const StartupMSMEPortal = () => {
                   <div className="grid grid-cols-2 gap-6 pt-4">
                     <div>
                       <label className="block text-sm font-medium text-slate-600 mb-2">State</label>
-                      <select
+                      <select 
                         value={data.location.state}
                         onChange={(e) => setData({ ...data, location: { ...data.location, state: e.target.value } })}
                         className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all bg-white text-[15px]"
@@ -277,8 +274,8 @@ const StartupMSMEPortal = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-slate-600 mb-2">City (Optional)</label>
-                      <input
-                        type="text"
+                      <input 
+                        type="text" 
                         value={data.location.city}
                         onChange={(e) => setData({ ...data, location: { ...data.location, city: e.target.value } })}
                         placeholder="Enter city"
@@ -291,15 +288,13 @@ const StartupMSMEPortal = () => {
             </section>
 
             {/* STEP 4: Funding Requirement */}
-            <section ref={(el) => (sectionRefs.current[4] = el)} data-step="4" className="scroll-mt-32 pt-4">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold text-slate-800 mb-2">Funding Requirement</h2>
-                <p className="text-slate-500 text-base">How much capital are you looking to raise?</p>
+            <section ref={(el) => (sectionRefs.current[4] = el)} data-step="4" className="scroll-mt-32">
+              <div className="mb-8">
+                <h2 className="text-3xl font-bold text-slate-800 mb-3">Funding Requirement</h2>
+                <p className="text-slate-500 text-lg">How much capital are you looking to raise?</p>
               </div>
-              <div className="bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm">
-                <label className="font-semibold mb-2 block text-slate-800">Funding Amount</label>
-                <div className="relative">
-                <select
+              <div className="relative">
+                <select 
                   value={data.funding.label}
                   onChange={(e) => {
                     const selected = fundingOptions.find(f => f.label === e.target.value);
@@ -315,22 +310,21 @@ const StartupMSMEPortal = () => {
                 <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                 </div>
-                </div>
               </div>
             </section>
 
             {/* STEP 5: Registration & Final */}
-            <section ref={(el) => (sectionRefs.current[5] = el)} data-step="5" className="scroll-mt-32 pt-4">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold text-slate-800 mb-2">Registration & Details</h2>
-                <p className="text-slate-500 text-base">Select your entity type and any special tags.</p>
+            <section ref={(el) => (sectionRefs.current[5] = el)} data-step="5" className="scroll-mt-32">
+              <div className="mb-8">
+                <h2 className="text-3xl font-bold text-slate-800 mb-3">Registration & Details</h2>
+                <p className="text-slate-500 text-lg">Select your entity type and any special tags.</p>
               </div>
-
-              <div className="space-y-6">
-                <div className="bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm">
-                  <label className="font-semibold mb-2 block text-slate-800">Registration Type</label>
+              
+              <div className="space-y-10">
+                <div>
+                  <label className="block text-sm font-semibold text-slate-800 mb-4 uppercase tracking-wider">Registration Type</label>
                   <div className="relative">
-                    <select
+                    <select 
                       value={data.registration[0] || ""}
                       onChange={(e) => setData({ ...data, registration: [e.target.value] })}
                       className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-indigo-50 focus:border-indigo-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
@@ -347,8 +341,8 @@ const StartupMSMEPortal = () => {
                 </div>
 
                 {/* Extra Filters */}
-                <div className="bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm">
-                  <label className="font-semibold mb-3 block text-slate-800">Additional Tags (Optional)</label>
+                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                  <label className="block text-sm font-semibold text-slate-800 mb-4 uppercase tracking-wider">Additional Tags (Optional)</label>
                   <div className="flex flex-wrap gap-3">
                     {extraTags.map((tag) => {
                       const isSelected = data.tags.includes(tag);
@@ -357,8 +351,8 @@ const StartupMSMEPortal = () => {
                           key={tag}
                           onClick={() => handleMultiSelect("tags", tag)}
                           className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border
-                            ${isSelected
-                              ? "border-slate-800 bg-slate-800 text-white"
+                            ${isSelected 
+                              ? "border-slate-800 bg-slate-800 text-white" 
                               : "border-slate-200 bg-white text-slate-600 hover:bg-slate-100"
                             }`}
                         >
@@ -391,7 +385,7 @@ const StartupMSMEPortal = () => {
                 <p className="mt-4 text-sm text-slate-500">Your details are saved automatically.</p>
               </div>
             </section>
-
+            
           </div>
         </main>
       </div>
@@ -399,4 +393,4 @@ const StartupMSMEPortal = () => {
   );
 };
 
-export default StartupMSMEPortal;
+export default StartupGrantMatching;

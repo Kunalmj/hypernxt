@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { agricultureSchemes } from "../data/agricultureData";
 
@@ -20,6 +20,39 @@ const AgriculturePortal = () => {
     state: "",
     support: "",
   });
+
+  const [activeStep, setActiveStep] = useState(1);
+  const sectionRefs = useRef({});
+
+  const steps = [
+    { id: 1, title: "Farmer Type" },
+    { id: 2, title: "Farm Details" },
+    { id: 3, title: "Location" },
+    { id: 4, title: "Support Needed" },
+    { id: 5, title: "Find Schemes" }
+  ];
+
+  useEffect(() => {
+    const handleScroll = (e) => {
+      const mainContent = e.target;
+      const scrollPosition = mainContent.scrollTop + mainContent.clientHeight / 3;
+
+      let currentStep = 1;
+      for (let i = 1; i <= 5; i++) {
+        const el = sectionRefs.current[i];
+        if (el && el.offsetTop <= scrollPosition) {
+          currentStep = i;
+        }
+      }
+      setActiveStep(currentStep);
+    };
+
+    const mainElement = document.querySelector("main");
+    if (mainElement) {
+      mainElement.addEventListener("scroll", handleScroll);
+      return () => mainElement.removeEventListener("scroll", handleScroll);
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -92,18 +125,20 @@ const AgriculturePortal = () => {
 
         {/* MAIN */}
         <main className="flex-1 px-16 py-12 overflow-y-auto scroll-smooth">
-          <div className="max-w-4xl mx-auto space-y-24 pb-32">
+          <div className="max-w-4xl mx-auto space-y-12 pb-24">
 
             {/* 1️⃣ FARMER TYPE */}
             <section ref={(el) => (sectionRefs.current[1] = el)} data-step="1">
-              <h1 className="text-3xl font-semibold text-center mb-2">
+              <h1 className="text-2xl font-bold text-slate-800 text-center mb-2">
                 What type of farmer are you?
               </h1>
-              <p className="text-center text-gray-500 mb-10">
+              <p className="text-center text-slate-500 text-base mb-6">
                 Select based on your land holding size
               </p>
 
-              <div className="relative max-w-xl mx-auto mt-6">
+              <div className="max-w-xl mx-auto bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm">
+                <label className="font-semibold mb-2 block text-slate-800">Farmer Category</label>
+                <div className="relative">
                 <select
                   value={data.farmerType}
                   onChange={(e) => setData({ ...data, farmerType: e.target.value })}
@@ -121,19 +156,20 @@ const AgriculturePortal = () => {
                 <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                 </div>
+                </div>
               </div>
             </section>
 
             {/* 2️⃣ FARM DETAILS */}
-            <section ref={(el) => (sectionRefs.current[2] = el)} data-step="2">
-              <h2 className="text-2xl font-semibold mb-8 text-center">
+            <section ref={(el) => (sectionRefs.current[2] = el)} data-step="2" className="pt-6 border-t border-slate-100">
+              <h2 className="text-2xl font-bold text-slate-800 text-center mb-6">
                 Tell us about your farm
               </h2>
 
-              {/* LAND SIZE */}
-              <div className="mb-10">
-                <label className="font-medium">Land Size</label>
-                <div className="relative mt-4">
+              <div className="max-w-xl mx-auto bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm">
+                <label className="font-semibold mb-2 block text-slate-800">Land Size</label>
+                <p className="text-sm text-slate-500 mb-4">Please select your total operational land area.</p>
+                <div className="relative">
                   <select
                     value={data.landSize}
                     onChange={(e) => setData({ ...data, landSize: e.target.value })}
@@ -159,10 +195,14 @@ const AgriculturePortal = () => {
             </section>
 
             {/* 3️⃣ STATE */}
-            <section ref={(el) => (sectionRefs.current[3] = el)} data-step="3" className="pt-8 border-t border-slate-100">
-              <div>
-                <label className="font-medium text-xl mb-4 block">State / Region</label>
-                <div className="relative mt-4">
+            <section ref={(el) => (sectionRefs.current[3] = el)} data-step="3" className="pt-6 border-t border-slate-100">
+              <h2 className="text-2xl font-bold text-slate-800 text-center mb-6">
+                State / Region
+              </h2>
+              <div className="max-w-xl mx-auto bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm">
+                <label className="font-semibold mb-2 block text-slate-800">Operational State</label>
+                <p className="text-sm text-slate-500 mb-4">Select the state where your farm is located to find local schemes.</p>
+                <div className="relative">
                   <select
                     value={data.state}
                     onChange={(e) => setData({ ...data, state: e.target.value })}
@@ -184,12 +224,16 @@ const AgriculturePortal = () => {
             </section>
 
             {/* 4️⃣ SUPPORT */}
-            <section ref={(el) => (sectionRefs.current[4] = el)} data-step="4" className="pt-8 border-t border-slate-100">
-              <h2 className="text-3xl font-semibold text-center mb-10">
-                What type of support do you need?
-              </h2>
+            <section ref={(el) => (sectionRefs.current[4] = el)} data-step="4" className="pt-6 border-t border-slate-100">
+              <div className="mb-6">
+                <h2 className="text-2xl font-bold text-slate-800 text-center mb-2">Support Needed</h2>
+                <p className="text-center text-slate-500 text-base">What type of support do you need?</p>
+              </div>
 
-              <div className="relative mt-4 max-w-xl mx-auto">
+              <div className="max-w-xl mx-auto bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm">
+                <label className="font-semibold mb-2 block text-slate-800">Support Category</label>
+                <p className="text-sm text-slate-500 mb-4">Choose the primary area where you need assistance.</p>
+                <div className="relative">
                 <select
                   value={data.support}
                   onChange={(e) => setData({ ...data, support: e.target.value })}
@@ -210,19 +254,16 @@ const AgriculturePortal = () => {
                 <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
                   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                 </div>
-
+                </div>
               </div>
             </section>
 
             {/* 5️⃣ SUBMIT */}
-            <section ref={(el) => (sectionRefs.current[5] = el)} data-step="5" className="pt-8 border-t border-slate-100">
-              <h2 className="text-2xl font-semibold text-center mb-6">
-                Review and Find Schemes
-              </h2>
-              <div className="flex justify-center mt-10">
+            <section ref={(el) => (sectionRefs.current[5] = el)} data-step="5" className="pt-8 border-t border-slate-100 pb-10">
+              <div className="flex justify-center mt-4">
                 <button
                   onClick={handleSubmit}
-                  className="px-10 py-3 bg-blue-600 text-white rounded-md font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-200"
+                  className="px-12 py-4 bg-blue-600 text-white rounded-xl font-bold text-lg hover:bg-blue-700 transition shadow-xl shadow-blue-200"
                 >
                   Find Schemes
                 </button>
