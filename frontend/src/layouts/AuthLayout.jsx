@@ -12,7 +12,7 @@ const AuthLayout = () => {
       {/* Global Background Image */}
       <div className="absolute inset-0 z-0 bg-slate-900">
         <img
-          src="/background.jpeg"
+          src="/contentb.jpeg"
           alt="Global Background"
           className="absolute inset-0 w-full h-full object-cover opacity-80"
         />
@@ -26,7 +26,7 @@ const AuthLayout = () => {
         {/* Left Side: Image Area with Border */}
         <div className="hidden md:block absolute top-0 left-0 w-[60%] h-full rounded-[2.5rem] border-[14px] border-white/90 z-20 overflow-hidden bg-slate-950">
           <img
-            src="/back.jpeg"
+            src="/content.jpeg"
             alt="Card Background"
             className="absolute inset-0 w-full h-full object-cover object-center"
           />
@@ -40,31 +40,9 @@ const AuthLayout = () => {
               Citizen Services
             </div>
 
-            <div className="absolute top-8 right-12 text-white text-sm font-bold flex gap-6 z-20 items-center drop-shadow-lg">
-              <Link to="/login" className="hover:text-slate-200 transition">Login</Link>
-              <Link to="/signup" className="border border-white/40 px-5 py-2 rounded-full hover:bg-white hover:text-slate-900 transition-all">Sign Up</Link>
-            </div>
-
-            {/* Left Side Bottom Profile/Info */}
-            <div className="absolute bottom-8 left-8 flex items-center gap-4 text-white drop-shadow-lg">
-              <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center shadow-xl border-2 border-white/20">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                </svg>
-              </div>
-              <div>
-                <div className="font-bold text-sm">Govt. of India</div>
-                <div className="text-xs text-slate-300 font-medium">Digital Welfare Platform</div>
-              </div>
-            </div>
-
-            <div className="absolute bottom-8 right-12 flex gap-2 drop-shadow-lg">
-              <button className="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white/20 transition backdrop-blur-md">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
-              </button>
-              <button className="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white/20 transition backdrop-blur-md">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
-              </button>
+            <div className="absolute top-8 right-12 text-sm font-bold flex gap-3 z-20 items-center drop-shadow-lg">
+              <Link to="/login" className={`px-5 py-2 rounded-full transition-all ${location.pathname === '/login' ? 'bg-white text-slate-900 shadow-md' : 'border border-white/40 text-white hover:bg-white hover:text-slate-900'}`}>Login</Link>
+              <Link to="/signup" className={`px-5 py-2 rounded-full transition-all ${location.pathname === '/signup' ? 'bg-white text-slate-900 shadow-md' : 'border border-white/40 text-white hover:bg-white hover:text-slate-900'}`}>Sign Up</Link>
             </div>
 
           </div>
@@ -76,9 +54,9 @@ const AuthLayout = () => {
         >
           {/* Header */}
           <div className="flex justify-between items-center px-8 md:pl-[20%] md:pr-10 pt-8">
-            <div className="font-black text-xl tracking-tight text-slate-900 uppercase italic">
+            <Link to="/" className="font-black text-xl tracking-tight text-slate-900 uppercase italic">
               OPPURTUNITY<span className="text-blue-600">HUB</span>
-            </div>
+            </Link>
             <button className="flex items-center gap-2 px-3 py-1.5 border border-slate-200 rounded-full text-xs font-bold text-slate-700 hover:bg-slate-50 transition shadow-sm">
               🇬🇧 EN <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
             </button>
