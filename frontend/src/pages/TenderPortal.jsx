@@ -2,6 +2,15 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { tenders } from "../data/tenderData";
 
+const Icons = {
+  Stage: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>,
+  Sector: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>,
+  Location: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>,
+  Funding: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>,
+  Registration: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>,
+  Exit: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+};
+
 const TenderPortal = () => {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(1);
@@ -56,38 +65,55 @@ const TenderPortal = () => {
   };
 
   return (
-    <div className="h-screen bg-[#f8fafc] flex justify-center p-6">
-      <div className="w-full max-w-6xl h-full bg-white rounded-xl flex overflow-hidden" style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.06), 0 8px 32px rgba(37,99,235,0.09), 0 24px 64px rgba(37,99,235,0.06), inset 0 0 0 1px rgba(226,232,240,0.9)" }}>
+    <div className="h-screen bg-gradient-to-b from-white to-blue-100 flex justify-center p-6 font-sans overflow-hidden">
+      <div className="w-full max-w-7xl h-full flex overflow-hidden rounded-2xl bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
 
-        {/* ================= SIDEBAR ================= */}
-        <aside className="w-80 bg-[#eff6ff] p-10 flex-shrink-0">
-          <h2 className="text-lg font-semibold mb-10">Tender Portal</h2>
+        {/* SIDEBAR */}
+        <aside className="w-[340px] bg-[#153e9c] p-10 hidden md:flex flex-col relative overflow-hidden shrink-0 rounded-l-2xl">
+          <div 
+            className="absolute bottom-0 left-0 right-0 h-[400px] opacity-20 pointer-events-none"
+            style={{ 
+              background: "radial-gradient(circle at bottom, rgba(255,255,255,0.8) 0%, transparent 70%)",
+              clipPath: "polygon(50% 10%, 100% 100%, 0% 100%)" 
+            }}
+          ></div>
+          <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-[#0b2259]/80 to-transparent pointer-events-none"></div>
 
-          <div className="relative flex flex-col gap-12">
-            <div className="absolute left-[18px] top-6 bottom-6 w-[2px] bg-blue-200"></div>
+          <h2 className="text-3xl mb-12 text-white flex items-center relative z-10 tracking-tight">
+            <span className="font-extrabold mr-1.5">Tender</span> <span className="font-light opacity-80">Portal</span>
+          </h2>
 
-            {steps.map((s) => (
-              <div key={s.id} className="flex items-center gap-4 relative z-10">
-                <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300
-                  ${activeStep === s.id
-                      ? "bg-blue-600 text-white"
-                      : activeStep > s.id
-                        ? "bg-blue-100 text-blue-600"
-                        : "bg-white border text-gray-400"
-                    }`}
+          <div className="flex flex-col gap-2 relative z-10">
+            {steps.map((s) => {
+              const isActive = activeStep === s.id;
+              const Icon = s.id === 1 ? Icons.Sector : s.id === 2 ? Icons.Stage : s.id === 3 ? Icons.Funding : s.id === 4 ? Icons.Location : Icons.Registration;
+              
+              return (
+                <div 
+                  key={s.id} 
+                  className={`flex items-center gap-4 p-3 rounded-2xl cursor-pointer transition-all duration-300 ${isActive ? 'bg-[#2954b8]' : 'hover:bg-white/5'}`} 
+                  onClick={() => {
+                    const el = sectionRefs.current[s.id];
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }}
                 >
-                  {activeStep > s.id ? "✓" : s.id}
+                  <div className={`w-[52px] h-[52px] rounded-[14px] flex items-center justify-center transition-all duration-300 ${isActive ? 'bg-white text-[#153e9c] shadow-md' : 'bg-white/10 text-white/70'}`}>
+                    <Icon />
+                  </div>
+                  <span className={`flex-1 text-[16px] transition-all duration-300 ${isActive ? 'text-white font-semibold' : 'text-white/70 font-medium'}`}>
+                    {s.title}
+                  </span>
+                  {isActive && <div className="w-2 h-2 bg-white rounded-full mr-1"></div>}
                 </div>
+              );
+            })}
+          </div>
 
-                <span
-                  className={`transition ${activeStep === s.id ? "text-black" : "text-gray-400"
-                    }`}
-                >
-                  {s.title}
-                </span>
-              </div>
-            ))}
+          <div className="mt-auto relative z-10 pt-10 pb-4">
+            <button className="flex items-center gap-3 text-white/80 hover:text-white transition-colors font-semibold text-[15px]" onClick={() => navigate('/')}>
+              <Icons.Exit />
+              Exit Portal
+            </button>
           </div>
         </aside>
 
@@ -101,24 +127,20 @@ const TenderPortal = () => {
                 Tell us about your business capabilities
               </h1>
 
-              <div className="grid grid-cols-3 gap-6">
-                {["Supply", "Works", "Services"].map((t) => (
-                  <div
-                    key={t}
-                    onClick={() => setData({ ...data, type: t })}
-                    className={`p-8 border rounded-xl text-center cursor-pointer transition-all duration-200
-                      ${data.type === t
-                        ? "border-blue-500 bg-blue-50"
-                        : "border-gray-200 hover:border-blue-300"
-                      }`}
-                    style={data.type === t
-                      ? { boxShadow: "0 0 0 1px #3b82f6, 0 4px 16px rgba(37,99,235,0.15), inset 0 1px 0 rgba(255,255,255,0.9)" }
-                      : { boxShadow: "0 1px 3px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.8)" }
-                    }
-                  >
-                    <p className="font-semibold">{t}</p>
-                  </div>
-                ))}
+              <div className="relative max-w-xl mx-auto mt-6">
+                <select 
+                  value={data.type}
+                  onChange={(e) => setData({ ...data, type: e.target.value })}
+                  className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
+                >
+                  <option value="" disabled>Select capability type</option>
+                  {["Supply", "Works", "Services"].map(t => (
+                    <option key={t} value={t}>{t}</option>
+                  ))}
+                </select>
+                <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                </div>
               </div>
             </section>
 
@@ -128,30 +150,30 @@ const TenderPortal = () => {
                 Industry & Sector
               </h2>
 
-              <div className="grid grid-cols-4 gap-4">
-                {[
-                  "Information Technology",
-                  "Construction",
-                  "Healthcare",
-                  "Consulting",
-                  "Manufacturing",
-                  "Software Development",
-                  "Maintenance",
-                  "Education",
-                ].map((i) => (
-                  <button
-                    key={i}
-                    onClick={() => setData({ ...data, industry: i })}
-                    className={`p-3 border rounded-lg transition
-                      ${data.industry === i
-                        ? "border-blue-600 bg-blue-50"
-                        : "border-gray-200 hover:border-gray-300"
-                      }`}
+              <div className="relative mt-4">
+                  <select 
+                    value={data.industry}
+                    onChange={(e) => setData({ ...data, industry: e.target.value })}
+                    className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
                   >
-                    {i}
-                  </button>
-                ))}
-              </div>
+                    <option value="" disabled>Select industry/sector</option>
+                    {[
+                      "Information Technology",
+                      "Construction",
+                      "Healthcare",
+                      "Consulting",
+                      "Manufacturing",
+                      "Software Development",
+                      "Maintenance",
+                      "Education",
+                    ].map(i => (
+                      <option key={i} value={i}>{i}</option>
+                    ))}
+                  </select>
+                  <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                  </div>
+                </div>
             </section>
 
             {/* ================= SECTION 3 ================= */}
@@ -168,25 +190,25 @@ const TenderPortal = () => {
                     Budget Range
                   </h3>
 
-                  <div className="grid grid-cols-2 gap-6">
-                    {[
-                      "Under ₹50 Lakhs",
-                      "₹50L - ₹2 Crores",
-                      "₹2-10 Crores",
-                      "Above ₹10 Crores",
-                    ].map((b) => (
-                      <button
-                        key={b}
-                        onClick={() => setData({ ...data, budget: b })}
-                        className={`p-6 rounded-xl border transition
-                          ${data.budget === b
-                            ? "border-blue-600 bg-blue-50"
-                            : "border-gray-200 hover:border-gray-300"
-                          }`}
-                      >
-                        {b}
-                      </button>
-                    ))}
+                  <div className="relative mt-4">
+                    <select 
+                      value={data.budget}
+                      onChange={(e) => setData({ ...data, budget: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
+                    >
+                      <option value="" disabled>Select budget range</option>
+                      {[
+                        "Under ₹50 Lakhs",
+                        "₹50L - ₹2 Crores",
+                        "₹2-10 Crores",
+                        "Above ₹10 Crores",
+                      ].map(b => (
+                        <option key={b} value={b}>{b}</option>
+                      ))}
+                    </select>
+                    <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -201,29 +223,29 @@ const TenderPortal = () => {
                     Preferred Location
                   </h3>
 
-                  <div className="grid grid-cols-4 gap-4">
-                    {[
-                      "Delhi NCR",
-                      "Maharashtra",
-                      "Karnataka",
-                      "Tamil Nadu",
-                      "Gujarat",
-                      "West Bengal",
-                      "Pan India",
-                      "Multiple Locations",
-                    ].map((l) => (
-                      <button
-                        key={l}
-                        onClick={() => setData({ ...data, location: l })}
-                        className={`p-4 rounded-lg border transition
-                          ${data.location === l
-                            ? "border-blue-600 bg-blue-50"
-                            : "border-gray-200 hover:border-gray-300"
-                          }`}
-                      >
-                        {l}
-                      </button>
-                    ))}
+                  <div className="relative mt-4">
+                    <select 
+                      value={data.location}
+                      onChange={(e) => setData({ ...data, location: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
+                    >
+                      <option value="" disabled>Select location</option>
+                      {[
+                        "Delhi NCR",
+                        "Maharashtra",
+                        "Karnataka",
+                        "Tamil Nadu",
+                        "Gujarat",
+                        "West Bengal",
+                        "Pan India",
+                        "Multiple Locations",
+                      ].map(l => (
+                        <option key={l} value={l}>{l}</option>
+                      ))}
+                    </select>
+                    <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -238,27 +260,27 @@ const TenderPortal = () => {
                     Organization Type
                   </h3>
 
-                  <div className="grid grid-cols-3 gap-4">
-                    {[
-                      "Central Government",
-                      "State Government",
-                      "PSU",
-                      "Autonomous Bodies",
-                      "Municipal Corporation",
-                      "All",
-                    ].map((o) => (
-                      <button
-                        key={o}
-                        onClick={() => setData({ ...data, orgType: o })}
-                        className={`p-4 rounded-lg border transition
-                          ${data.orgType === o
-                            ? "border-blue-600 bg-blue-50"
-                            : "border-gray-200 hover:border-gray-300"
-                          }`}
-                      >
-                        {o}
-                      </button>
-                    ))}
+                  <div className="relative mt-4 max-w-xl">
+                    <select 
+                      value={data.orgType}
+                      onChange={(e) => setData({ ...data, orgType: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
+                    >
+                      <option value="" disabled>Select organization type</option>
+                      {[
+                        "Central Government",
+                        "State Government",
+                        "PSU",
+                        "Autonomous Bodies",
+                        "Municipal Corporation",
+                        "All",
+                      ].map(o => (
+                        <option key={o} value={o}>{o}</option>
+                      ))}
+                    </select>
+                    <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                    </div>
                   </div>
                 </div>
 
