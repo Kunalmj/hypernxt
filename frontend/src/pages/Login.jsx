@@ -18,7 +18,7 @@ const Login = () => {
   return (
     <div className="w-full text-center">
       <div className="mb-10">
-        <h1 className="text-[2.5rem] font-black mb-2 tracking-tight text-slate-900 leading-none">
+        <h1 className="text-[2.5rem] font-black mb-2 pt-5 tracking-tight text-slate-900 leading-none">
           Hi Citizen
         </h1>
         <p className="text-slate-600 text-sm font-medium">

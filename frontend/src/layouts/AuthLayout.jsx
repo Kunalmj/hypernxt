@@ -26,12 +26,10 @@ const AuthLayout = () => {
         {/* Left Side: Image Area with Border */}
         <div className="hidden md:block absolute top-0 left-0 w-[60%] h-full rounded-[2.5rem] border-[14px] border-white/90 z-20 overflow-hidden bg-slate-950">
           <img
-            src="/content.jpeg"
-            alt="Card Background"
-            className="absolute inset-0 w-full h-full object-cover object-center"
+            src="/indian-flag-tall.png"
+          alt="Indian Flag Background"
+            className="absolute w-full h-full object-cover object-top"
           />
-          <div className="absolute inset-0 bg-slate-900/60 mix-blend-multiply"></div>
-          <div className="absolute inset-0 bg-blue-900/20 mix-blend-overlay"></div>
 
           <div className="w-full h-full relative z-30 pointer-events-auto">
 
@@ -54,12 +52,9 @@ const AuthLayout = () => {
         >
           {/* Header */}
           <div className="flex justify-between items-center px-8 md:pl-[20%] md:pr-10 pt-8">
-            <Link to="/" className="font-black text-xl tracking-tight text-slate-900 uppercase italic">
+            <Link to="/" className="font-black text-xl tracking-tight text-slate-900 uppercase">
               OPPURTUNITY<span className="text-blue-600">HUB</span>
             </Link>
-            <button className="flex items-center gap-2 px-3 py-1.5 border border-slate-200 rounded-full text-xs font-bold text-slate-700 hover:bg-slate-50 transition shadow-sm">
-              🇬🇧 EN <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
-            </button>
           </div>
 
           {/* Scrollable Form Content */}

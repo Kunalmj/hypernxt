@@ -1,74 +1,87 @@
-import React, { useState } from "react";
+import React from "react";
 
 const testimonials = [
-  { name: "Priya Sharma",  location: "Mumbai, Maharashtra", tag: "Student",  text: "Finding the right scholarship felt impossible until I used OpportunityHub. The guided form helped me secure funding for my masters.", doc: "Scholarship",     img: "https://i.pravatar.cc/80?img=47" },
-  { name: "Rahul Verma",   location: "Delhi, NCR",          tag: "Founder",  text: "As an early-stage founder, MSME grants were very confusing. The portal simplified the entire process and I successfully received my seed fund.", doc: "Startup Grant", img: "https://i.pravatar.cc/80?img=12" },
-  { name: "Anita Patel",   location: "Ahmedabad, Gujarat",  tag: "Farmer", text: "The agriculture subsidy portal is a lifesaver. I applied for the solar pump scheme and the step-by-step checklist was perfectly clear.", doc: "Agri Subsidy",         img: "https://i.pravatar.cc/80?img=32" },
+  { name: "Priya Sharma",    location: "Mumbai, MH",      tag: "Student",  text: "Finding the right scholarship felt impossible until I used OpportunityHub. The guided form helped me secure funding for my masters.", doc: "Scholarship",     img: "https://i.pravatar.cc/100?img=47" },
+  { name: "Rahul Verma",     location: "Delhi, NCR",      tag: "Founder",  text: "As an early-stage founder, MSME grants were very confusing. The portal simplified the entire process and I received my seed fund.", doc: "Startup Grant", img: "https://i.pravatar.cc/100?img=12" },
+  { name: "Anita Patel",     location: "Ahmedabad, GJ",   tag: "Farmer",   text: "The agriculture subsidy portal is a lifesaver. I applied for the solar pump scheme and the step-by-step checklist was perfectly clear.", doc: "Agri Subsidy", img: "https://i.pravatar.cc/100?img=32" },
+  { name: "Vikram Singh",    location: "Bangalore, KA",   tag: "Developer", text: "The ease of tracking application status is what sets this apart. No more running to government offices for simple updates.", doc: "Digital India", img: "https://i.pravatar.cc/100?img=33" },
+  { name: "Meera Reddy",     location: "Hyderabad, TS",   tag: "Graduate",  text: "Skill development grants helped me transition into a tech career. The documentation guide was exceptionally helpful for my application.", doc: "Skill India", img: "https://i.pravatar.cc/100?img=26" },
 ];
 
-const Testimonials = () => {
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
+const TestimonialCard = ({ testimonial }) => (
+  <div className="flex-shrink-0 w-[320px] md:w-[400px] mx-4">
+    <div className="bg-white rounded-2xl border border-[#e2e8f0] shadow-sm hover:shadow-md transition-shadow p-6 h-full flex flex-col justify-between">
+      <div>
+        <div className="flex items-center gap-4 mb-4">
+          <img 
+            src={testimonial.img} 
+            alt={testimonial.name}
+            className="w-12 h-12 rounded-full object-cover border-2 border-[#dbeafe]" 
+          />
+          <div>
+            <div className="font-bold text-[#0f172a] text-[0.9rem]">{testimonial.name}</div>
+            <div className="text-[0.75rem] text-[#64748b]">
+              {testimonial.location} · <span className="text-[#1d4ed8] font-semibold">{testimonial.tag}</span>
+            </div>
+          </div>
+        </div>
+        <div className="text-2xl text-[#cbd5e1] leading-none mb-2 font-serif">"</div>
+        <p className="text-[#475569] text-[0.88rem] leading-relaxed italic mb-4 whitespace-pre-wrap">
+          {testimonial.text}
+        </p>
+      </div>
+      <div className="pt-4 border-t border-[#f1f5f9] flex items-center justify-between">
+        <span className="text-[0.65rem] text-[#64748b] uppercase font-bold tracking-wider">Applied For</span>
+        <span className="bg-[#f0fdf4] px-3 py-1 rounded-full text-[0.75rem] font-bold text-[#059669] border border-[#dcfce7]">
+          {testimonial.doc}
+        </span>
+      </div>
+    </div>
+  </div>
+);
 
+const Testimonials = () => {
   return (
     <>
-      {/* Wave → Testimonials */}
+      {/* Wave Transition */}
       <div className="bg-white leading-none">
         <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[56px]">
           <path d="M0,28 C360,0 720,56 1080,28 C1260,14 1380,42 1440,28 L1440,56 L0,56 Z" fill="#f8fafc" />
         </svg>
       </div>
 
-      <section className="bg-[#f8fafc] py-12 md:py-16 px-6">
-        <div className="max-w-[1100px] mx-auto">
-          <div className="text-center mb-10 md:mb-14">
-            <h2 className="text-[1.6rem] md:text-[1.9rem] font-extrabold text-[#0f172a] mb-2">Real People, Real Results</h2>
-            <p className="text-[#64748b] text-[0.85rem] md:text-[0.93rem] max-w-md mx-auto">Thousands of Indians have successfully applied through OpportunityHub</p>
-          </div>
+      <section className="bg-[#f8fafc] py-16 md:py-24 overflow-hidden relative">
+        <div className="max-w-[1440px] mx-auto px-6 mb-12 text-center">
+          <h2 className="text-[1.8rem] md:text-[2.2rem] font-extrabold text-[#0f172a] mb-4">Real People, Real Results</h2>
+          <p className="text-[#64748b] text-[0.95rem] md:text-[1.05rem] max-w-2xl mx-auto font-medium">
+            Thousands of Indians have successfully applied through OpportunityHub. 
+            Join the community of successful applicants today.
+          </p>
+        </div>
 
-          <div className="bg-white rounded-3xl border border-[#e2e8f0] shadow-lg p-7 md:p-10 lg:p-12 max-w-[800px] mx-auto relative">
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8 text-center md:text-left">
-              <img 
-                src={testimonials[activeTestimonial].img} 
-                alt={testimonials[activeTestimonial].name}
-                className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-2 border-[#dbeafe] shadow-sm" 
-              />
-              <div className="flex-1">
-                <div className="text-3xl md:text-4xl text-[#cbd5e1] leading-none mb-3 md:mb-4 font-serif">"</div>
-                <p className="text-[#374151] text-[0.9rem] md:text-[1rem] leading-relaxed mb-6 italic">
-                  {testimonials[activeTestimonial].text}
-                </p>
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-t border-[#f1f5f9] pt-6">
-                  <div>
-                    <div className="font-bold text-[#0f172a] text-[0.95rem]">{testimonials[activeTestimonial].name}</div>
-                    <div className="text-[0.82rem] text-[#64748b] mt-0.5">
-                      {testimonials[activeTestimonial].location} · <span className="text-[#1d4ed8] font-bold">{testimonials[activeTestimonial].tag}</span>
-                    </div>
-                  </div>
-                  <div className="bg-[#f0fdf4] px-4 py-2 rounded-xl border border-[#dcfce7] inline-block self-center md:self-auto">
-                    <div className="text-[0.65rem] text-[#065f46] uppercase font-bold tracking-widest mb-0.5 opacity-60">Applied For</div>
-                    <div className="text-[0.85rem] font-extrabold text-[#059669]">{testimonials[activeTestimonial].doc}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        {/* Marquee Container */}
+        <div className="relative">
+          {/* Gradient Fades */}
+          <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-r from-[#f8fafc] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-l from-[#f8fafc] to-transparent z-10 pointer-events-none" />
 
-          {/* Dots */}
-          <div className="flex justify-center gap-3 mt-10">
-            {testimonials.map((_, i) => (
-              <button 
-                key={i} 
-                onClick={() => setActiveTestimonial(i)}
-                className={`w-2.5 h-2.5 rounded-full border-none cursor-pointer transition-all ${
-                  i === activeTestimonial ? "bg-[#1d4ed8] scale-125 shadow-sm" : "bg-[#bfdbfe]"
-                }`}
-              />
+          {/* Scrolling Row */}
+          <div className="flex animate-marquee hover:[animation-play-state:paused] whitespace-nowrap">
+            {/* First set */}
+            {testimonials.map((t, i) => (
+              <TestimonialCard key={`t1-${i}`} testimonial={t} />
+            ))}
+            {/* Second set for seamless loop */}
+            {testimonials.map((t, i) => (
+              <TestimonialCard key={`t2-${i}`} testimonial={t} />
             ))}
           </div>
         </div>
+        
       </section>
     </>
   );
 };
 
 export default Testimonials;
+

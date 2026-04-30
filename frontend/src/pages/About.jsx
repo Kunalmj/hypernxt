@@ -1,13 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const About = () => {
+  const navigate = useNavigate();
   return (
     <div 
       style={{ 
         background: "linear-gradient(160deg, #f0f7ff 0%, #f5f8ff 40%, #fdf4fb 75%, #fff8f5 100%)", 
         fontFamily: "'Inter', 'Segoe UI', sans-serif" 
       }}
-      className="selection:bg-blue-100 selection:text-blue-700 min-h-screen overflow-hidden -mt-[88px] pt-[88px]"
+      className="selection:bg-blue-100 selection:text-blue-700 min-h-screen overflow-hidden -mt-[88px] pt-[5px]"
     >
       {/* Hero Section */}
       <div className="relative pt-28 pb-16 md:pt-36 md:pb-20 lg:min-h-[750px] flex items-center">
@@ -35,11 +37,8 @@ const About = () => {
               </p>
               
               <div className="flex flex-wrap gap-4 justify-center lg:justify-start animate-[fadeIn_1.6s_ease-out]">
-                <button className="bg-[#0f172a] text-white px-8 py-4 rounded-full font-bold shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                <button onClick={() => navigate('/')} className="bg-[#0f172a] text-white px-8 py-4 rounded-full font-bold shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
                   Explore Platform
-                </button>
-                <button className="bg-white/80 backdrop-blur-md text-[#0f172a] border border-[#cbd5e1] px-8 py-4 rounded-full font-bold shadow-sm hover:border-[#94a3b8] hover:bg-white transition-all duration-300">
-                  Read Our Story
                 </button>
               </div>
 
@@ -61,36 +60,11 @@ const About = () => {
               {/* Complex Image Layout */}
               <div className="relative z-10 w-full rounded-[2.5rem] p-3 bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)]">
                 <img 
-                  src="/professional-hero-bg.png" 
-                  alt="Corporate Technology Abstract" 
+                  src="/gateway-of-india.png" 
+                  alt="Gateway of India Mumbai" 
                   className="w-full h-auto object-cover rounded-[2rem] shadow-inner"
                   style={{ maxHeight: '600px' }}
                 />
-                
-                {/* Floating stat card overlapping the image to make it look rich */}
-                <div className="absolute -bottom-8 -left-8 bg-white/95 backdrop-blur-md border border-[#e2e8f0] p-6 rounded-3xl shadow-xl animate-[float_6s_ease-in-out_infinite_reverse]">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-[#ecfdf5] rounded-full flex items-center justify-center text-[#10b981]">
-                      <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-black text-[#0f172a]">100%</div>
-                      <div className="text-[0.7rem] font-bold text-[#64748b] uppercase tracking-widest">Verified Data</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Floating connection card */}
-                <div className="absolute -top-6 -right-6 bg-white/95 backdrop-blur-md border border-[#e2e8f0] p-5 rounded-3xl shadow-xl animate-[float_7s_ease-in-out_infinite]">
-                   <div className="flex items-center gap-3">
-                      <div className="flex -space-x-3">
-                        <div className="w-10 h-10 rounded-full bg-blue-100 border-2 border-white flex items-center justify-center text-blue-600 font-bold text-xs">AI</div>
-                        <div className="w-10 h-10 rounded-full bg-indigo-100 border-2 border-white flex items-center justify-center text-indigo-600 font-bold text-xs">ML</div>
-                        <div className="w-10 h-10 rounded-full bg-purple-100 border-2 border-white flex items-center justify-center text-purple-600 font-bold text-xs">Sec</div>
-                      </div>
-                      <div className="text-xs font-bold text-[#0f172a] leading-tight">Advanced<br/>Architecture</div>
-                   </div>
-                </div>
               </div>
             </div>
           </div>
@@ -109,8 +83,8 @@ const About = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-[3rem] blur-2xl opacity-20"></div>
               <div className="relative p-2 bg-[#1e293b]/50 backdrop-blur-sm border border-[#334155] rounded-[2.5rem]">
                 <img 
-                  src="/professional-network.png" 
-                  alt="Secure Digital Network" 
+                  src="/india-network.png" 
+                  alt="India Digital Network Map" 
                   className="relative z-10 w-full max-w-[600px] h-auto object-cover rounded-[2rem] shadow-2xl"
                 />
               </div>
@@ -146,7 +120,7 @@ const About = () => {
       </div>
 
       {/* Core Values Section (Light Glassmorphism) */}
-      <div className="container mx-auto px-8 md:px-16 lg:px-24 py-32 relative z-10">
+      <div className="container mx-auto px-8 md:px-16 lg:px-24 py-22 relative z-10">
         <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-extrabold text-[#0f172a] mb-5 tracking-tight">Enterprise <span className="text-[#1d4ed8]">Standards</span></h2>
             <p className="text-[#64748b] text-[1rem] max-w-2xl mx-auto font-medium">Built from the ground up to serve the citizens with integrity and technological excellence.</p>
@@ -173,7 +147,7 @@ const About = () => {
       </div>
 
       {/* Timeline or Values Section */}
-      <div className="py-24 relative overflow-hidden bg-gradient-to-b from-transparent to-[#e2e8f0]/30">
+      <div className="py-14 relative overflow-hidden bg-gradient-to-b from-transparent to-[#e2e8f0]/30">
         <div className="container mx-auto px-8 md:px-16 lg:px-24 relative z-10">
             <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-5xl font-extrabold text-[#0f172a] mb-5 tracking-tight">Built for <span className="text-[#1d4ed8] inline border-b-[3px] border-[#3b82f6] pb-1">Impact.</span></h2>

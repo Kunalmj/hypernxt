@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import {
   IconScholarship, IconStartup, IconAgriculture, IconWomen,
   IconResearch, IconTender, IconCitizen, IconUsers, IconDoc,
-  IconShield, IconStar, IconBot, IconStatus, IconPhone,
+  IconShield, IconStar, IconBot, IconStatus, IconPhone, IconRefresh,
 } from "../components/homepage/Icons";
 
 /* ── Contact method icons ─────────────────────────────────────── */
@@ -338,9 +338,7 @@ const howItWorks = [
 ];
 
 const helpLinks = [
-  { Icon: IconScholarship, title: "Scholarship Help",    desc: "Profile matching & SOP guidance",          path: "/help/scholarship" },
-  { Icon: IconStartup,     title: "Startup & MSME Help", desc: "Grant eligibility and application support", path: "/help/msme" },
-  { Icon: IconAgriculture, title: "Agriculture Help",    desc: "Document checklist and farm registration",  path: "/help/agriculture" },
+  { Icon: IconRefresh, title: "Correction Services",  desc: "Update errors in existing applications", path: "/help/correction" },
   { Icon: IconStatus,      title: "Status Tracking",     desc: "Track your application in real-time",       path: "/help/status" },
   { Icon: IconPhone,       title: "Expert Support",      desc: "Talk to an application specialist live",    path: "/help/expert" },
 ];
@@ -537,14 +535,14 @@ const Services = () => {
       </div>
 
       {/* ── Quick Help Links ───────────────────────────────────── */}
-      <section className="bg-white py-12 md:py-16 px-6">
+      <section className="bg-white py-10 md:py-10 px-6">
         <div className="max-w-[1100px] mx-auto">
           <div className="text-center mb-10 md:mb-12">
             <h2 className="text-[1.6rem] md:text-[1.9rem] font-extrabold text-[#0f172a] mb-2">Need Quick Help?</h2>
             <p className="text-[#64748b] text-[0.85rem] md:text-[0.93rem] max-w-lg mx-auto">Access targeted help for specific services instantly</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+          <div className="grid grid-cols-3 md:grid-cols-3 gap-5 md:gap-6 max-w-4xl mx-auto">
             {helpLinks.map(({ Icon: HIcon, title, desc, path }) => (
               <div
                 key={title}

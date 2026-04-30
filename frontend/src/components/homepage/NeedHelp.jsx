@@ -2,9 +2,6 @@ import { IconScholarship, IconStartup, IconAgriculture, IconStatus, IconRefresh,
 import { Link } from "react-router-dom";
 
 const helpServices = [
-  { Icon: IconScholarship, title: "Scholarship Assistance",  desc: "Profile matching & application support", path: "/help/scholarship" },
-  { Icon: IconStartup,   title: "Startup & MSME Help",        desc: "Grant application and eligibility check", path: "/help/msme" },
-  { Icon: IconAgriculture,      title: "Agriculture Subsidies",       desc: "Document checklist and farm registration", path: "/help/agriculture" },
   { Icon: IconStatus,  title: "Status Tracking",      desc: "Track your application in real-time", path: "/help/status" },
   { Icon: IconRefresh, title: "Correction Services",  desc: "Update errors in existing applications", path: "/help/correction" },
   { Icon: IconPhone,   title: "Expert Support",       desc: "Talk to an application expert live", path: "/help/expert" },
@@ -47,7 +44,7 @@ const NeedHelp = () => {
           </div>
 
           <div className="text-center mt-10 md:mt-12">
-            <Link to="/all-services" className="inline-block bg-[#1e3a8a] text-white border-none px-8 py-3.5 rounded-xl font-bold text-sm cursor-pointer shadow-md transition-colors hover:bg-[#1e40af] text-decoration-none">
+            <Link to="/services" className="inline-block bg-[#1e3a8a] text-white border-none px-8 py-3.5 rounded-xl font-bold text-sm cursor-pointer shadow-md transition-colors hover:bg-[#1e40af] text-decoration-none">
               View All Services →
             </Link>
           </div>

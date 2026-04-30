@@ -76,7 +76,7 @@ const BrowseServices = () => {
 
           <div className="text-center mt-10 md:mt-12">
             <Link to="/browse-all" className="inline-block bg-[#1e3a8a] text-white border-none px-8 py-3.5 rounded-xl font-bold text-sm cursor-pointer shadow-md transition-colors hover:bg-[#1e40af] text-decoration-none">
-              View All Services →
+              View All →
             </Link>
           </div>
         </div>
