@@ -1,10 +1,11 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { agricultureSchemes as mockSchemes } from "../data/agricultureData";
 
 const AgricultureResults = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const [expandedId, setExpandedId] = useState(null);
 
   const query = state?.query || null;
 
@@ -85,7 +86,7 @@ const AgricultureResults = () => {
 
         <div className="grid gap-6">
           {filteredSchemes.map((s) => (
-            <div key={s.id} className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 hover:shadow-md transition-shadow flex flex-col md:flex-row gap-6 md:items-center">
+            <div key={s.id} className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 hover:shadow-md transition-shadow flex flex-col md:flex-row flex-wrap gap-6 md:items-center">
               
               <div className="flex-1 space-y-4">
                 <div className="flex flex-wrap items-center gap-2">
@@ -131,16 +132,159 @@ const AgricultureResults = () => {
               </div>
 
               <div className="md:w-48 flex-shrink-0 flex flex-col gap-3">
-                <button className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors shadow-sm">
+                <button 
+                  onClick={() => navigate("/agri-apply", { state: { scheme: s } })}
+                  className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors shadow-sm"
+                >
                   Apply Now
                 </button>
-                <button className="w-full py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-lg transition-colors">
-                  View Details
+                <button 
+                  onClick={() => setExpandedId(expandedId === s.id ? null : s.id)}
+                  className="w-full py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-lg transition-colors"
+                >
+                  {expandedId === s.id ? "Hide Details" : "View Details"}
                 </button>
               </div>
 
+              {/* Expandable Details Panel */}
+              {expandedId === s.id && (
+                <div className="w-full border-t border-slate-100 pt-6 mt-2 animate-fadeIn">
+
+                  {/* Quick Stats Row */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                    <div className="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
+                      <p className="text-xs font-semibold text-emerald-500 uppercase tracking-wider mb-1">Financial Benefit</p>
+                      <p className="text-base font-bold text-emerald-700">{s.amount}</p>
+                    </div>
+                    <div className="bg-red-50 rounded-xl p-4 border border-red-100">
+                      <p className="text-xs font-semibold text-red-400 uppercase tracking-wider mb-1">Deadline</p>
+                      <p className="text-base font-bold text-red-600">{s.deadline}</p>
+                    </div>
+                    <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
+                      <p className="text-xs font-semibold text-blue-400 uppercase tracking-wider mb-1">Scheme Type</p>
+                      <p className="text-base font-bold text-blue-700">{s.type}</p>
+                    </div>
+                    <div className="bg-purple-50 rounded-xl p-4 border border-purple-100">
+                      <p className="text-xs font-semibold text-purple-400 uppercase tracking-wider mb-1">Application Mode</p>
+                      <p className="text-sm font-bold text-purple-700">{s.applicationMode || "Online"}</p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    {/* Benefits */}
+                    {s.benefits && (
+                      <div className="bg-white rounded-xl p-5 border border-slate-200">
+                        <h4 className="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+                          <span className="w-6 h-6 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-600 text-xs">✓</span>
+                          Benefits & Support
+                        </h4>
+                        <ul className="space-y-2">
+                          {s.benefits.map((b, i) => (
+                            <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
+                              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-1.5 shrink-0"></span>
+                              {b}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Documents Required */}
+                    {s.documentsRequired && (
+                      <div className="bg-white rounded-xl p-5 border border-slate-200">
+                        <h4 className="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+                          <span className="w-6 h-6 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 text-xs">📄</span>
+                          Documents Required
+                        </h4>
+                        <ul className="space-y-2">
+                          {s.documentsRequired.map((d, i) => (
+                            <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
+                              <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 shrink-0"></span>
+                              {d}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Selection Process */}
+                    <div className="bg-slate-50 rounded-xl p-5 border border-slate-200">
+                      <h4 className="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+                        <span className="w-6 h-6 bg-amber-100 rounded-lg flex items-center justify-center text-amber-600 text-xs">⚡</span>
+                        Approval Process
+                      </h4>
+                      <p className="text-sm text-slate-600 leading-relaxed">{s.selectionProcess || "Document Verification -> Approval"}</p>
+                      {s.renewalPolicy && (
+                        <div className="mt-4 pt-3 border-t border-slate-200">
+                          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Renewal/Disbursement</p>
+                          <p className="text-sm text-slate-600">{s.renewalPolicy}</p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Important Dates & Contact */}
+                    <div className="bg-slate-50 rounded-xl p-5 border border-slate-200">
+                      <h4 className="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+                        <span className="w-6 h-6 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 text-xs">📅</span>
+                        Important Dates & Contact
+                      </h4>
+                      {s.importantDates && (
+                        <div className="grid grid-cols-2 gap-3 mb-4">
+                          <div>
+                            <p className="text-xs text-slate-400 font-medium">Opens</p>
+                            <p className="text-sm font-semibold text-slate-700">{s.importantDates.applicationStart}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-slate-400 font-medium">Closes</p>
+                            <p className="text-sm font-semibold text-red-600">{s.importantDates.applicationEnd}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-slate-400 font-medium">Processing</p>
+                            <p className="text-sm font-semibold text-slate-700">{s.importantDates.shortlistAnnouncement}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-slate-400 font-medium">Disbursement</p>
+                            <p className="text-sm font-semibold text-emerald-600">{s.importantDates.disbursement}</p>
+                          </div>
+                        </div>
+                      )}
+                      {s.contact && (
+                        <div className="pt-3 border-t border-slate-200">
+                          <p className="text-sm text-slate-600">✉ {s.contact.email}</p>
+                          <p className="text-sm text-slate-600">☎ {s.contact.helpline}</p>
+                        </div>
+                      )}
+                    </div>
+
+                  </div>
+
+                  {/* Website Link + Apply CTA */}
+                  <div className="mt-5 flex flex-col sm:flex-row items-center gap-3 justify-between bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100">
+                    <div className="flex items-center gap-2 text-sm text-slate-600">
+                      <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
+                      <span className="font-medium text-blue-700">{s.website || "Official website"}</span>
+                    </div>
+                    <button
+                      onClick={() => navigate("/agri-apply", { state: { scheme: s } })}
+                      className="px-8 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors shadow-sm text-sm"
+                    >
+                      Apply for this Scheme →
+                    </button>
+                  </div>
+
+                </div>
+              )}
+
             </div>
           ))}
+          <style>{`
+            @keyframes fadeIn {
+              from { opacity: 0; transform: translateY(8px); }
+              to { opacity: 1; transform: translateY(0); }
+            }
+            .animate-fadeIn { animation: fadeIn 0.25s ease-out; }
+          `}</style>
         </div>
       </div>
     </div>

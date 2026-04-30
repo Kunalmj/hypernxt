@@ -39,22 +39,19 @@ const StartupMSMEPortal = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [data, setData] = useState(() => {
-    const saved = localStorage.getItem("grantSearchState");
-    if (saved) return JSON.parse(saved);
-    return {
-      stage: "",
-      sectors: [],
-      location: { state: "", city: "", panIndia: false },
-      funding: { min: 0, max: 0, label: "" },
-      registration: [],
-      tags: []
-    };
-  });
-
+  // Clear any stale data left from previous sessions
   useEffect(() => {
-    localStorage.setItem("grantSearchState", JSON.stringify(data));
-  }, [data]);
+    localStorage.removeItem("grantSearchState");
+  }, []);
+
+  const [data, setData] = useState({
+    stage: "",
+    sectors: [],
+    location: { state: "", city: "", panIndia: false },
+    funding: { min: 0, max: 0, label: "" },
+    registration: [],
+    tags: []
+  });
 
   const steps = [
     { id: 1, title: "Stage" },
@@ -388,7 +385,7 @@ const StartupMSMEPortal = () => {
                     "Find Grants →"
                   )}
                 </button>
-                <p className="mt-4 text-sm text-slate-500">Your details are saved automatically.</p>
+                <p className="mt-4 text-sm text-slate-500">Fill in all steps to find your best grants.</p>
               </div>
             </section>
 
