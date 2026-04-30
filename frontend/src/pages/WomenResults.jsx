@@ -37,17 +37,17 @@ const WomenResults = () => {
       {/* Header section */}
       <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white pt-20 pb-16 px-6">
         <div className="max-w-5xl mx-auto">
-          <button 
+          <button
             onClick={handleNewSearch}
             className="flex items-center gap-2 text-blue-200 hover:text-white transition-colors mb-8 text-sm font-medium"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
             Back to Search
           </button>
-          
+
           <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Your Program Matches</h1>
           <p className="text-lg text-blue-100 max-w-2xl opacity-90">
-            {isExactMatch 
+            {isExactMatch
               ? `We found ${filteredPrograms.length} tailored opportunities based on your profile.`
               : "No exact matches found for your highly specific criteria. Showing all available programs instead."}
           </p>
@@ -77,21 +77,21 @@ const WomenResults = () => {
 
       {/* Results Section */}
       <div className="max-w-5xl mx-auto px-6 -mt-6">
-        
+
         {!isExactMatch && query && (
-           <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg mb-8 shadow-sm flex items-start gap-4">
-              <svg className="w-6 h-6 text-amber-500 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-              <div>
-                <h3 className="text-amber-800 font-semibold">No exact matches</h3>
-                <p className="text-amber-700 text-sm mt-1">We couldn't find programs perfectly matching all your criteria. Here are other opportunities you might consider.</p>
-              </div>
-           </div>
+          <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg mb-8 shadow-sm flex items-start gap-4">
+            <svg className="w-6 h-6 text-amber-500 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+            <div>
+              <h3 className="text-amber-800 font-semibold">No exact matches</h3>
+              <p className="text-amber-700 text-sm mt-1">We couldn't find programs perfectly matching all your criteria. Here are other opportunities you might consider.</p>
+            </div>
+          </div>
         )}
 
         <div className="grid gap-6">
           {filteredPrograms.map((p) => (
             <div key={p.id} className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 hover:shadow-md transition-shadow flex flex-col md:flex-row flex-wrap gap-6 md:items-center">
-              
+
               <div className="flex-1 space-y-4">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-xs font-bold uppercase tracking-wider border border-emerald-100">
@@ -101,11 +101,11 @@ const WomenResults = () => {
                     {p.deadline}
                   </span>
                 </div>
-                
+
                 <h2 className="text-2xl font-bold text-slate-800">{p.title}</h2>
                 <p className="text-sm text-slate-500 font-medium">{p.provider}</p>
                 <p className="text-slate-600 text-sm">{p.description}</p>
-                
+
                 <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600">
                   <div className="flex items-center gap-1.5">
                     <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
@@ -133,13 +133,14 @@ const WomenResults = () => {
               </div>
 
               <div className="md:w-48 flex-shrink-0 flex flex-col gap-3">
-                <button 
-                  onClick={() => navigate("/women-apply", { state: { program: p } })}
-                  className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors shadow-sm"
+                <button
+                  onClick={() => navigate("/services")}
+                  className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors shadow-sm flex items-center justify-center gap-2"
                 >
-                  Apply Now
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>
+                  Get Help
                 </button>
-                <button 
+                <button
                   onClick={() => setExpandedId(expandedId === p.id ? null : p.id)}
                   className="w-full py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-lg transition-colors"
                 >
