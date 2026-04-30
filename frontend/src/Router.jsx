@@ -18,16 +18,22 @@ import CorrectionServices from "./pages/help/CorrectionServices";
 import ExpertSupport from "./pages/help/ExpertSupport";
 import ScholarshipPortal from "./pages/ScholarshipPortal";
 import ScholarshipResults from "./pages/ScholarshipResults";
+import ScholarshipApplyForm from "./pages/ScholarshipApplyForm";
 import StartupMSMEPortal from "./pages/StartupMSMEPortal";
 import StartupGrantResults from "./pages/StartupGrantResults";
+import StartupApplyForm from "./pages/StartupApplyForm";
 import AgriculturePortal from "./pages/AgriculturePortal";
 import AgricultureResults from "./pages/AgricultureResults";
+import AgriApplyForm from "./pages/AgriApplyForm";
 import WomenPortal from "./pages/WomenPortal";
 import WomenResults from "./pages/WomenResults";
+import WomenApplyForm from "./pages/WomenApplyForm";
 import ResearchPortal from "./pages/ResearchPortal";
 import ResearchResults from "./pages/ResearchResults";
+import ResearchApplyForm from "./pages/ResearchApplyForm";
 import TenderPortal from "./pages/TenderPortal";
 import TenderResults from "./pages/TenderResults";
+import TenderApplyForm from "./pages/TenderApplyForm";
 import CitizenSchemesPortal from "./pages/CitizenSchemesPortal";
 import BankingSchemes from "./pages/BankingSchemes";
 import HealthSchemes from "./pages/HealthSchemes";
@@ -69,16 +75,22 @@ const router = createBrowserRouter([
       { path: "help/expert", element: <ExpertSupport /> },
       { path: "scholarships", element: <ScholarshipPortal /> },
       { path: "scholarship-results", element: <ScholarshipResults /> },
+      { path: "scholarship-apply", element: <ScholarshipApplyForm /> },
       { path: "startup-msme", element: <StartupMSMEPortal /> },
       { path: "startup-grant-results", element: <StartupGrantResults /> },
+      { path: "startup-apply", element: <StartupApplyForm /> },
       { path: "agriculture", element: <AgriculturePortal /> },
       { path: "agri-results", element: <AgricultureResults /> },
+      { path: "agri-apply", element: <AgriApplyForm /> },
       { path: "women-programs", element: <WomenPortal /> },
       { path: "women-results", element: <WomenResults /> },
+      { path: "women-apply", element: <WomenApplyForm /> },
       { path: "research-grants", element: <ResearchPortal /> },
       { path: "research-results", element: <ResearchResults /> },
+      { path: "research-apply", element: <ResearchApplyForm /> },
       { path: "tenders", element: <TenderPortal /> },
       { path: "tender-results", element: <TenderResults /> },
+      { path: "tender-apply", element: <TenderApplyForm /> },
       { path: "citizen-schemes", element: <CitizenSchemesPortal /> },
       { path: "citizen-schemes/banking", element: <BankingSchemes /> },
       { path: "citizen-schemes/health", element: <HealthSchemes /> },
