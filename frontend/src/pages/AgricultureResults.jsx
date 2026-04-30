@@ -133,10 +133,11 @@ const AgricultureResults = () => {
 
               <div className="md:w-48 flex-shrink-0 flex flex-col gap-3">
                 <button 
-                  onClick={() => navigate("/agri-apply", { state: { scheme: s } })}
-                  className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors shadow-sm"
+                  onClick={() => navigate("/services")}
+                  className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors shadow-sm flex items-center justify-center gap-2"
                 >
-                  Apply Now
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  Get Help
                 </button>
                 <button 
                   onClick={() => setExpandedId(expandedId === s.id ? null : s.id)}

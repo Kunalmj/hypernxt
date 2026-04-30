@@ -1,265 +1,614 @@
 import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import {
+  IconScholarship, IconStartup, IconAgriculture, IconWomen,
+  IconResearch, IconTender, IconCitizen, IconUsers, IconDoc,
+  IconShield, IconStar, IconBot, IconStatus, IconPhone,
+} from "../components/homepage/Icons";
 
-const Services = () => {
-  const [activeTab, setActiveTab] = useState("Empowerment & Growth");
+/* ── Contact method icons ─────────────────────────────────────── */
+const IconEmail = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+    <polyline points="22,6 12,13 2,6" />
+  </svg>
+);
+const IconPhoneOutline = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l1.32-1.32a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+  </svg>
+);
+const IconWhatsApp = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+  </svg>
+);
+
+/* ── Request Service Modal ────────────────────────────────────── */
+const serviceOptions = [
+  "Citizen Schemes Assistance",
+  "Scholarship Application Services",
+  "Startup Grant Assistance",
+  "MSME Subsidy Support",
+  "Agriculture Scheme Help",
+  "Women Program Guidance",
+  "Research Grant Support",
+  "Tender/RFP Filing Services",
+];
+
+const RequestServiceModal = ({ service, onClose }) => {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    specificService: service || "",
+    description: "",
+    contactMethod: "Email",
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const set = (key, val) => setForm(f => ({ ...f, [key]: val }));
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setTimeout(onClose, 2500);
+  };
+
+  // Close on backdrop click
+  const handleBackdrop = (e) => {
+    if (e.target === e.currentTarget) onClose();
+  };
 
   return (
-    <div className="min-h-screen bg-white font-sans text-slate-800">
-      {/* 1. Hero Section */}
-      <section className="relative h-[60vh] min-h-[550px] flex items-center justify-center text-white"
-        style={{
-          backgroundImage: "linear-gradient(rgba(10, 25, 47, 0.7), rgba(10, 25, 47, 0.8)), url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2000&q=80')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center px-4"
+      style={{ background: "rgba(15,23,42,0.55)", backdropFilter: "blur(4px)" }}
+      onClick={handleBackdrop}
+    >
+      <div
+        className="bg-white rounded-2xl w-full max-w-[500px] shadow-2xl overflow-hidden"
+        onClick={e => e.stopPropagation()}
       >
-        <div className="text-center z-10 px-4 mt-16">
-          <p className="text-sm md:text-base font-semibold tracking-widest uppercase mb-4 text-blue-300">Empowering Citizens</p>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-10 tracking-tight">OPPORTUNITY HUB</h1>
-          <button className="bg-transparent border-2 border-white hover:bg-white hover:text-[#0a192f] transition-all duration-300 px-10 py-3.5 rounded-full text-sm font-bold tracking-[0.2em] uppercase">
-            Discover
+        {/* Header */}
+        <div className="px-6 pt-5 pb-4 border-b border-[#f1f5f9] flex items-center justify-between">
+          <div>
+            <h2 className="text-[1.05rem] font-extrabold text-[#0f172a]">Request Service</h2>
+            <p className="text-[0.78rem] text-[#64748b] mt-0.5">{service}</p>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-8 h-8 rounded-xl bg-[#f8fafc] border border-[#e2e8f0] flex items-center justify-center text-[#64748b] hover:bg-[#f1f5f9] hover:text-[#0f172a] transition-colors cursor-pointer"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
         </div>
-      </section>
 
-      {/* 2. Floating Service Tabs */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-20 relative z-20">
-        <div className="bg-white rounded-xl shadow-2xl flex flex-wrap md:flex-nowrap overflow-hidden border border-gray-100">
-          {['Scheme Discovery', 'Document Locker', 'App Tracking', 'Scholarships', 'Career Growth'].map((service, idx) => (
-            <div 
-              key={service} 
-              className={`flex-1 text-center py-8 px-4 border-r border-gray-100 last:border-0 cursor-pointer transition-colors duration-300 ${
-                idx === 3 ? 'bg-blue-600 text-white' : 'hover:bg-blue-50 text-slate-600'
-              }`}
-            >
-              <div className="flex justify-center mb-4">
-                {idx === 0 && <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>}
-                {idx === 1 && <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>}
-                {idx === 2 && <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>}
-                {idx === 3 && <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6M12 14l-6.16-3.422A12.083 12.083 0 0012 20.055a11.952 11.952 0 00-6.824-2.998" /></svg>}
-                {idx === 4 && <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>}
+        {/* Body */}
+        {submitted ? (
+          <div className="flex flex-col items-center justify-center py-12 px-8 text-center">
+            <div className="w-14 h-14 bg-[#d1fae5] rounded-full flex items-center justify-center mb-4">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h3 className="text-[1rem] font-extrabold text-[#0f172a] mb-1.5">Request Submitted!</h3>
+            <p className="text-[0.82rem] text-[#64748b] leading-relaxed">Our team will contact you within 24 hours on your preferred channel.</p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="px-6 py-4 space-y-3">
+
+            {/* Row 1: Name + Email */}
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-[0.76rem] font-bold text-[#0f172a] mb-1">Full Name <span className="text-red-500">*</span></label>
+                <input type="text" required value={form.name} onChange={e => set("name", e.target.value)}
+                  placeholder="Enter your full name"
+                  className="w-full px-3 py-2.5 rounded-xl border border-[#e2e8f0] text-[0.82rem] text-[#0f172a] placeholder-[#94a3b8] focus:outline-none focus:border-[#3b82f6] focus:ring-2 focus:ring-[#3b82f6]/15 transition-all"
+                />
               </div>
-              <h3 className={`text-[0.8rem] font-bold uppercase tracking-[0.15em] ${idx === 3 ? 'text-white' : 'text-slate-800'}`}>{service}</h3>
-              <p className={`text-[0.65rem] mt-2 uppercase tracking-widest ${idx === 3 ? 'text-blue-200' : 'text-slate-400'}`}>
-                {idx === 0 && 'Find Schemes'}
-                {idx === 1 && 'Secure Storage'}
-                {idx === 2 && 'Real-time Updates'}
-                {idx === 3 && 'Financial Aid'}
-                {idx === 4 && 'Skill Building'}
-              </p>
-              {idx === 3 && (
-                <div className="mt-4 w-8 h-8 mx-auto rounded-full bg-white flex items-center justify-center text-blue-600 shadow-lg">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                </div>
-              )}
+              <div>
+                <label className="block text-[0.76rem] font-bold text-[#0f172a] mb-1">Email Address <span className="text-red-500">*</span></label>
+                <input type="email" required value={form.email} onChange={e => set("email", e.target.value)}
+                  placeholder="your@email.com"
+                  className="w-full px-3 py-2.5 rounded-xl border border-[#e2e8f0] text-[0.82rem] text-[#0f172a] placeholder-[#94a3b8] focus:outline-none focus:border-[#3b82f6] focus:ring-2 focus:ring-[#3b82f6]/15 transition-all"
+                />
+              </div>
             </div>
-          ))}
-        </div>
+
+            {/* Row 2: Phone + Service */}
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-[0.76rem] font-bold text-[#0f172a] mb-1">Phone / WhatsApp <span className="text-red-500">*</span></label>
+                <input type="tel" required value={form.phone} onChange={e => set("phone", e.target.value)}
+                  placeholder="+91 98765 43210"
+                  className="w-full px-3 py-2.5 rounded-xl border border-[#e2e8f0] text-[0.82rem] text-[#0f172a] placeholder-[#94a3b8] focus:outline-none focus:border-[#3b82f6] focus:ring-2 focus:ring-[#3b82f6]/15 transition-all"
+                />
+              </div>
+              <div>
+                <label className="block text-[0.76rem] font-bold text-[#0f172a] mb-1">Service Needed <span className="text-red-500">*</span></label>
+                <div className="relative">
+                  <select required value={form.specificService} onChange={e => set("specificService", e.target.value)}
+                    className="w-full px-3 py-2.5 rounded-xl border border-[#e2e8f0] text-[0.82rem] text-[#0f172a] bg-white appearance-none focus:outline-none focus:border-[#3b82f6] focus:ring-2 focus:ring-[#3b82f6]/15 transition-all cursor-pointer"
+                  >
+                    <option value="" disabled>Select a service</option>
+                    {serviceOptions.map(s => <option key={s} value={s}>{s}</option>)}
+                  </select>
+                  <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#94a3b8] text-xs">▾</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Description */}
+            <div>
+              <label className="block text-[0.76rem] font-bold text-[#0f172a] mb-1">Brief Description <span className="text-red-500">*</span></label>
+              <textarea required rows={2} value={form.description} onChange={e => set("description", e.target.value)}
+                placeholder="Describe your requirements, timeline, and any specific needs..."
+                className="w-full px-3 py-2.5 rounded-xl border border-[#e2e8f0] text-[0.82rem] text-[#0f172a] placeholder-[#94a3b8] focus:outline-none focus:border-[#3b82f6] focus:ring-2 focus:ring-[#3b82f6]/15 transition-all resize-none"
+              />
+            </div>
+
+            {/* Contact Method */}
+            <div>
+              <label className="block text-[0.76rem] font-bold text-[#0f172a] mb-2">Preferred Contact Method <span className="text-red-500">*</span></label>
+              <div className="grid grid-cols-3 gap-2.5">
+                {[
+                  { label: "Email", Icon: IconEmail },
+                  { label: "Phone", Icon: IconPhoneOutline },
+                  { label: "WhatsApp", Icon: IconWhatsApp },
+                ].map(({ label, Icon: CIcon }) => (
+                  <button key={label} type="button" onClick={() => set("contactMethod", label)}
+                    className={`flex flex-col items-center gap-1.5 py-2.5 rounded-xl border-2 transition-all cursor-pointer font-semibold text-[0.75rem] ${
+                      form.contactMethod === label
+                        ? "border-[#3b82f6] bg-[#eff6ff] text-[#1d4ed8]"
+                        : "border-[#e2e8f0] bg-white text-[#64748b] hover:border-[#bfdbfe] hover:bg-[#f8fafc]"
+                    }`}
+                  >
+                    <CIcon />{label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Buttons */}
+            <div className="flex gap-3">
+              <button type="button" onClick={onClose}
+                className="flex-1 py-2.5 rounded-xl border-2 border-[#e2e8f0] text-[#374151] font-bold text-[0.82rem] bg-white hover:bg-[#f8fafc] transition-colors cursor-pointer"
+              >Cancel</button>
+              <button type="submit"
+                className="flex-1 py-2.5 rounded-xl bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-bold text-[0.82rem] transition-colors cursor-pointer shadow-md shadow-blue-200 flex items-center justify-center gap-2"
+              >Submit Request →</button>
+            </div>
+          </form>
+        )}
       </div>
+    </div>
+  );
+};
 
-      {/* 3. Why Choose Us */}
-      <section className="py-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-black text-center text-[#0a192f] mb-12">Why Opportunity Hub?</h2>
-        
-        <div className="flex flex-wrap justify-center mb-16 border-b border-gray-200 relative">
-          {['Inclusive Access', 'Empowerment & Growth', 'Verified Assistance'].map((tab) => (
-            <button 
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`px-6 md:px-12 py-4 text-xs md:text-sm font-bold uppercase tracking-widest transition-all duration-300 relative ${
-                activeTab === tab ? 'text-blue-700' : 'text-slate-400 hover:text-slate-700'
-              }`}
-            >
-              {tab}
-              {activeTab === tab && (
-                <div className="absolute bottom-[-1px] left-0 w-full h-[2px] bg-blue-700 flex justify-center">
-                  <div className="w-2.5 h-2.5 rounded-full bg-blue-700 absolute -top-1 ring-4 ring-white"></div>
-                </div>
-              )}
-            </button>
-          ))}
+/* ── Local icon helpers ───────────────────────────────────────── */
+const IconCheck = ({ color = "#2563eb" }) => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+
+const IconMSME = ({ size = 22, color = "#2563eb" }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="3" width="20" height="14" rx="2" />
+    <line x1="8" y1="21" x2="16" y2="21" />
+    <line x1="12" y1="17" x2="12" y2="21" />
+  </svg>
+);
+
+/* ── Data ─────────────────────────────────────────────────────── */
+const stats = [
+  { Icon: IconUsers,  value: "50,000+", label: "Applications Filed" },
+  { Icon: IconDoc,    value: "1,200+",  label: "Schemes Indexed" },
+  { Icon: IconShield, value: "98%",     label: "Success Rate" },
+  { Icon: IconStar,   value: "4.9/5",   label: "User Rating" },
+];
+
+const serviceCards = [
+  {
+    id: "citizen",
+    Icon: IconCitizen,
+    title: "Citizen Schemes Assistance",
+    desc: "Comprehensive support for government welfare schemes.",
+    tag: "Popular",
+    included: [
+      "Scheme Eligibility Assessment",
+      "Application Form Filling & Submission",
+      "Document Verification & Preparation",
+      "Benefit Claim Processing",
+      "Government Portal Navigation Support",
+    ],
+    route: "/citizen-schemes",
+  },
+  {
+    id: "scholarship",
+    Icon: IconScholarship,
+    title: "Scholarship Application Services",
+    desc: "Expert assistance for scholarship applications worldwide.",
+    tag: "3 Steps",
+    included: [
+      "SOP/Essay Writing & Editing",
+      "Application Review & Optimization",
+      "Document Preparation & Verification",
+      "Interview Preparation & Mock Sessions",
+      "Eligibility Assessment & Guidance",
+    ],
+    route: "/scholarships",
+  },
+  {
+    id: "startup",
+    Icon: IconStartup,
+    title: "Startup Grant Assistance",
+    desc: "Professional support for securing startup funding.",
+    tag: "5 Steps",
+    included: [
+      "Business Plan Writing & Review",
+      "Pitch Deck Creation & Design",
+      "Financial Projections & Modeling",
+      "Grant Proposal Writing",
+      "Application Strategy & Support",
+    ],
+    route: "/startup-msme",
+  },
+  {
+    id: "msme",
+    Icon: IconMSME,
+    title: "MSME Subsidy Support",
+    desc: "Comprehensive assistance for MSME schemes and subsidies.",
+    tag: "3 Steps",
+    included: [
+      "MSME Registration Assistance",
+      "Documentation Support & Filing",
+      "Compliance Guidance & Review",
+      "Subsidy Application Filing",
+      "Claim Processing Support",
+    ],
+    route: "/startup-msme",
+  },
+  {
+    id: "agri",
+    Icon: IconAgriculture,
+    title: "Agriculture Scheme Help",
+    desc: "Dedicated support for agricultural schemes and subsidies.",
+    tag: "3 Steps",
+    included: [
+      "Scheme Application Assistance",
+      "Subsidy Claim Processing",
+      "Documentation & Verification",
+      "Government Liaison Support",
+      "Eligibility Assessment",
+    ],
+    route: "/agriculture",
+  },
+  {
+    id: "women",
+    Icon: IconWomen,
+    title: "Women Program Guidance",
+    desc: "Specialized assistance for women-focused programs.",
+    tag: "3 Steps",
+    included: [
+      "Application Support & Guidance",
+      "Document Verification & Preparation",
+      "Eligibility Assessment",
+      "Form Filling Assistance",
+      "Program Selection Consultation",
+    ],
+    route: "/women-programs",
+  },
+  {
+    id: "research",
+    Icon: IconResearch,
+    title: "Research Grant Support",
+    desc: "Expert help for research grant applications.",
+    tag: "5 Steps",
+    included: [
+      "Research Proposal Writing",
+      "Budget Planning & Justification",
+      "Ethics Clearance Support",
+      "Application Review & Editing",
+      "Grant Writing Consultation",
+    ],
+    route: "/research-grants",
+  },
+  {
+    id: "tender",
+    Icon: IconTender,
+    title: "Tender/RFP Filing Services",
+    desc: "Professional assistance for government tenders and RFPs.",
+    tag: "5 Steps",
+    included: [
+      "Tender Document Preparation",
+      "Technical & Financial Bid Writing",
+      "EMD & Bank Guarantee Assistance",
+      "Compliance & Documentation Support",
+      "Bid Submission & Follow-up",
+    ],
+    route: "/tenders",
+  },
+];
+
+const howItWorks = [
+  { step: "01", title: "Choose Service", desc: "Select the service portal that matches your need — scholarship, grant, tender, or scheme." },
+  { step: "02", title: "Submit Request", desc: "Fill out a simple guided form with your profile details and required information." },
+  { step: "03", title: "Get Contacted", desc: "Our expert team reviews your profile and reaches out within 24 hours." },
+  { step: "04", title: "Secure Funding", desc: "We complete and submit your application, tracking it until a decision is made." },
+];
+
+const helpLinks = [
+  { Icon: IconScholarship, title: "Scholarship Help",    desc: "Profile matching & SOP guidance",          path: "/help/scholarship" },
+  { Icon: IconStartup,     title: "Startup & MSME Help", desc: "Grant eligibility and application support", path: "/help/msme" },
+  { Icon: IconAgriculture, title: "Agriculture Help",    desc: "Document checklist and farm registration",  path: "/help/agriculture" },
+  { Icon: IconStatus,      title: "Status Tracking",     desc: "Track your application in real-time",       path: "/help/status" },
+  { Icon: IconPhone,       title: "Expert Support",      desc: "Talk to an application specialist live",    path: "/help/expert" },
+];
+
+/* ── Component ────────────────────────────────────────────────── */
+const Services = () => {
+  const navigate = useNavigate();
+  const [modalService, setModalService] = useState(null);
+
+  const openModal = (serviceName) => setModalService(serviceName);
+  const closeModal = () => setModalService(null);
+
+  return (
+    <div
+      style={{
+        background: "linear-gradient(160deg, #f0f7ff 0%, #f5f8ff 40%, #fdf4fb 75%, #fff8f5 100%)",
+        minHeight: "100vh",
+        fontFamily: "'Inter', 'Segoe UI', sans-serif",
+      }}
+    >
+      {/* Modal */}
+      {modalService && <RequestServiceModal service={modalService} onClose={closeModal} />}
+      {/* ── Hero ──────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden flex items-center bg-gradient-to-br from-[#ece9ff] via-[#e8f0ff] to-[#f0eeff] min-h-[420px] -mt-[88px] pt-[88px]">
+        {/* Blob glows */}
+        <div className="absolute top-[-100px] left-[-100px] w-[520px] h-[520px] rounded-full pointer-events-none z-0 hidden md:block" style={{ background: "radial-gradient(circle at 40% 40%, #a5b4fc 0%, transparent 65%)", opacity: 0.45 }} />
+        <div className="absolute bottom-[-80px] right-[-80px] w-[440px] h-[440px] rounded-full pointer-events-none z-0 hidden md:block" style={{ background: "radial-gradient(circle at 60% 60%, #c4b5fd 0%, transparent 65%)", opacity: 0.4 }} />
+
+        <div className="relative z-10 w-full flex flex-col items-center px-6 py-14 md:py-20 text-center">
+          <span className="inline-flex items-center gap-1.5 bg-white/88 border border-[#bfdbfe] text-[#1d4ed8] text-[0.72rem] font-bold px-5 py-2 rounded-full backdrop-blur-md shadow-md mb-6 tracking-wide uppercase">
+            Professional Application Assistance
+          </span>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#0f172a] leading-[1.2] mb-5 tracking-tight max-w-3xl">
+            Expert Help for Every{" "}
+            <span className="text-[#1d4ed8] border-b-[3px] border-[#3b82f6] pb-0.5">
+              Application
+            </span>
+          </h1>
+          <p className="text-[#64748b] text-[0.9rem] md:text-[1rem] max-w-lg leading-relaxed mb-10">
+            From scholarships and startup grants to government tenders — our experts handle the complexity so you don't have to.
+          </p>
+          {/* Quick nav pills */}
+          <div className="flex flex-wrap justify-center gap-2.5 max-w-2xl">
+            {[
+              { label: "Scholarships", route: "/scholarships", Icon: IconScholarship },
+              { label: "Startup Grants", route: "/startup-msme", Icon: IconStartup },
+              { label: "Agriculture", route: "/agriculture", Icon: IconAgriculture },
+              { label: "Tenders/RFPs", route: "/tenders", Icon: IconTender },
+              { label: "Citizen Schemes", route: "/citizen-schemes", Icon: IconCitizen },
+            ].map(({ label, route, Icon: PIcon }) => (
+              <button
+                key={label}
+                onClick={() => navigate(route)}
+                className="flex items-center gap-1.5 bg-white/92 border border-[#dbeafe] rounded-full px-4 py-2 text-[0.78rem] text-[#374151] font-semibold cursor-pointer shadow-sm transition-all backdrop-blur-md hover:border-[#93c5fd] hover:text-[#1d4ed8] hover:bg-[#f0f7ff]"
+              >
+                <PIcon size={14} color="#2563eb" /> {label}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          <div className="relative group">
-            <div className="absolute inset-0 bg-blue-600/10 rounded-2xl transform translate-x-4 translate-y-4 transition-transform group-hover:translate-x-6 group-hover:translate-y-6"></div>
-            <img 
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" 
-              alt="Community Empowerment" 
-              className="relative z-10 rounded-2xl shadow-2xl w-full object-cover h-[350px]"
-            />
-            <div className="absolute -left-8 -bottom-8 z-20 w-48 h-48 rounded-xl overflow-hidden border-4 border-white shadow-xl hidden md:block">
-              <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=400&q=80" alt="Learning" className="w-full h-full object-cover"/>
-            </div>
-          </div>
-          <div className="md:pl-8">
-            <p className="text-slate-600 leading-loose mb-6 text-sm md:text-base">
-              <strong className="text-slate-800">Opportunity Hub</strong> is positioned as a leading platform dedicated to bridging the gap between government welfare programs, educational institutions, and the citizens who need them most. We believe in building a future where opportunities are accessible to everyone.
-            </p>
-            <p className="text-slate-600 leading-loose text-sm md:text-base">
-              Based in Bhubaneswar, Odisha, our reach extends across districts and states, working hand-in-hand with civic organizations and government departments to streamline the application process and ensure zero drop-offs in financial aid.
-            </p>
-          </div>
+        {/* Wave bottom */}
+        <div className="absolute bottom-0 left-0 right-0 leading-0 z-20 pointer-events-none">
+          <svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[72px]">
+            <path d="M0,40 C180,80 360,0 540,36 C720,72 900,10 1080,44 C1260,78 1380,28 1440,40 L1440,72 L0,72 Z" fill="#f0f7ff" />
+          </svg>
         </div>
       </section>
 
-      {/* 4. Platform With a Difference */}
-      <section className="bg-slate-50 py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-            <div className="lg:col-span-4 flex flex-col justify-center">
-              <h2 className="text-3xl md:text-4xl lg:text-[2.5rem] font-black text-[#0a192f] mb-8 leading-[1.2]">
-                Platform<br/>With a Difference.<br/><span className="text-blue-600">Impact.</span>
-              </h2>
-              <p className="text-slate-600 mb-10 leading-loose text-sm">
-                Opportunity Hub stands out as an ecosystem designed for actual civic empowerment. By bringing together intelligent scheme matching, document management, and real-time support, we make finding and claiming your rightful benefits completely seamless.
-              </p>
-              <div className="flex items-center gap-5">
-                <div className="w-14 h-14 rounded-full bg-[#0a192f] flex items-center justify-center text-white font-black text-xl shadow-lg">
-                  SK
+      {/* ── Stats Bar ─────────────────────────────────────────── */}
+      <section className="bg-[#f0f7ff] pb-10 md:pb-14">
+        <div className="max-w-[1100px] mx-auto px-6">
+          <div className="bg-white border border-[#e2e8f0] rounded-2xl md:rounded-3xl shadow-lg grid grid-cols-2 md:grid-cols-4 overflow-hidden">
+            {stats.map(({ Icon: StatIcon, value, label }, i) => (
+              <div
+                key={label}
+                className={`flex items-center gap-3.5 p-5 md:p-6 lg:p-7 ${i % 2 === 0 ? "border-r border-[#f1f5f9]" : "md:border-r md:border-[#f1f5f9]"} ${i < 2 ? "border-b border-[#f1f5f9] md:border-b-0" : ""} ${i === 3 ? "md:border-r-0" : ""}`}
+              >
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-[#eff6ff] flex items-center justify-center flex-shrink-0">
+                  <StatIcon size={20} color="#2563eb" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-[#0a192f] uppercase text-sm tracking-widest mb-1">Sanjiv Kumar</h4>
-                  <p className="text-xs text-blue-600 font-bold uppercase tracking-widest">Director of Civic Engagement</p>
+                  <div className="text-lg md:text-[1.3rem] font-extrabold text-[#1d4ed8] leading-tight">{value}</div>
+                  <div className="text-[0.7rem] md:text-[0.78rem] text-[#64748b] font-medium uppercase tracking-wide opacity-80">{label}</div>
                 </div>
               </div>
-            </div>
-            
-            <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 group">
-                <div className="overflow-hidden h-[240px]">
-                  <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80" alt="Our Mission" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
-                </div>
-                <div className="p-8">
-                  <h3 className="font-bold text-[#0a192f] uppercase tracking-widest mb-4">Our Mission</h3>
-                  <p className="text-slate-500 text-sm mb-8 leading-relaxed">
-                    To democratize access to welfare schemes and educational scholarships by simplifying complex application procedures through technology.
-                  </p>
-                  <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center group-hover:bg-[#0a192f] transition-colors cursor-pointer">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 group">
-                <div className="overflow-hidden h-[240px]">
-                  <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80" alt="Ecosystem Redefined" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
-                </div>
-                <div className="p-8">
-                  <h3 className="font-bold text-[#0a192f] uppercase tracking-widest mb-4">Ecosystem Redefined</h3>
-                  <p className="text-slate-500 text-sm mb-8 leading-relaxed">
-                    We eliminate the bureaucratic friction, offering a unified, transparent portal that tracks your progress every step of the way.
-                  </p>
-                  <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center group-hover:bg-[#0a192f] transition-colors cursor-pointer">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
-                  </div>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 5. Unmatched Services (Dark Section from Mockup) */}
-      <section className="bg-[#0b162c] py-32 text-white relative overflow-hidden">
-        {/* Subtle background element */}
-        <div className="absolute right-[-10%] top-1/2 transform -translate-y-1/2 w-1/2 h-[80%] opacity-5 pointer-events-none">
-           <svg viewBox="0 0 100 100" className="w-full h-full fill-current"><path d="M50 0L100 25V75L50 100L0 75V25L50 0Z" /></svg>
-        </div>
+      {/* wave */}
+      <div className="bg-[#f0f7ff] leading-none">
+        <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[56px]">
+          <path d="M0,28 C240,56 480,0 720,28 C960,56 1200,8 1440,28 L1440,56 L0,56 Z" fill="white" />
+        </svg>
+      </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8">
-            
-            {/* Left Column */}
-            <div className="flex flex-col justify-between h-full">
-              <div className="mb-16 lg:mb-0">
-                <h2 className="text-4xl md:text-5xl lg:text-[3rem] font-bold leading-[1.1] mb-10 tracking-tight">
-                  Unmatched<br/>Opportunities.<br/>Unmatched<br/>Excellence.
-                </h2>
-                <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white transition-colors hover:text-[#0b162c] cursor-pointer">
-                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                </div>
-              </div>
+      {/* ── Services Grid ─────────────────────────────────────── */}
+      <section className="bg-white py-12 md:py-16 px-6">
+        <div className="max-w-[1100px] mx-auto">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="text-[1.6rem] md:text-[1.9rem] font-extrabold text-[#0f172a] mb-2">Our Services</h2>
+            <p className="text-[#64748b] text-[0.85rem] md:text-[0.93rem] max-w-lg mx-auto">
+              Choose from our comprehensive range of application assistance services tailored to your needs.
+            </p>
+          </div>
 
-              {/* Scheme Discovery Card in Left Column */}
-              <div className="border border-[#233a66] p-10 hover:bg-[#112444] transition-all duration-300 group cursor-pointer mt-12 lg:mt-auto relative min-h-[280px] flex flex-col justify-center">
-                <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-blue-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-blue-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="mb-8 opacity-70 group-hover:opacity-100 group-hover:-translate-y-2 transition-all duration-300">
-                  <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                </div>
-                <h3 className="text-lg font-bold tracking-widest uppercase mb-4 text-white">Scheme Discovery</h3>
-                <p className="text-blue-100/50 text-sm leading-relaxed font-light">
-                  Our intelligent matching engine helps you find government schemes tailored to your age, occupation, and financial profile instantly.
-                </p>
-              </div>
-            </div>
-
-            {/* Right Columns (2x2 Grid) */}
-            <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {[
-                { title: "Document Locker", icon: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z", desc: "Securely store and manage your official documents required for various scheme applications in one encrypted, easily accessible location." },
-                { title: "Application Tracking", icon: "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2", desc: "Real-time updates on your application status across multiple government departments and welfare boards, ensuring complete transparency." },
-                { title: "Student Scholarships", icon: "M12 14l9-5-9-5-9 5 9 5zm0 0v6M12 14l-6.16-3.422A12.083 12.083 0 0012 20.055a11.952 11.952 0 00-6.824-2.998", desc: "Access specialized academic scholarships, grants, and financial aid opportunities tailored exclusively for school and university students." },
-                { title: "Career Development", icon: "M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z", desc: "Find government-sponsored training programs, internships, and skill-building workshops to boost your career prospects and employability." },
-              ].map((service) => (
-                <div key={service.title} className="border border-[#233a66] p-10 hover:bg-[#112444] transition-all duration-300 group cursor-pointer relative min-h-[280px] flex flex-col justify-center">
-                  <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-blue-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-blue-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="mb-8 opacity-70 group-hover:opacity-100 group-hover:-translate-y-2 transition-all duration-300">
-                    <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1" d={service.icon} /></svg>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+            {serviceCards.map(({ id, Icon: SIcon, title, desc, tag, included, route }) => (
+              <div
+                key={id}
+                className="bg-white border border-[#e2e8f0] rounded-2xl p-6 flex flex-col transition-all duration-250 hover:shadow-xl hover:-translate-y-1 hover:border-[#bfdbfe] group"
+                style={{
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(37,99,235,0.06)",
+                  transition: "all 0.25s cubic-bezier(0.4,0,0.2,1)",
+                }}
+              >
+                {/* Icon + tag */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className="w-12 h-12 bg-[#eff6ff] rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <SIcon size={24} color="#2563eb" />
                   </div>
-                  <h3 className="text-lg font-bold tracking-widest uppercase mb-4 text-white">{service.title}</h3>
-                  <p className="text-blue-100/50 text-sm leading-relaxed font-light">
-                    {service.desc}
-                  </p>
+                  <span className="bg-[#f0f9ff] text-[#0369a1] text-[0.7rem] font-bold px-3 py-1 rounded-full border border-[#bae6fd]">{tag}</span>
                 </div>
-              ))}
-            </div>
 
+                {/* Title + desc */}
+                <h3 className="text-[1rem] font-bold text-[#0f172a] mb-1 leading-snug">{title}</h3>
+                <p className="text-[0.83rem] text-[#64748b] leading-relaxed mb-4">{desc}</p>
+
+                {/* What's included */}
+                <div className="mb-5 flex-1">
+                  <p className="text-[0.68rem] font-black uppercase text-[#94a3b8] tracking-[0.15em] mb-3">What's Included:</p>
+                  <ul className="space-y-2">
+                    {included.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-[0.82rem] font-medium text-[#374151]">
+                        <span className="mt-0.5 shrink-0"><IconCheck /></span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* CTA */}
+                <button
+                  onClick={() => openModal(title)}
+                  className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-bold py-3 rounded-xl transition-colors flex items-center justify-center gap-2 text-[0.85rem] shadow-md shadow-blue-100 mt-auto"
+                >
+                  Get Started →
+                </button>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 6. Stats & Map */}
-      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-b border-gray-100">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          <div className="grid grid-cols-2 gap-y-16 gap-x-8">
-            <div>
-              <div className="text-4xl md:text-[3.5rem] font-light text-[#0a192f] mb-4 flex flex-col gap-2">
-                1200+ <span className="text-[0.65rem] font-bold text-slate-400 uppercase tracking-widest">Schemes<br/>Indexed</span>
-              </div>
-            </div>
-            <div>
-              <div className="text-4xl md:text-[3.5rem] font-light text-[#0a192f] mb-4 flex flex-col gap-2">
-                45K+ <span className="text-[0.65rem] font-bold text-slate-400 uppercase tracking-widest">Benefited<br/>Citizens</span>
-              </div>
-            </div>
-            <div>
-              <div className="text-4xl md:text-[3.5rem] font-light text-[#0a192f] mb-4 flex flex-col gap-2">
-                30 <span className="text-[0.65rem] font-bold text-slate-400 uppercase tracking-widest">Districts<br/>Covered</span>
-              </div>
-            </div>
-            <div>
-              <div className="text-4xl md:text-[3.5rem] font-light text-[#0a192f] mb-4 flex flex-col gap-2">
-                99% <span className="text-[0.65rem] font-bold text-slate-400 uppercase tracking-widest">Success<br/>Rate</span>
-              </div>
-            </div>
+      {/* wave */}
+      <div className="bg-white leading-none">
+        <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[56px]">
+          <path d="M0,28 C360,0 720,56 1080,28 C1260,14 1380,42 1440,28 L1440,56 L0,56 Z" fill="#f8fafc" />
+        </svg>
+      </div>
+
+      {/* ── How It Works ──────────────────────────────────────── */}
+      <section className="bg-[#f8fafc] py-12 md:py-16 px-6">
+        <div className="max-w-[1100px] mx-auto">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="text-[1.6rem] md:text-[1.9rem] font-extrabold text-[#0f172a] mb-2">How It Works</h2>
+            <p className="text-[#64748b] text-[0.85rem] md:text-[0.93rem] max-w-md mx-auto">Simple 4-step process to get expert assistance</p>
           </div>
-          
-          <div className="relative">
-             <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80" alt="Local Reach in Odisha" className="w-full opacity-60 rounded-xl mix-blend-luminosity" />
-             {/* Map marker dot pointing generally to the east side of a map */}
-             <div className="absolute top-[45%] left-[70%] transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-                <div className="w-4 h-4 bg-blue-600 rounded-full animate-ping absolute"></div>
-                <div className="w-4 h-4 bg-blue-600 rounded-full relative z-10 border-2 border-white shadow-lg"></div>
-                <div className="mt-3 bg-white text-[0.65rem] font-bold px-3 py-1.5 rounded shadow-lg text-blue-900 uppercase tracking-widest whitespace-nowrap">Bhubaneswar, Odisha</div>
-                <div className="bg-slate-800 text-[0.55rem] text-white px-2 py-0.5 rounded-b opacity-80 uppercase tracking-wider">India</div>
-             </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 relative">
+            {/* Connector line desktop */}
+            <div className="hidden lg:block absolute top-[46px] left-[14%] right-[14%] h-[2px] bg-[#e2e8f0] z-0" />
+
+            {howItWorks.map(({ step, title, desc }, i) => (
+              <div key={step} className="bg-white border border-[#e2e8f0] rounded-2xl p-6 text-center shadow-sm relative z-10" style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(37,99,235,0.06)" }}>
+                <div className="w-14 h-14 bg-[#1d4ed8] text-white rounded-2xl flex items-center justify-center text-[1.1rem] font-extrabold mx-auto mb-5 shadow-lg shadow-blue-200 border-4 border-white">
+                  {step}
+                </div>
+                <h3 className="font-bold text-[#0f172a] text-[0.95rem] mb-2">{title}</h3>
+                <p className="text-[0.82rem] text-[#64748b] leading-relaxed">{desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
-      
+
+      {/* wave */}
+      <div className="bg-[#f8fafc] leading-none">
+        <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[56px]">
+          <path d="M0,28 C240,56 480,0 720,28 C960,56 1200,8 1440,28 L1440,56 L0,56 Z" fill="white" />
+        </svg>
+      </div>
+
+      {/* ── Quick Help Links ───────────────────────────────────── */}
+      <section className="bg-white py-12 md:py-16 px-6">
+        <div className="max-w-[1100px] mx-auto">
+          <div className="text-center mb-10 md:mb-12">
+            <h2 className="text-[1.6rem] md:text-[1.9rem] font-extrabold text-[#0f172a] mb-2">Need Quick Help?</h2>
+            <p className="text-[#64748b] text-[0.85rem] md:text-[0.93rem] max-w-lg mx-auto">Access targeted help for specific services instantly</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+            {helpLinks.map(({ Icon: HIcon, title, desc, path }) => (
+              <div
+                key={title}
+                className="bg-white border border-[#e2e8f0] rounded-2xl p-6 shadow-sm transition-all hover:shadow-lg hover:-translate-y-1 hover:border-[#bfdbfe] group cursor-pointer"
+                onClick={() => navigate(path)}
+                style={{ transition: "all 0.25s" }}
+              >
+                <div className="w-11 h-11 bg-[#eff6ff] rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <HIcon size={22} color="#2563eb" />
+                </div>
+                <h4 className="font-bold text-[#0f172a] mb-2 text-[0.95rem]">{title}</h4>
+                <p className="text-[0.83rem] text-[#64748b] leading-relaxed mb-4">{desc}</p>
+                <span className="text-[0.82rem] text-[#1d4ed8] font-bold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                  Learn More <span className="transition-transform group-hover:translate-x-1">→</span>
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* wave */}
+      <div className="bg-white leading-none">
+        <svg viewBox="0 0 1440 56" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[56px]">
+          <path d="M0,28 C240,56 480,0 720,28 C960,56 1200,8 1440,28 L1440,56 L0,56 Z" fill="#f8fafc" />
+        </svg>
+      </div>
+
+      {/* ── AI CTA Banner (same as home page) ─────────────────── */}
+      <section className="bg-[#f8fafc] px-6 pb-14 md:pb-16">
+        <div className="max-w-[1100px] mx-auto">
+          <div className="bg-gradient-to-br from-[#0f172a] via-[#1e3a8a] to-[#1d4ed8] rounded-[24px] md:rounded-[32px] p-8 md:p-12 lg:p-14 flex flex-col lg:flex-row lg:items-center justify-between gap-8 md:gap-10 shadow-2xl overflow-hidden relative">
+            {/* Background Accent */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
+
+            <div className="flex-1 text-center lg:text-left z-10">
+              <span className="inline-flex items-center gap-2 bg-white/10 text-white/90 text-[0.72rem] font-bold px-4 py-1.5 rounded-full mb-5 tracking-widest uppercase border border-white/20">
+                <IconBot size={15} color="white" /> Ready to Get Started?
+              </span>
+              <h3 className="text-[1.3rem] md:text-2xl font-extrabold text-white mb-3 tracking-tight">
+                Don't Let Complex Applications Hold You Back
+              </h3>
+              <p className="text-white/70 text-[0.85rem] md:text-[0.9rem] leading-relaxed max-w-md mx-auto lg:mx-0">
+                Our experts guide you through every step — from eligibility check to final submission. Available 24/7.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 sm:justify-center lg:justify-end z-10">
+              <Link
+                to="/ai-helper"
+                className="bg-white text-[#1e3a8a] border-none px-6 py-3.5 rounded-xl font-bold text-sm cursor-pointer flex items-center justify-center gap-2 transition-opacity hover:opacity-90 text-decoration-none"
+              >
+                <IconBot size={16} color="#1e3a8a" /> Try AI Helper
+              </Link>
+              <Link
+                to="/contact"
+                className="bg-white/10 text-white/90 border border-white/25 px-6 py-3.5 rounded-xl font-bold text-sm cursor-pointer transition-colors hover:bg-white/15 text-decoration-none flex items-center justify-center"
+              >
+                Contact an Expert
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
