@@ -118,7 +118,12 @@ const WomenChildSchemes = () => {
                       <div className="bg-[#fdf2f8] border border-[#fbcfe8] rounded-xl px-3 py-2"><p className="text-[0.68rem] text-[#db2777] font-bold uppercase tracking-wide mb-0.5">Benefit</p><p className="text-[0.82rem] font-semibold text-[#0f172a]">{scheme.benefit}</p></div>
                     </div>
                     <div className="flex flex-col gap-2 w-full">
-                      <button className="w-full inline-flex items-center justify-center gap-1.5 bg-[#be185d] text-white text-[0.8rem] font-bold rounded-xl px-4 py-2.5 border-none cursor-pointer hover:bg-[#9d174d] transition-colors">View Details →</button>
+                      <button 
+                        onClick={() => navigate("/scheme-details", { state: { scheme } })}
+                        className="w-full inline-flex items-center justify-center gap-1.5 bg-[#be185d] text-white text-[0.8rem] font-bold rounded-xl px-4 py-2.5 border-none cursor-pointer hover:bg-[#9d174d] transition-colors"
+                      >
+                        View Details →
+                      </button>
                     </div>
                   </div>
                 </div>

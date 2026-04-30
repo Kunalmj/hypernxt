@@ -6,13 +6,9 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import About from "./pages/About";
 import Services from "./pages/Services";
-import AllServices from "./pages/AllServices";
 import BrowseAllServices from "./pages/BrowseAllServices";
 import AIHelper from "./pages/AIHelper";
 import ContactSupport from "./pages/ContactSupport";
-import ScholarshipAssistance from "./pages/help/ScholarshipAssistance";
-import StartupHelp from "./pages/help/StartupHelp";
-import AgricultureHelp from "./pages/help/AgricultureHelp";
 import StatusTracking from "./pages/help/StatusTracking";
 import CorrectionServices from "./pages/help/CorrectionServices";
 import ExpertSupport from "./pages/help/ExpertSupport";
@@ -47,6 +43,7 @@ import TransportSchemes from "./pages/TransportSchemes";
 import TravelSchemes from "./pages/TravelSchemes";
 import UtilitySchemes from "./pages/UtilitySchemes";
 import WomenChildSchemes from "./pages/WomenChildSchemes";
+import SchemeDetails from "./pages/SchemeDetails";
 
 const router = createBrowserRouter([
   {
@@ -63,13 +60,9 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "about", element: <About /> },
       { path: "services", element: <Services /> },
-      { path: "all-services", element: <AllServices /> },
       { path: "browse-all", element: <BrowseAllServices /> },
       { path: "ai-helper", element: <AIHelper /> },
       { path: "contact", element: <ContactSupport /> },
-      { path: "help/scholarship", element: <ScholarshipAssistance /> },
-      { path: "help/msme", element: <StartupHelp /> },
-      { path: "help/agriculture", element: <AgricultureHelp /> },
       { path: "help/status", element: <StatusTracking /> },
       { path: "help/correction", element: <CorrectionServices /> },
       { path: "help/expert", element: <ExpertSupport /> },
@@ -104,6 +97,7 @@ const router = createBrowserRouter([
       { path: "citizen-schemes/travel", element: <TravelSchemes /> },
       { path: "citizen-schemes/utility", element: <UtilitySchemes /> },
       { path: "citizen-schemes/women", element: <WomenChildSchemes /> },
+      { path: "scheme-details", element: <SchemeDetails /> },
     ],
   },
 ]);

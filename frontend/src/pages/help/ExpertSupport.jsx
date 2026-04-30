@@ -173,27 +173,53 @@ const ExpertSupport = () => {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#f8fbff] font-['Inter',_sans-serif]">
+    <div 
+      className="min-h-screen font-['Inter',_sans-serif]"
+      style={{ 
+        background: "linear-gradient(160deg, #f0f7ff 0%, #f5f8ff 40%, #fdf4fb 75%, #fff8f5 100%)"
+      }}
+    >
       {showModal && <RequestServiceModal service="Expert Support" onClose={() => setShowModal(false)} />}
 
-      <div className="pt-32 pb-20 bg-white border-b border-slate-100">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl">
-            <Link to="/services" className="inline-flex items-center gap-2 text-xs font-black text-blue-600 uppercase tracking-widest mb-8 hover:gap-3 transition-all">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-                Back to Services
-            </Link>
-            <h1 className="text-5xl md:text-7xl font-[1000] text-slate-900 mb-6 tracking-tighter leading-tight italic">
-              Expert <span className="text-blue-600">Support.</span>
-            </h1>
-            <p className="text-xl text-slate-500 font-medium leading-relaxed max-w-2xl">
-              Talk directly to our network of social welfare experts and departmental consultants for personalized application guidance.
-            </p>
-          </div>
-        </div>
-      </div>
+      <section
+        className="relative overflow-hidden flex items-center bg-gradient-to-br from-[#ece9ff] via-[#e8f0ff] to-[#f0eeff] min-h-[450px] md:min-h-[500px] -mt-[88px] pt-[88px] border-b border-white/50"
+      >
+        {/* Blob glows */}
+        <div className="absolute top-[-100px] left-[-100px] w-[520px] h-[520px] rounded-full bg-radial-gradient from-[#a5b4fc]/45 to-transparent pointer-events-none z-0 hidden md:block" style={{ background: "radial-gradient(circle at 40% 40%, #a5b4fc 0%, transparent 65%)", opacity: 0.45 }} />
+        <div className="absolute bottom-[-80px] right-[-80px] w-[440px] h-[440px] rounded-full bg-radial-gradient from-[#c4b5fd]/40 to-transparent pointer-events-none z-0 hidden md:block" style={{ background: "radial-gradient(circle at 60% 60%, #c4b5fd 0%, transparent 65%)", opacity: 0.4 }} />
 
-      <div className="container mx-auto px-6 py-24">
+        {/* LEFT IMAGE - Indian Flag */}
+        <div className="absolute top-0 left-0 bottom-0 w-1/3 z-1 pointer-events-none overflow-hidden hidden lg:block">
+          <img src="/indian-flag.png" alt="" className="absolute bottom-[-5%] left-[-5%] w-[110%] h-[110%] object-contain object-bottom-left mix-blend-multiply saturate-[0.8] brightness-[1.05] contrast-[1.1] opacity-90" />
+          <div className="absolute inset-0 bg-[#a5b4fc]/10 mix-blend-multiply z-[2]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#ece9ff]/5 via-[#e8f0ff]/72 to-[#e8f0ff] z-[3]" />
+        </div>
+
+        {/* CONTENT */}
+        <div className="relative z-10 container mx-auto px-6 py-12 md:py-20 flex flex-col items-center lg:items-start lg:pl-[35%]">
+          <Link to="/services" className="inline-flex items-center gap-2 text-[0.65rem] font-black text-blue-600 uppercase tracking-[0.2em] mb-8 hover:gap-3 transition-all bg-white/80 backdrop-blur-md px-4 py-2 rounded-full border border-blue-100 shadow-sm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back to Services
+          </Link>
+          
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-[1000] text-slate-900 mb-6 tracking-tighter leading-[1.1] text-center lg:text-left">
+            Expert <span className="text-blue-600">Support.</span>
+          </h1>
+          
+          <p className="text-lg md:text-xl text-slate-600 font-medium leading-relaxed max-w-2xl text-center lg:text-left">
+            Talk directly to our network of social welfare experts and departmental consultants for personalized application guidance.
+          </p>
+        </div>
+
+        {/* Wave bottom */}
+        <div className="absolute bottom-0 left-0 right-0 leading-0 z-20 pointer-events-none">
+          <svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" className="block w-full h-[40px] md:h-[72px]">
+            <path d="M0,40 C180,80 360,0 540,36 C720,72 900,10 1080,44 C1260,78 1380,28 1440,40 L1440,72 L0,72 Z" fill="#f0f7ff" />
+          </svg>
+        </div>
+      </section>
+
+      <div className="container mx-auto pl-[10%] pr-[10%] py-24">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
           <div className="lg:col-span-2 space-y-16">
             <section>
@@ -205,7 +231,7 @@ const ExpertSupport = () => {
                   { t: "Eligibility Audit", d: "We audit your complete profile to uncover hidden schemes and benefits you qualify for." },
                   { t: "Priority Filing", d: "Experts fast-track your applications with dedicated support and direct department contacts." },
                 ].map((item, i) => (
-                  <div key={i} className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-xl shadow-blue-500/5">
+                  <div key={i} className="bg-white p-8 rounded-[1rem] border border-slate-100 shadow-xl shadow-blue-500/5">
                     <h4 className="text-lg font-black text-slate-900 mb-2">{item.t}</h4>
                     <p className="text-slate-500 text-sm font-medium leading-relaxed">{item.d}</p>
                   </div>
@@ -213,12 +239,12 @@ const ExpertSupport = () => {
               </div>
             </section>
 
-            <section className="bg-blue-600 p-12 rounded-[3.5rem] text-white">
+            <section className="bg-blue-600 p-12 rounded-[1rem] text-white">
               <h3 className="text-2xl font-black mb-4">Talk to an expert today</h3>
               <p className="text-blue-100 font-medium mb-8">Our consultants are available 7 days a week for urgent application needs.</p>
               <button
                 onClick={() => setShowModal(true)}
-                className="inline-block bg-white text-blue-600 font-black px-10 py-5 rounded-2xl shadow-xl hover:scale-105 transition-all cursor-pointer border-none"
+                className="inline-block bg-white text-blue-600 font-black px-10 py-5 rounded-[0.5rem] shadow-xl hover:scale-105 transition-all cursor-pointer border-none"
               >
                 Get Started →
               </button>
@@ -226,7 +252,7 @@ const ExpertSupport = () => {
           </div>
 
           <div className="space-y-8">
-            <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-xl shadow-blue-500/5">
+            <div className="bg-white p-8 rounded-[1rem] border border-slate-100 shadow-xl shadow-blue-500/5">
               <h4 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-6">Service Stats</h4>
               <div className="space-y-6">
                 <div>

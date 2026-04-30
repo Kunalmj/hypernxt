@@ -1,18 +1,19 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { agricultureSchemes } from "../data/agricultureData";
 
 const Icons = {
-  Stage: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>,
-  Sector: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>,
+  Category: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>,
+  Details: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>,
   Location: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>,
-  Funding: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>,
-  Registration: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>,
+  Support: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>,
+  Find: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>,
   Exit: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
 };
 
 const AgriculturePortal = () => {
   const navigate = useNavigate();
+  const [activeStep, setActiveStep] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [data, setData] = useState({
     farmerType: "",
@@ -23,54 +24,49 @@ const AgriculturePortal = () => {
     support: "",
   });
 
-  const [activeStep, setActiveStep] = useState(1);
   const sectionRefs = useRef({});
 
-  const steps = [
-    { id: 1, title: "Farmer Type" },
-    { id: 2, title: "Farm Details" },
-    { id: 3, title: "Location" },
-    { id: 4, title: "Support Needed" },
-    { id: 5, title: "Find Schemes" }
-  ];
-
   useEffect(() => {
-    const handleScroll = (e) => {
-      const mainContent = e.target;
-      const scrollPosition = mainContent.scrollTop + mainContent.clientHeight / 3;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveStep(Number(entry.target.dataset.step));
+          }
+        });
+      },
+      { threshold: 0.4, rootMargin: "-100px 0px -100px 0px" }
+    );
 
-      let currentStep = 1;
-      for (let i = 1; i <= 5; i++) {
-        const el = sectionRefs.current[i];
-        if (el && el.offsetTop <= scrollPosition) {
-          currentStep = i;
-        }
-      }
-      setActiveStep(currentStep);
-    };
+    Object.values(sectionRefs.current).forEach((sec) => {
+      if (sec) observer.observe(sec);
+    });
 
-    const mainElement = document.querySelector("main");
-    if (mainElement) {
-      mainElement.addEventListener("scroll", handleScroll);
-      return () => mainElement.removeEventListener("scroll", handleScroll);
-    }
+    return () => observer.disconnect();
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate("/agri-results", {
-      state: { query: data },
-    });
+  const steps = [
+    { id: 1, title: "Farmer Type", icon: Icons.Category },
+    { id: 2, title: "Farm Details", icon: Icons.Details },
+    { id: 3, title: "Location", icon: Icons.Location },
+    { id: 4, title: "Support Needed", icon: Icons.Support },
+    { id: 5, title: "Find Schemes", icon: Icons.Find }
+  ];
+
+  const handleSubmit = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate("/agri-results", { state: { query: data } });
+    }, 1500);
   };
 
   return (
-
     <div className="h-screen bg-gradient-to-b from-white to-blue-100 flex justify-center p-6 font-sans overflow-hidden">
       <div className="w-full max-w-7xl h-full flex overflow-hidden rounded-2xl bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
 
         {/* SIDEBAR */}
         <aside className="w-[340px] bg-[#153e9c] p-10 hidden md:flex flex-col relative overflow-hidden shrink-0 rounded-l-2xl">
-          {/* Overlay gradient graphic to mimic the architecture building */}
           <div
             className="absolute bottom-0 left-0 right-0 h-[400px] opacity-20 pointer-events-none"
             style={{
@@ -87,7 +83,7 @@ const AgriculturePortal = () => {
           <div className="flex flex-col gap-2 relative z-10">
             {steps.map((s) => {
               const isActive = activeStep === s.id;
-              const Icon = s.id === 1 ? Icons.Sector : s.id === 2 ? Icons.Stage : s.id === 3 ? Icons.Location : s.id === 4 ? Icons.Funding : Icons.Registration;
+              const Icon = s.icon;
 
               return (
                 <div
@@ -302,9 +298,10 @@ const AgriculturePortal = () => {
               <div className="mt-16 flex flex-col items-center">
                 <button
                   onClick={handleSubmit}
+                  disabled={isLoading}
                   className="group relative inline-flex items-center justify-center px-10 py-4 text-lg font-bold text-white transition-all duration-200 bg-gradient-to-r from-blue-600 to-indigo-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 hover:shadow-lg hover:-translate-y-1 w-full md:w-auto min-w-[240px]"
                 >
-                  Find Schemes →
+                  {isLoading ? "Finding Schemes..." : "Find Schemes →"}
                 </button>
                 <p className="mt-4 text-sm text-slate-500">Discover agriculture grants tailored for you.</p>
               </div>
