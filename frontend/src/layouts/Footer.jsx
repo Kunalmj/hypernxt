@@ -27,9 +27,19 @@ function Footer() {
           <div>
             <h3 className="text-white font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2 text-sm text-gray-400">
-              {["Home", "About Us", "Services", "Contact Us"].map((item) => (
-                <li key={item} className="hover:text-blue-400 cursor-pointer transition">
-                  {item}
+              {[
+                { label: "Home", to: "/" },
+                { label: "About Us", to: "/about" },
+                { label: "Services", to: "/services" },
+                { label: "Contact Us", to: "/contact" },
+              ].map((item) => (
+                <li key={item.label}>
+                  <Link
+                    to={item.to}
+                    className="hover:text-blue-400 transition"
+                  >
+                    {item.label}
+                  </Link>
                 </li>
               ))}
             </ul>
