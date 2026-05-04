@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { scholarships } from "../data/scholarshipData";
+import { indianStates } from "../utils/states";
 
 const Icons = {
   Citizenship: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>,
@@ -60,7 +61,7 @@ const ScopeSelectorScreen = ({ onSelect }) => {
               desc: "Pursue scholarships at universities worldwide — USA, UK, Canada, Europe, Australia and more.",
               gradient: "from-blue-400/20 to-indigo-500/20",
               border: "border-blue-400/30 hover:border-blue-300",
-              badge: "🌍 Global",
+              badge: " Global",
               highlights: ["Fully-funded options", "Prestigious institutions", "150+ countries"]
             },
             {
@@ -71,7 +72,7 @@ const ScopeSelectorScreen = ({ onSelect }) => {
               desc: "Explore government and private scholarships for studies within India at top universities.",
               gradient: "from-orange-400/20 to-amber-400/20",
               border: "border-orange-400/30 hover:border-orange-300",
-              badge: "🇮🇳 India",
+              badge: " India",
               highlights: ["Central & state schemes", "Merit & need based", "All levels covered"]
             },
           ].map((opt) => (
@@ -129,6 +130,7 @@ const ScholarshipPortal = () => {
 
   const [activeStep, setActiveStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   // Clear any stale data left from previous sessions
   useEffect(() => {
@@ -179,6 +181,12 @@ const ScholarshipPortal = () => {
   }, [scopeSelected]);
 
   const handleSubmit = () => {
+    setError("");
+    if (!data.nationality || !data.region || !data.level || !data.field) {
+      setError("Please fill out all required fields before proceeding.");
+      return;
+    }
+
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
@@ -200,7 +208,7 @@ const ScholarshipPortal = () => {
   // Region options differ by scope
   const regionOptions = data.type === "International"
     ? ["USA", "UK", "Canada", "Australia", "Europe", "Japan", "Germany", "Singapore"]
-    : ["Delhi", "Maharashtra", "Karnataka", "Tamil Nadu", "Gujarat", "Punjab", "West Bengal", "All India"];
+    : indianStates;
 
   return (
     <div className="h-screen bg-gradient-to-b from-white to-blue-100 flex justify-center p-6 font-sans overflow-hidden">
@@ -229,7 +237,7 @@ const ScholarshipPortal = () => {
               setData({ ...data, type: "" });
             }}
           >
-            <span className="text-lg">{data.type === "International" ? "🌍" : "🇮🇳"}</span>
+            <span className="text-lg">{data.type === "International" ? "" : ""}</span>
             <div>
               <p className="text-white font-bold text-sm">{data.type} Scholarship</p>
               <p className="text-blue-200 text-xs group-hover:text-blue-100 transition-colors">Click to change scope</p>
@@ -428,7 +436,7 @@ const ScholarshipPortal = () => {
               <div className="mt-16 flex flex-col items-center">
                 <button
                   onClick={handleSubmit}
-                  disabled={!data.field || isLoading}
+                  disabled={isLoading}
                   className="group relative inline-flex items-center justify-center px-10 py-4 text-lg font-bold text-white transition-all duration-200 bg-gradient-to-r from-blue-600 to-indigo-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 hover:shadow-lg hover:-translate-y-1 w-full md:w-auto min-w-[240px] disabled:opacity-70 disabled:hover:translate-y-0 disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
@@ -443,7 +451,8 @@ const ScholarshipPortal = () => {
                     "Find Scholarships →"
                   )}
                 </button>
-                <p className="mt-4 text-sm text-slate-500">Your details are saved automatically.</p>
+                {error && <p className="mt-4 text-sm font-medium text-red-500">{error}</p>}
+                {!error && <p className="mt-4 text-sm text-slate-500">Your details are saved automatically.</p>}
               </div>
             </section>
 

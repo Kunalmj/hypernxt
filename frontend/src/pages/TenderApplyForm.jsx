@@ -29,8 +29,42 @@ const TenderApplyForm = () => {
 
   const [submitted, setSubmitted] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
+  const [error, setError] = useState("");
 
-  const update = (key, val) => setFormData((p) => ({ ...p, [key]: val }));
+  const update = (key, val) => {
+    setFormData((p) => ({ ...p, [key]: val }));
+    setError("");
+  };
+
+  const validateSection = (targetIndex) => {
+    if (targetIndex <= activeSection) return true;
+
+    const requiredFields = {
+      0: ["companyName", "registrationNo", "gst", "pan", "contactPerson", "designation", "phone", "email", "address", "city", "stateField"],
+      1: ["annualTurnover", "yearsExperience", "similarWorks"],
+      2: ["bankName", "accountNo", "ifsc"],
+    };
+
+    for (let i = activeSection; i < targetIndex; i++) {
+      const fields = requiredFields[i];
+      if (!fields) continue;
+
+      for (const field of fields) {
+        if (!formData[field] || formData[field].toString().trim() === "") {
+          setError(`Please fill all required fields in the "${sections[i].label}" section.`);
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
+  const handleSectionChange = (index) => {
+    if (validateSection(index)) {
+      setActiveSection(index);
+      window.scrollTo(0, 0);
+    }
+  };
 
   const sections = [
     { id: 0, label: "Company Info" },
@@ -118,9 +152,9 @@ const TenderApplyForm = () => {
             <div className="mt-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4">
               <p className="text-lg font-semibold">{tender.title}</p>
               <div className="flex flex-wrap gap-3 mt-2 text-sm text-blue-100">
-                <span>🏛 {tender.org}</span>
-                <span>💰 {tender.value}</span>
-                <span>📅 Deadline: {tender.deadline}</span>
+                <span> {tender.org}</span>
+                <span> {tender.value}</span>
+                <span> Deadline: {tender.deadline}</span>
                 <span className="font-mono text-blue-200">{tender.tenderId}</span>
               </div>
             </div>
@@ -134,7 +168,7 @@ const TenderApplyForm = () => {
           {sections.map((sec) => (
             <button
               key={sec.id}
-              onClick={() => setActiveSection(sec.id)}
+              onClick={() => handleSectionChange(sec.id)}
               className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                 activeSection === sec.id
                   ? "bg-blue-600 text-white shadow-sm"
@@ -176,8 +210,13 @@ const TenderApplyForm = () => {
               <Field label="City" required value={formData.city} onChange={(v) => update("city", v)} placeholder="e.g. Mumbai" />
               <Field label="State" required value={formData.stateField} onChange={(v) => update("stateField", v)} placeholder="e.g. Maharashtra" />
             </div>
-            <div className="flex justify-end pt-4">
-              <button type="button" onClick={() => setActiveSection(1)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
+            <div className="flex justify-end pt-4 flex-col items-end gap-3">
+              {error && (
+                <div className="text-red-500 text-sm font-semibold animate-bounce">
+                  {error}
+                </div>
+              )}
+              <button type="button" onClick={() => handleSectionChange(1)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
                 Next: Eligibility →
               </button>
             </div>
@@ -224,13 +263,20 @@ const TenderApplyForm = () => {
                 />
               </div>
             </div>
-            <div className="flex justify-between pt-4">
-              <button type="button" onClick={() => setActiveSection(0)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
-                ← Previous
-              </button>
-              <button type="button" onClick={() => setActiveSection(2)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
-                Next: Bank Details →
-              </button>
+            <div className="flex flex-col gap-3 pt-4">
+              {error && (
+                <div className="text-red-500 text-sm font-semibold text-right animate-bounce">
+                  {error}
+                </div>
+              )}
+              <div className="flex justify-between">
+                <button type="button" onClick={() => handleSectionChange(0)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
+                  ← Previous
+                </button>
+                <button type="button" onClick={() => handleSectionChange(2)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
+                  Next: Bank Details →
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -247,13 +293,20 @@ const TenderApplyForm = () => {
               <Field label="Account Number" required value={formData.accountNo} onChange={(v) => update("accountNo", v)} placeholder="XXXXXXXXXXXX" />
               <Field label="IFSC Code" required value={formData.ifsc} onChange={(v) => update("ifsc", v)} placeholder="e.g. SBIN0001234" />
             </div>
-            <div className="flex justify-between pt-4">
-              <button type="button" onClick={() => setActiveSection(1)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
-                ← Previous
-              </button>
-              <button type="button" onClick={() => setActiveSection(3)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
-                Next: Documents & EMD →
-              </button>
+            <div className="flex flex-col gap-3 pt-4">
+              {error && (
+                <div className="text-red-500 text-sm font-semibold text-right animate-bounce">
+                  {error}
+                </div>
+              )}
+              <div className="flex justify-between">
+                <button type="button" onClick={() => handleSectionChange(1)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
+                  ← Previous
+                </button>
+                <button type="button" onClick={() => handleSectionChange(3)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
+                  Next: Documents & EMD →
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -321,7 +374,7 @@ const TenderApplyForm = () => {
             </div>
 
             <div className="flex justify-between pt-4">
-              <button type="button" onClick={() => setActiveSection(2)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
+              <button type="button" onClick={() => handleSectionChange(2)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
                 ← Previous
               </button>
               <button

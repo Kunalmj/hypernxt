@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { STATES, BENEFICIARY_TYPES, GENDERS, SPONSORS, CASTES } from "../utils/filterConstants";
 
 const allSchemes = [
   {
@@ -32,10 +33,11 @@ const allSchemes = [
   },
 ];
 
-const STATES = ["All States", "All India", "Maharashtra", "Delhi", "Karnataka", "Tamil Nadu", "Gujarat", "Uttar Pradesh"];
-const BENEFICIARY_TYPES = ["All Beneficiaries", "Students", "Researchers", "Entrepreneurs"];
-const GENDERS = ["All Genders", "Male", "Female", "Transgender"];
-const SPONSORS = ["All Sponsors", "Central Government", "State Government"];
+
+
+
+
+
 
 const Tag = ({ label }) => (
   <span className="inline-flex items-center text-[0.72rem] font-semibold px-2.5 py-0.5 rounded-full border"
@@ -70,6 +72,8 @@ const ScienceSchemes = () => {
       if (filters.beneficiaryType !== "All Beneficiaries" && s.beneficiaryType !== filters.beneficiaryType) return false;
       if (filters.gender !== "All Genders" && s.gender !== filters.gender && s.gender !== "All Genders") return false;
       if (filters.sponsor !== "All Sponsors" && s.sponsor !== filters.sponsor) return false;
+      const schemeCaste = s.caste || "All Categories";
+      if (filters.caste !== "All Categories" && schemeCaste !== filters.caste && schemeCaste !== "All Categories") return false;
       return true;
     });
   }, [search, filters]);
@@ -95,7 +99,8 @@ const ScienceSchemes = () => {
             <FilterSelect label="Beneficiary Type" value={filters.beneficiaryType} onChange={(v) => setFilters({...filters, beneficiaryType: v})} options={BENEFICIARY_TYPES} />
             <FilterSelect label="Gender" value={filters.gender} onChange={(v) => setFilters({...filters, gender: v})} options={GENDERS} />
             <FilterSelect label="Sponsored By" value={filters.sponsor} onChange={(v) => setFilters({...filters, sponsor: v})} options={SPONSORS} />
-            <button onClick={() => setFilters({ state: "All States", beneficiaryType: "All Beneficiaries", gender: "All Genders", sponsor: "All Sponsors" })} className="w-full mt-1 py-2 rounded-xl text-[0.8rem] font-semibold text-[#64748b] border border-[#e2e8f0] bg-transparent cursor-pointer hover:border-[#d97706] hover:text-[#d97706] transition-colors">Reset Filters</button>
+            <FilterSelect label="Caste / Category"  value={filters.caste}           onChange={(v) => setFilter("caste", v)}           options={CASTES} />
+            <button onClick={() => setFilters({ state: "All States", beneficiaryType: "All Beneficiaries", gender: "All Genders", sponsor: "All Sponsors", caste: "All Categories" })} className="w-full mt-1 py-2 rounded-xl text-[0.8rem] font-semibold text-[#64748b] border border-[#e2e8f0] bg-transparent cursor-pointer hover:border-[#d97706] hover:text-[#d97706] transition-colors">Reset Filters</button>
           </aside>
         )}
         <div className="flex-1 min-w-0">

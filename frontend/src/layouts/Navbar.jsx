@@ -23,7 +23,7 @@ function Navbar() {
         alignItems:"center", 
         justifyContent:"space-between",
         padding: "0 12px 0 24px",
-        background: "rgba(255,255,255,0.9)",
+        background: "rgba(255, 255, 255, 1)",
         backdropFilter: "blur(16px)",
         WebkitBackdropFilter: "blur(16px)",
         border: "1px solid rgba(191,219,254,0.6)",
@@ -33,14 +33,12 @@ function Navbar() {
 
         {/* LOGO */}
         <Link to="/" style={{ textDecoration:"none", display:"flex", alignItems:"center", gap:"10px" }}>
-          <div style={{ width:"40px", height:"40px", background:"#1e3a8a", borderRadius:"10px", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, boxShadow:"0 2px 10px rgba(30,58,138,0.25)" }}>
-            <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
-              <path d="M6 5h10M6 9h7M6 13h10M6 17h5" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
+          <div style={{ width:"45px", height:"45px", display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
+            <img src="/logo.svg" alt="Logo" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
           </div>
           <div>
-            <div style={{ fontSize:"1.05rem", fontWeight:"800", lineHeight:"1.1", color:"#1e3a8a" }}>OpportunityHub</div>
-            <div style={{ fontSize:"0.65rem", color:"#6b7280", fontWeight:"500", lineHeight:"1" }}>India's Opportunity Portal</div>
+            <div style={{ fontSize:"1.1rem", fontWeight:"800", lineHeight:"1.1", color:"#1e3a8a", letterSpacing:"-0.02em" }}>FormEase</div>
+            <div style={{ fontSize:"0.65rem", color:"#64748b", fontWeight:"500", lineHeight:"1" }}>India's All-in-One Platform</div>
           </div>
         </Link>
 
@@ -107,11 +105,11 @@ function Navbar() {
       {open && (
         <div style={{ pointerEvents:"auto", position: "absolute", top: "90px", left: "24px", right: "24px", background:"rgba(255,255,255,0.96)", backdropFilter:"blur(16px)", border:"1px solid rgba(191,219,254,0.5)", borderRadius:"24px", padding:"16px 24px 20px", boxShadow:"0 20px 40px rgba(0,0,0,0.1)" }}>
           {[
-            { to: "/", label: "🏠 Home" },
-            { to: "/scholarships", label: "🎓 Scholarships" },
-            { to: "/startup-msme", label: "💼 Startup & MSME" },
-            { to: "/agriculture", label: "🌾 Agriculture" },
-            { to: "/tenders", label: "📄 Tenders" },
+            { to: "/", label: "Home" },
+            { to: "/scholarships", label: "Scholarships" },
+            { to: "/startup-msme", label: "Startup & MSME" },
+            { to: "/agriculture", label: "Agriculture" },
+            { to: "/tenders", label: "Tenders" },
           ].map((link) => (
             <Link
               key={link.to}

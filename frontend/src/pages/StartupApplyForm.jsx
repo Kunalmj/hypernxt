@@ -32,8 +32,45 @@ const StartupApplyForm = () => {
 
   const [submitted, setSubmitted] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
+  const [error, setError] = useState("");
 
-  const update = (key, val) => setFormData((p) => ({ ...p, [key]: val }));
+  const update = (key, val) => {
+    setFormData((p) => ({ ...p, [key]: val }));
+    setError("");
+  };
+
+  const validateSection = (targetIndex) => {
+    // Always allow going backwards
+    if (targetIndex <= activeSection) return true;
+
+    // Define required fields per section
+    const requiredFields = {
+      0: ["founderName", "email", "phone", "startupName", "address", "city", "state", "pincode"],
+      1: ["sector", "stage", "teamSize"],
+      2: ["arr", "fundingRaised", "bankName", "accountNo", "ifsc"],
+    };
+
+    // Check all sections from current up to target-1
+    for (let i = activeSection; i < targetIndex; i++) {
+      const fields = requiredFields[i];
+      if (!fields) continue;
+
+      for (const field of fields) {
+        if (!formData[field] || formData[field].toString().trim() === "") {
+          setError(`Please fill all required fields in the "${sections[i].label}" section.`);
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
+  const handleSectionChange = (index) => {
+    if (validateSection(index)) {
+      setActiveSection(index);
+      window.scrollTo(0, 0);
+    }
+  };
 
   const sections = [
     { id: 0, label: "Company Info" },
@@ -88,9 +125,9 @@ const StartupApplyForm = () => {
             <div className="mt-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4">
               <p className="text-lg font-semibold">{grant.title}</p>
               <div className="flex flex-wrap gap-3 mt-2 text-sm text-blue-100">
-                <span>🏛 {grant.provider}</span>
-                <span>💰 {grant.amount}</span>
-                <span>📅 Deadline: {grant.deadline}</span>
+                <span> {grant.provider}</span>
+                <span> {grant.amount}</span>
+                <span> Deadline: {grant.deadline}</span>
               </div>
             </div>
           )}
@@ -103,7 +140,7 @@ const StartupApplyForm = () => {
           {sections.map((sec) => (
             <button
               key={sec.id}
-              onClick={() => setActiveSection(sec.id)}
+              onClick={() => handleSectionChange(sec.id)}
               className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                 activeSection === sec.id
                   ? "bg-blue-600 text-white shadow-sm"
@@ -141,8 +178,13 @@ const StartupApplyForm = () => {
               <Field label="State" required value={formData.state} onChange={(v) => update("state", v)} placeholder="e.g. Karnataka" />
               <Field label="PIN Code" required value={formData.pincode} onChange={(v) => update("pincode", v)} placeholder="e.g. 560001" />
             </div>
-            <div className="flex justify-end pt-4">
-              <button type="button" onClick={() => setActiveSection(1)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
+            <div className="flex justify-end pt-4 flex-col items-end gap-3">
+              {error && (
+                <div className="text-red-500 text-sm font-semibold animate-bounce">
+                  {error}
+                </div>
+              )}
+              <button type="button" onClick={() => handleSectionChange(1)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
                 Next: Business Details →
               </button>
             </div>
@@ -162,13 +204,20 @@ const StartupApplyForm = () => {
               <Field label="Date of Incorporation" type="date" value={formData.incorporationDate} onChange={(v) => update("incorporationDate", v)} />
               <SelectField label="Current Team Size" required value={formData.teamSize} onChange={(v) => update("teamSize", v)} options={["1-5", "6-15", "16-50", "50+"]} />
             </div>
-            <div className="flex justify-between pt-4">
-              <button type="button" onClick={() => setActiveSection(0)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
-                ← Previous
-              </button>
-              <button type="button" onClick={() => setActiveSection(2)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
-                Next: Financials →
-              </button>
+            <div className="flex flex-col gap-3 pt-4">
+              {error && (
+                <div className="text-red-500 text-sm font-semibold text-right animate-bounce">
+                  {error}
+                </div>
+              )}
+              <div className="flex justify-between">
+                <button type="button" onClick={() => handleSectionChange(0)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
+                  ← Previous
+                </button>
+                <button type="button" onClick={() => handleSectionChange(2)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
+                  Next: Financials →
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -187,13 +236,20 @@ const StartupApplyForm = () => {
               <Field label="Account Number" required value={formData.accountNo} onChange={(v) => update("accountNo", v)} placeholder="XXXXXXXXXXXX" />
               <Field label="IFSC Code" required value={formData.ifsc} onChange={(v) => update("ifsc", v)} placeholder="e.g. HDFC0001234" />
             </div>
-            <div className="flex justify-between pt-4">
-              <button type="button" onClick={() => setActiveSection(1)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
-                ← Previous
-              </button>
-              <button type="button" onClick={() => setActiveSection(3)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
-                Next: Pitch & Docs →
-              </button>
+            <div className="flex flex-col gap-3 pt-4">
+              {error && (
+                <div className="text-red-500 text-sm font-semibold text-right animate-bounce">
+                  {error}
+                </div>
+              )}
+              <div className="flex justify-between">
+                <button type="button" onClick={() => handleSectionChange(1)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
+                  ← Previous
+                </button>
+                <button type="button" onClick={() => handleSectionChange(3)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
+                  Next: Pitch & Docs →
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -254,7 +310,7 @@ const StartupApplyForm = () => {
             </div>
 
             <div className="flex justify-between pt-4">
-              <button type="button" onClick={() => setActiveSection(2)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
+              <button type="button" onClick={() => handleSectionChange(2)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
                 ← Previous
               </button>
               <button

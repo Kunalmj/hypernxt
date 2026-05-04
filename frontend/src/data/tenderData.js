@@ -14,7 +14,7 @@ export const tenders = [
     location: "Maharashtra",
     description: "Design, supply, testing, and commissioning of integrated solar LED street lights with Li-ion batteries across various wards in Mumbai.",
     tags: ["Solar", "LED", "Green Energy"],
-    website: "https://mcgm.gov.in/tenders",
+    website: "https://mcgm.gov.in",
     bidSubmissionMode: "Online (e-Tendering Portal)",
     eligibility: [
       "Registered firm with GST registration",
@@ -100,7 +100,7 @@ export const tenders = [
     location: "Pan India",
     description: "Prequalification of vendors for providing managed cloud services and disaster recovery for national portal hosting.",
     tags: ["IT", "Cloud", "SaaS"],
-    website: "https://gem.gov.in/tender/detail/GEM/2026/B/882190",
+    website: "https://gem.gov.in",
     bidSubmissionMode: "GeM Portal (Government e-Marketplace)",
     eligibility: [
       "Registered on Government e-Marketplace (GeM)",
@@ -143,7 +143,7 @@ export const tenders = [
     location: "Pan India",
     description: "Empanelment of IT agencies for mobile app development, UI/UX design, and platform maintenance for Startup India.",
     tags: ["App Dev", "Software", "UI/UX"],
-    website: "https://startupindia.gov.in/content/sih/en/tenders.html",
+    website: "https://startupindia.gov.in",
     bidSubmissionMode: "Online Proposal Submission via email + physical copy",
     eligibility: [
       "IT company registered for at least 3 years",
@@ -186,7 +186,7 @@ export const tenders = [
     location: "Maharashtra",
     description: "Procurement of PCR machines, refrigerated centrifuges, and other diagnostic equipment for district hospitals.",
     tags: ["Medical", "Pharma", "Equipments"],
-    website: "https://haffkinepharma.com/tenders",
+    website: "https://haffkinepharma.com",
     bidSubmissionMode: "Online (Maharashtra e-Tendering System)",
     eligibility: [
       "Authorized dealer/distributor of medical equipment",

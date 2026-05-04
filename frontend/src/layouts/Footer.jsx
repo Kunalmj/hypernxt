@@ -14,8 +14,8 @@ function Footer() {
           {/* BRAND */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 text-xl font-extrabold text-white mb-3">
-              <span className="bg-blue-500 text-white text-sm font-bold px-2 py-1 rounded-lg">OH</span>
-              OpportunityHub
+              <span className="bg-blue-500 text-white text-sm font-bold px-2 py-1 rounded-lg">FE</span>
+              FormEase
             </div>
             <p className="text-sm text-gray-400 leading-relaxed">
               India's trusted portal for Scholarships, Grants, Tenders, and
@@ -87,7 +87,7 @@ function Footer() {
               </button>
             </div>
             <div className="mt-5 space-y-1.5 text-sm text-gray-400">
-              <div>📧 support@opportunityhub.in</div>
+              <div>📧 contact@formease.in</div>
               <div>📞 +91 1800-XXX-XXXX</div>
               <div>🕐 Mon–Sat, 9:00 AM – 6:00 PM</div>
             </div>
@@ -96,7 +96,7 @@ function Footer() {
 
         {/* BOTTOM BAR */}
         <div className="border-t border-gray-800 mt-12 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-gray-500">
-          <span>© 2026 OpportunityHub. All rights reserved.</span>
+          <span>© 2026 FormEase. All rights reserved.</span>
           <div className="flex gap-5">
             {["Privacy Policy", "Terms of Service", "Disclaimer"].map((item) => (
               <span key={item} className="hover:text-blue-400 cursor-pointer transition">

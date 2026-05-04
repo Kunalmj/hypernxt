@@ -26,8 +26,42 @@ const AgriApplyForm = () => {
 
   const [submitted, setSubmitted] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
+  const [error, setError] = useState("");
 
-  const update = (key, val) => setFormData((p) => ({ ...p, [key]: val }));
+  const update = (key, val) => {
+    setFormData((p) => ({ ...p, [key]: val }));
+    setError("");
+  };
+
+  const validateSection = (targetIndex) => {
+    if (targetIndex <= activeSection) return true;
+
+    const requiredFields = {
+      0: ["farmerName", "aadhaar", "phone", "state", "district", "tehsil", "village"],
+      1: ["landSize", "khasraNo", "irrigationType", "cropType"],
+      2: ["bankName", "accountNo", "ifsc"],
+    };
+
+    for (let i = activeSection; i < targetIndex; i++) {
+      const fields = requiredFields[i];
+      if (!fields) continue;
+
+      for (const field of fields) {
+        if (!formData[field] || formData[field].toString().trim() === "") {
+          setError(`Please fill all required fields in the "${sections[i].label}" section.`);
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
+  const handleSectionChange = (index) => {
+    if (validateSection(index)) {
+      setActiveSection(index);
+      window.scrollTo(0, 0);
+    }
+  };
 
   const sections = [
     { id: 0, label: "Personal Info" },
@@ -82,9 +116,9 @@ const AgriApplyForm = () => {
             <div className="mt-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4">
               <p className="text-lg font-semibold">{scheme.title}</p>
               <div className="flex flex-wrap gap-3 mt-2 text-sm text-blue-100">
-                <span>🏛 {scheme.provider}</span>
-                <span>💰 {scheme.amount}</span>
-                <span>📅 Deadline: {scheme.deadline}</span>
+                <span> {scheme.provider}</span>
+                <span> {scheme.amount}</span>
+                <span> Deadline: {scheme.deadline}</span>
               </div>
             </div>
           )}
@@ -97,7 +131,7 @@ const AgriApplyForm = () => {
           {sections.map((sec) => (
             <button
               key={sec.id}
-              onClick={() => setActiveSection(sec.id)}
+              onClick={() => handleSectionChange(sec.id)}
               className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                 activeSection === sec.id
                   ? "bg-blue-600 text-white shadow-sm"
@@ -130,8 +164,13 @@ const AgriApplyForm = () => {
               <Field label="Tehsil/Block" required value={formData.tehsil} onChange={(v) => update("tehsil", v)} placeholder="e.g. Samrala" />
               <Field label="Village" required value={formData.village} onChange={(v) => update("village", v)} placeholder="e.g. Machhiwara" />
             </div>
-            <div className="flex justify-end pt-4">
-              <button type="button" onClick={() => setActiveSection(1)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
+            <div className="flex justify-end pt-4 flex-col items-end gap-3">
+              {error && (
+                <div className="text-red-500 text-sm font-semibold animate-bounce">
+                  {error}
+                </div>
+              )}
+              <button type="button" onClick={() => handleSectionChange(1)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
                 Next: Land Details →
               </button>
             </div>
@@ -151,13 +190,20 @@ const AgriApplyForm = () => {
               <SelectField label="Irrigation Type" required value={formData.irrigationType} onChange={(v) => update("irrigationType", v)} options={["Rainfed", "Canal", "Tube Well", "Micro-Irrigation (Drip/Sprinkler)", "Other"]} />
               <SelectField label="Primary Crop Type" required value={formData.cropType} onChange={(v) => update("cropType", v)} options={["Wheat/Rice", "Pulses", "Oilseeds", "Vegetables/Fruits", "Cash Crops (Cotton/Sugarcane)", "Other"]} />
             </div>
-            <div className="flex justify-between pt-4">
-              <button type="button" onClick={() => setActiveSection(0)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
-                ← Previous
-              </button>
-              <button type="button" onClick={() => setActiveSection(2)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
-                Next: Bank Info →
-              </button>
+            <div className="flex flex-col gap-3 pt-4">
+              {error && (
+                <div className="text-red-500 text-sm font-semibold text-right animate-bounce">
+                  {error}
+                </div>
+              )}
+              <div className="flex justify-between">
+                <button type="button" onClick={() => handleSectionChange(0)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
+                  ← Previous
+                </button>
+                <button type="button" onClick={() => handleSectionChange(2)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
+                  Next: Bank Info →
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -174,13 +220,20 @@ const AgriApplyForm = () => {
               <Field label="Account Number (Aadhaar Seeded)" required value={formData.accountNo} onChange={(v) => update("accountNo", v)} placeholder="XXXXXXXXXXXX" />
               <Field label="IFSC Code" required value={formData.ifsc} onChange={(v) => update("ifsc", v)} placeholder="e.g. SBIN0001234" />
             </div>
-            <div className="flex justify-between pt-4">
-              <button type="button" onClick={() => setActiveSection(1)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
-                ← Previous
-              </button>
-              <button type="button" onClick={() => setActiveSection(3)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
-                Next: Documents →
-              </button>
+            <div className="flex flex-col gap-3 pt-4">
+              {error && (
+                <div className="text-red-500 text-sm font-semibold text-right animate-bounce">
+                  {error}
+                </div>
+              )}
+              <div className="flex justify-between">
+                <button type="button" onClick={() => handleSectionChange(1)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
+                  ← Previous
+                </button>
+                <button type="button" onClick={() => handleSectionChange(3)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
+                  Next: Documents →
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -227,7 +280,7 @@ const AgriApplyForm = () => {
             </div>
 
             <div className="flex justify-between pt-4">
-              <button type="button" onClick={() => setActiveSection(2)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
+              <button type="button" onClick={() => handleSectionChange(2)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
                 ← Previous
               </button>
               <button

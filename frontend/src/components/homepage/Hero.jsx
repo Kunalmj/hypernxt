@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { IconSearch, IconScholarship, IconStartup, IconAgriculture, IconTender, IconWomen } from "./Icons";
+import { IconSearch, IconScholarship, IconStartup, IconAgriculture, IconTender, IconWomen, IconResearch, IconCitizen } from "./Icons";
 
 const pills = [
   { label: "Scholarships", Icon: IconScholarship, route: "/scholarships" },
@@ -10,8 +10,23 @@ const pills = [
   { label: "Women Programs", Icon: IconWomen, route: "/women-programs" },
 ];
 
+const ALL_SERVICES = [
+  { Icon: IconScholarship, title: "Scholarships", route: "/scholarships" },
+  { Icon: IconStartup, title: "Startup/MSME", route: "/startup-msme" },
+  { Icon: IconAgriculture, title: "Agriculture", route: "/agriculture" },
+  { Icon: IconWomen, title: "Women Programs", route: "/women-programs" },
+  { Icon: IconResearch, title: "Research Grants", route: "/research-grants" },
+  { Icon: IconTender, title: "Tenders/RFPs", route: "/tenders" },
+  { Icon: IconCitizen, title: "Citizen Schemes", route: "/citizen-schemes" },
+];
+
 const Hero = ({ query, setQuery }) => {
   const navigate = useNavigate();
+  const [isFocused, setIsFocus] = useState(false);
+
+  const filtered = ALL_SERVICES.filter(s => 
+    query && s.title.toLowerCase().includes(query.toLowerCase())
+  );
 
   return (
     <section
@@ -54,21 +69,50 @@ const Hero = ({ query, setQuery }) => {
         </p>
 
         {/* Search */}
-        <div className="flex items-center bg-white/95 border-1.5 border-[#dbeafe] rounded-full overflow-hidden shadow-xl w-full max-w-lg backdrop-blur-md">
-          <span className="pl-4.5 flex items-center flex-shrink-0">
-            <IconSearch />
-          </span>
-          <input 
-            type="text" 
-            value={query} 
-            onChange={e => setQuery(e.target.value)} 
-            placeholder="Search documents, services..."
-            className="flex-1 border-none outline-none px-3 py-3.5 md:py-4 text-sm md:text-[0.9rem] text-[#1e293b] bg-transparent" 
-          />
-          <button
-            className="bg-[#1d4ed8] text-white border-none px-6 md:px-8 py-3.5 md:py-4 font-bold text-sm cursor-pointer transition-colors hover:bg-[#1e40af] whitespace-nowrap"
-            onClick={() => {}}
-          >Search</button>
+        <div className="relative w-full max-w-lg">
+          <div className="flex items-center bg-white/95 border-1.5 border-[#dbeafe] rounded-full overflow-hidden shadow-xl w-full backdrop-blur-md transition-all focus-within:ring-4 focus-within:ring-blue-100 focus-within:border-blue-300">
+            <span className="pl-4.5 flex items-center flex-shrink-0">
+              <IconSearch />
+            </span>
+            <input 
+              type="text" 
+              value={query} 
+              onChange={e => setQuery(e.target.value)} 
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => setTimeout(() => setIsFocus(false), 200)}
+              placeholder="Search documents, services..."
+              className="flex-1 border-none outline-none px-3 py-3.5 md:py-4 text-sm md:text-[0.9rem] text-[#1e293b] bg-transparent" 
+            />
+            <button
+              className="bg-[#1d4ed8] text-white border-none px-6 md:px-8 py-3.5 md:py-4 font-bold text-sm cursor-pointer transition-colors hover:bg-[#1e40af] whitespace-nowrap"
+            >Search</button>
+          </div>
+
+          {/* DROPDOWN */}
+          {isFocused && filtered.length > 0 && (
+            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden z-[100] animate-in fade-in slide-in-from-top-2 duration-200">
+              <div className="py-2">
+                {filtered.map(({ title, route, Icon: SvcIcon }) => (
+                  <button
+                    key={title}
+                    onMouseDown={(e) => { 
+                      e.preventDefault(); // Prevent blur from firing before this
+                      navigate(route); 
+                      setQuery(""); 
+                      setIsFocus(false);
+                    }}
+                    className="w-full flex items-center gap-3 px-5 py-3 hover:bg-slate-50 transition-colors border-none bg-transparent cursor-pointer text-left group"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                      <SvcIcon size={18} />
+                    </div>
+                    <span className="text-sm font-semibold text-slate-700">{title}</span>
+                    <span className="ml-auto text-[0.7rem] font-bold text-slate-400 bg-slate-50 px-2 py-0.5 rounded uppercase tracking-wider group-hover:text-blue-500">Open Form</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Pills */}

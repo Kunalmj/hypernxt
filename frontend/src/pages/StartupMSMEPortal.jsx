@@ -10,12 +10,7 @@ const Icons = {
   Exit: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
 };
 
-const IndianStates = [
-  "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana",
-  "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur",
-  "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu",
-  "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"
-];
+import { indianStates as IndianStates } from "../utils/states";
 
 const fundingOptions = [
   { label: "<5 Lakhs", min: 0, max: 5 },
@@ -113,7 +108,17 @@ const StartupMSMEPortal = () => {
     return false;
   };
 
+  const isFormValid = !isNextDisabled(1) && !isNextDisabled(2) && !isNextDisabled(3) && !isNextDisabled(4) && !isNextDisabled(5);
+
+  const [error, setError] = useState("");
+
   const handleSubmit = () => {
+    setError("");
+    if (!isFormValid) {
+      setError("Please fill out all required fields in all steps before proceeding.");
+      return;
+    }
+
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
@@ -359,7 +364,7 @@ const StartupMSMEPortal = () => {
                               : "border-slate-200 bg-white text-slate-600 hover:bg-slate-100"
                             }`}
                         >
-                          {isSelected ? "✓ " : "+ "}{tag}
+                          {isSelected ? " " : "+ "}{tag}
                         </button>
                       );
                     })}
@@ -385,7 +390,8 @@ const StartupMSMEPortal = () => {
                     "Find Grants →"
                   )}
                 </button>
-                <p className="mt-4 text-sm text-slate-500">Fill in all steps to find your best grants.</p>
+                {error && <p className="mt-4 text-sm font-medium text-red-500">{error}</p>}
+                {!error && <p className="mt-4 text-sm text-slate-500">Fill in all steps to find your best grants.</p>}
               </div>
             </section>
 
