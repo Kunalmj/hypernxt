@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { indianStates } from "../utils/states";
 
 const Icons = {
   Category: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>,
@@ -14,6 +15,7 @@ const AgriculturePortal = () => {
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const [data, setData] = useState({
     farmerType: "",
@@ -54,6 +56,12 @@ const AgriculturePortal = () => {
   ];
 
   const handleSubmit = () => {
+    setError("");
+    if (!data.farmerType || !data.landSize || !data.state || !data.support) {
+      setError("Please fill out all required fields before proceeding.");
+      return;
+    }
+
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
@@ -210,7 +218,7 @@ const AgriculturePortal = () => {
                               : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
                             }`}
                         >
-                          {isSelected ? "✓ " : "+ "}{crop}
+                          {isSelected ? " " : "+ "}{crop}
                         </button>
                       );
                     })}
@@ -236,10 +244,7 @@ const AgriculturePortal = () => {
                       className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all bg-white text-[15px]"
                     >
                       <option value="">Select State</option>
-                      {[
-                        "Punjab", "Haryana", "Uttar Pradesh", "Maharashtra",
-                        "Karnataka", "Tamil Nadu", "West Bengal", "All India"
-                      ].map(s => (
+                      {indianStates.map(s => (
                         <option key={s} value={s}>{s}</option>
                       ))}
                     </select>
@@ -303,7 +308,8 @@ const AgriculturePortal = () => {
                 >
                   {isLoading ? "Finding Schemes..." : "Find Schemes →"}
                 </button>
-                <p className="mt-4 text-sm text-slate-500">Discover agriculture grants tailored for you.</p>
+                {error && <p className="mt-4 text-sm font-medium text-red-500">{error}</p>}
+                {!error && <p className="mt-4 text-sm text-slate-500">Discover agriculture grants tailored for you.</p>}
               </div>
             </section>
 

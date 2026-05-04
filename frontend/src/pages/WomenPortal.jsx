@@ -125,7 +125,7 @@ const WomenPortal = () => {
           <div className="sticky top-0 bg-white/80 backdrop-blur-md z-20 border-b border-slate-100 p-6 shadow-sm">
             <div className="max-w-3xl mx-auto flex items-center justify-between">
               <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-600">
-                Find OpportunityHub
+                Find Opportunity
               </h1>
               <div className="text-sm font-medium text-slate-500 bg-slate-100 px-4 py-1.5 rounded-full">
                 Step {activeStep} of 5

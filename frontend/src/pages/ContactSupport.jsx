@@ -19,7 +19,7 @@ const ContactSupport = () => {
             Get in <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Touch.</span>
           </h1>
           <p className="text-base md:text-lg text-slate-500 font-medium leading-relaxed max-w-2xl mx-auto">
-            Have questions about a specific scheme or need technical support with your Opportunity Hub account? Our dedicated team is here to assist you.
+            Have questions about a specific scheme or need technical support with your FormEase account? Our dedicated team is here to assist you.
           </p>
         </div>
 
@@ -29,7 +29,7 @@ const ContactSupport = () => {
           <div className="lg:col-span-5 space-y-5 md:space-y-6">
             {[
                 { t: "Expert Support", v: "1800-300-4000", ext: "Toll Free", d: "Mon-Sat, 9am - 6pm IST", icon: "M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" },
-                { t: "Email Inquiry", v: "support@opportunityhub.in", ext: "", d: "Average response time: 4 hours", icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
+                { t: "Email Inquiry", v: "contact@formease.in", ext: "", d: "Average response time: 4 hours", icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
                 { t: "Headquarters", v: "Civic Tower, Sector 62", ext: "", d: "Bhubaneswar, Odisha, India", icon: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" }
             ].map((item, i) => (
                 <div key={i} className="group flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-6 p-6 sm:p-8 rounded-[2rem] bg-white border border-slate-100 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-900/5 transition-all duration-300 shadow-md">

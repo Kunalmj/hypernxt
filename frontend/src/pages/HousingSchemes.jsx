@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { STATES, BENEFICIARY_TYPES, GENDERS, SPONSORS, CASTES } from "../utils/filterConstants";
 
 /* ── Scheme data ─────────────────────────────────────────────── */
 const allSchemes = [
@@ -89,10 +90,11 @@ const allSchemes = [
   },
 ];
 
-const STATES = ["All States", "All India", "Maharashtra", "Delhi", "Karnataka", "Tamil Nadu", "Gujarat", "Uttar Pradesh"];
-const BENEFICIARY_TYPES = ["All Beneficiaries", "EWS/LIG", "Rural Households", "Homeless", "General Public"];
-const GENDERS = ["All Genders", "Male", "Female", "Transgender"];
-const SPONSORS = ["All Sponsors", "Central Government", "State Government", "Both"];
+
+
+
+
+
 
 /* ── Tag badge ───────────────────────────────────────────────── */
 const Tag = ({ label }) => (
@@ -134,6 +136,7 @@ const HousingSchemes = () => {
     beneficiaryType: "All Beneficiaries",
     gender: "All Genders",
     sponsor: "All Sponsors",
+    caste: "All Categories",
   });
 
   const setFilter = (key, val) => setFilters((f) => ({ ...f, [key]: val }));
@@ -150,6 +153,8 @@ const HousingSchemes = () => {
       if (filters.beneficiaryType !== "All Beneficiaries" && s.beneficiaryType !== filters.beneficiaryType) return false;
       if (filters.gender !== "All Genders" && s.gender !== filters.gender && s.gender !== "All Genders") return false;
       if (filters.sponsor !== "All Sponsors" && s.sponsor !== filters.sponsor) return false;
+      const schemeCaste = s.caste || "All Categories";
+      if (filters.caste !== "All Categories" && schemeCaste !== filters.caste && schemeCaste !== "All Categories") return false;
       return true;
     });
   }, [search, filters]);
@@ -212,9 +217,10 @@ const HousingSchemes = () => {
             <FilterSelect label="Beneficiary Type"  value={filters.beneficiaryType} onChange={(v) => setFilter("beneficiaryType", v)} options={BENEFICIARY_TYPES} />
             <FilterSelect label="Gender"            value={filters.gender}          onChange={(v) => setFilter("gender", v)}          options={GENDERS} />
             <FilterSelect label="Sponsored By"      value={filters.sponsor}         onChange={(v) => setFilter("sponsor", v)}         options={SPONSORS} />
+            <FilterSelect label="Caste / Category"  value={filters.caste}           onChange={(v) => setFilter("caste", v)}           options={CASTES} />
             <button
               onClick={() =>
-                setFilters({ state: "All States", beneficiaryType: "All Beneficiaries", gender: "All Genders", sponsor: "All Sponsors" })
+                setFilters({ state: "All States", beneficiaryType: "All Beneficiaries", gender: "All Genders", sponsor: "All Sponsors", caste: "All Categories" })
               }
               className="w-full mt-1 py-2 rounded-xl text-[0.8rem] font-semibold text-[#64748b] border border-[#e2e8f0] bg-transparent cursor-pointer hover:border-[#3b82f6] hover:text-[#2563eb] transition-colors"
             >
@@ -310,9 +316,7 @@ const HousingSchemes = () => {
                       >
                         View Details →
                       </button>
-                      <button className="w-full inline-flex items-center justify-center gap-1.5 bg-white text-[#2563eb] text-[0.8rem] font-semibold rounded-xl px-4 py-2 border border-[#bfdbfe] cursor-pointer hover:bg-[#eff6ff] transition-colors">
-                        🤝 Need Assistance?
-                      </button>
+                      
                     </div>
                   </div>
                 </div>

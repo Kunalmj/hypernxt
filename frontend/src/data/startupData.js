@@ -57,7 +57,7 @@ export const startupSchemes = [
     eligibility: "Women-led startups only (min 51% equity)",
     description: "Empowering women entrepreneurs in the technology sector.",
     tags: ["Women-led"],
-    website: "https://wcd.nic.in/women-tech-grant",
+    website: "https://wcd.nic.in",
     applicationMode: "Online submission of pitch deck and financials",
     selectionProcess: "Technical Review → Financial Feasibility Check → Interview with Expert Panel → Grant Approval",
     benefits: [
@@ -99,7 +99,7 @@ export const startupSchemes = [
     eligibility: "Registered Pvt Ltd or LLP",
     description: "Innovation challenge for agricultural technologies and sustainable farming.",
     tags: ["Rural startup", "Sustainability / Climate"],
-    website: "https://agricoop.nic.in/agritech",
+    website: "https://agricoop.nic.in",
     applicationMode: "Online via Agri-India Hackathon portal",
     selectionProcess: "Idea Pitch → Prototype Demonstration → Field Trial Validation → Final Jury Selection",
     benefits: [
@@ -141,7 +141,7 @@ export const startupSchemes = [
     eligibility: "Minimum ₹10L ARR",
     description: "Scale-up capital for health technology startups with proven clinical outcomes.",
     tags: ["DeepTech"],
-    website: "https://mohfw.gov.in/healthtech",
+    website: "https://mohfw.gov.in",
     applicationMode: "Application with Clinical Trial Data",
     selectionProcess: "Clinical Validation Review → Commercial Diligence → Medical Board Interview → Funding Approval",
     benefits: [
@@ -183,7 +183,7 @@ export const startupSchemes = [
     eligibility: "College students",
     description: "Fellowship to encourage entrepreneurship among students.",
     tags: ["Student startup"],
-    website: "https://mic.gov.in/fellowship",
+    website: "https://mic.gov.in",
     applicationMode: "Institute-level nomination",
     selectionProcess: "University Screening → Regional Pitch → National Level Interview",
     benefits: [
@@ -224,7 +224,7 @@ export const startupSchemes = [
     eligibility: "Sustainability focus",
     description: "Grants for clean energy and climate tech innovations.",
     tags: ["Sustainability / Climate"],
-    website: "https://mnre.gov.in/clean-grant",
+    website: "https://mnre.gov.in",
     applicationMode: "Detailed Project Report (DPR) Submission",
     selectionProcess: "Technical Feasibility Study → Environmental Impact Assessment → Financial Review → Approval",
     benefits: [
@@ -265,7 +265,7 @@ export const startupSchemes = [
     eligibility: "Not Registered / Pvt Ltd",
     description: "Awards for innovative financial technologies promoting financial inclusion.",
     tags: [],
-    website: "https://rbihub.in/awards",
+    website: "https://rbihub.in",
     applicationMode: "Online Form with Demo Video",
     selectionProcess: "Initial Screening → Demo Day Pitch → Final Selection by RBI Panel",
     benefits: [
@@ -306,7 +306,7 @@ export const startupSchemes = [
     eligibility: "DPIIT or MSME",
     description: "Research grants for artificial intelligence and machine learning applications in governance.",
     tags: ["DeepTech", "Student startup"],
-    website: "https://indiaai.gov.in/grant",
+    website: "https://indiaai.gov.in",
     applicationMode: "Online Proposal Submission",
     selectionProcess: "Peer Review → Technical Evaluation → Committee Approval",
     benefits: [

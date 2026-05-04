@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Hero from "../components/homepage/Hero";
-import StatsBar from "../components/homepage/StatsBar";
 import BrowseServices from "../components/homepage/BrowseServices";
 import NeedHelp from "../components/homepage/NeedHelp";
 import AIBanner from "../components/homepage/AIBanner";
@@ -19,9 +18,7 @@ const Home = () => {
     >
       <Hero query={query} setQuery={setQuery} />
       
-      <StatsBar />
-      
-      <BrowseServices />
+      <BrowseServices query={query} />
       
       <NeedHelp />
       

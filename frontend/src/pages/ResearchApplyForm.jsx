@@ -26,8 +26,42 @@ const ResearchApplyForm = () => {
 
   const [submitted, setSubmitted] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
+  const [error, setError] = useState("");
 
-  const update = (key, val) => setFormData((p) => ({ ...p, [key]: val }));
+  const update = (key, val) => {
+    setFormData((p) => ({ ...p, [key]: val }));
+    setError("");
+  };
+
+  const validateSection = (targetIndex) => {
+    if (targetIndex <= activeSection) return true;
+
+    const requiredFields = {
+      0: ["investigatorName", "designation", "department", "institution", "email", "phone"],
+      1: ["projectTitle", "researchArea", "duration", "summary"],
+      2: ["budget", "bankName", "accountNo", "ifsc"],
+    };
+
+    for (let i = activeSection; i < targetIndex; i++) {
+      const fields = requiredFields[i];
+      if (!fields) continue;
+
+      for (const field of fields) {
+        if (!formData[field] || formData[field].toString().trim() === "") {
+          setError(`Please fill all required fields in the "${sections[i].label}" section.`);
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
+  const handleSectionChange = (index) => {
+    if (validateSection(index)) {
+      setActiveSection(index);
+      window.scrollTo(0, 0);
+    }
+  };
 
   const sections = [
     { id: 0, label: "Investigator Details" },
@@ -82,8 +116,8 @@ const ResearchApplyForm = () => {
             <div className="mt-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4">
               <p className="text-lg font-semibold">{grant.title}</p>
               <div className="flex flex-wrap gap-3 mt-2 text-sm text-blue-100">
-                <span>🏛 {grant.agency}</span>
-                <span>💰 {grant.amount}</span>
+                <span> {grant.agency}</span>
+                <span> {grant.amount}</span>
                 <span>⏱ Duration: {grant.duration}</span>
               </div>
             </div>
@@ -97,7 +131,7 @@ const ResearchApplyForm = () => {
           {sections.map((sec) => (
             <button
               key={sec.id}
-              onClick={() => setActiveSection(sec.id)}
+              onClick={() => handleSectionChange(sec.id)}
               className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all ${
                 activeSection === sec.id
                   ? "bg-blue-600 text-white shadow-sm"
@@ -128,8 +162,13 @@ const ResearchApplyForm = () => {
               <Field label="Official Email Address" type="email" required value={formData.email} onChange={(v) => update("email", v)} placeholder="ananya@iitb.ac.in" />
               <Field label="Contact Number" type="tel" required value={formData.phone} onChange={(v) => update("phone", v)} placeholder="+91 98765 43210" />
             </div>
-            <div className="flex justify-end pt-4">
-              <button type="button" onClick={() => setActiveSection(1)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
+            <div className="flex justify-end pt-4 flex-col items-end gap-3">
+              {error && (
+                <div className="text-red-500 text-sm font-semibold animate-bounce">
+                  {error}
+                </div>
+              )}
+              <button type="button" onClick={() => handleSectionChange(1)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
                 Next: Project Details →
               </button>
             </div>
@@ -163,13 +202,20 @@ const ResearchApplyForm = () => {
                 />
               </div>
             </div>
-            <div className="flex justify-between pt-4">
-              <button type="button" onClick={() => setActiveSection(0)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
-                ← Previous
-              </button>
-              <button type="button" onClick={() => setActiveSection(2)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
-                Next: Funding & Inst. →
-              </button>
+            <div className="flex flex-col gap-3 pt-4">
+              {error && (
+                <div className="text-red-500 text-sm font-semibold text-right animate-bounce">
+                  {error}
+                </div>
+              )}
+              <div className="flex justify-between">
+                <button type="button" onClick={() => handleSectionChange(0)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
+                  ← Previous
+                </button>
+                <button type="button" onClick={() => handleSectionChange(2)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
+                  Next: Funding & Inst. →
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -188,13 +234,20 @@ const ResearchApplyForm = () => {
               <Field label="Institution Account Number" required value={formData.accountNo} onChange={(v) => update("accountNo", v)} placeholder="XXXXXXXXXXXX" />
               <Field label="IFSC Code" required value={formData.ifsc} onChange={(v) => update("ifsc", v)} placeholder="e.g. SBIN0001234" />
             </div>
-            <div className="flex justify-between pt-4">
-              <button type="button" onClick={() => setActiveSection(1)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
-                ← Previous
-              </button>
-              <button type="button" onClick={() => setActiveSection(3)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
-                Next: Upload & Submit →
-              </button>
+            <div className="flex flex-col gap-3 pt-4">
+              {error && (
+                <div className="text-red-500 text-sm font-semibold text-right animate-bounce">
+                  {error}
+                </div>
+              )}
+              <div className="flex justify-between">
+                <button type="button" onClick={() => handleSectionChange(1)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
+                  ← Previous
+                </button>
+                <button type="button" onClick={() => handleSectionChange(3)} className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-colors shadow-sm">
+                  Next: Upload & Submit →
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -241,7 +294,7 @@ const ResearchApplyForm = () => {
             </div>
 
             <div className="flex justify-between pt-4">
-              <button type="button" onClick={() => setActiveSection(2)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
+              <button type="button" onClick={() => handleSectionChange(2)} className="px-6 py-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl transition-colors">
                 ← Previous
               </button>
               <button

@@ -11,7 +11,7 @@ const services = [
   { Icon: IconCitizen, title: "Citizen Schemes", desc: "Explore 3,000+ government welfare schemes across 12 categories — banking, health, housing, and more.", count: "12 Categories", route: "/citizen-schemes" },
 ];
 
-const BrowseServices = () => {
+const BrowseServices = ({ query = "" }) => {
   const navigate = useNavigate();
 
   return (
@@ -31,7 +31,12 @@ const BrowseServices = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {services.map(({ Icon: SvcIcon, title, desc, count, route }) => (
+            {services
+              .filter(s => 
+                s.title.toLowerCase().includes(query.toLowerCase()) || 
+                s.desc.toLowerCase().includes(query.toLowerCase())
+              )
+              .map(({ Icon: SvcIcon, title, desc, count, route }) => (
               <div 
                 key={title}
                 className="bg-white border border-[#e2e8f0] rounded-2xl p-7 flex flex-col justify-between cursor-pointer group"
@@ -72,12 +77,6 @@ const BrowseServices = () => {
                 </button>
               </div>
             ))}
-          </div>
-
-          <div className="text-center mt-10 md:mt-12">
-            <Link to="/browse-all" className="inline-block bg-[#1e3a8a] text-white border-none px-8 py-3.5 rounded-xl font-bold text-sm cursor-pointer shadow-md transition-colors hover:bg-[#1e40af] text-decoration-none">
-              View All →
-            </Link>
           </div>
         </div>
       </section>
