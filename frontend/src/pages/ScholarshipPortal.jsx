@@ -9,133 +9,15 @@ const Icons = {
   Tier: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z" /><path d="M6 12v5c0 2 2.7 3.5 6 3.5s6-1.5 6-3.5v-5" /></svg>,
   Field: () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M2 12h20" /><path d="m4.93 4.93 14.14 14.14M4.93 19.07 19.07 4.93" /></svg>,
   Exit: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>,
-  Globe: () => <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>,
-  Flag: () => <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" /><line x1="4" y1="22" x2="4" y2="15" /></svg>,
-};
-
-/* ── Scope Selector Landing Screen ────────────────────────────── */
-const ScopeSelectorScreen = ({ onSelect }) => {
-  const navigate = useNavigate();
-  const [hovered, setHovered] = useState(null);
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f1f5c] via-[#153e9c] to-[#1e3a8a] flex flex-col font-sans">
-      {/* Top bar */}
-      <div className="flex items-center justify-between px-8 pt-8 pb-4">
-        <div className="text-white">
-          <span className="text-2xl font-extrabold tracking-tight">Scholarship</span>
-          <span className="text-2xl font-light opacity-70 ml-1">Portal</span>
-        </div>
-        <button
-          onClick={() => navigate("/")}
-          className="flex items-center gap-2 text-white/60 hover:text-white transition-colors text-sm font-semibold"
-        >
-          <Icons.Exit />
-          Exit
-        </button>
-      </div>
-
-      {/* Center content */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 pb-16">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-blue-200 text-sm font-semibold mb-6">
-            <span className="w-2 h-2 bg-blue-300 rounded-full animate-pulse"></span>
-            Step 1 of 5 — Scholarship Scope
-          </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4 leading-tight">
-            Where do you want to study?
-          </h1>
-          <p className="text-blue-200 text-lg max-w-md mx-auto opacity-90">
-            Tell us your scholarship scope and we'll find the best opportunities tailored for you.
-          </p>
-        </div>
-
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
-          {[
-            {
-              id: "International",
-              Icon: Icons.Globe,
-              title: "International",
-              subtitle: "Study Abroad",
-              desc: "Pursue scholarships at universities worldwide — USA, UK, Canada, Europe, Australia and more.",
-              gradient: "from-blue-400/20 to-indigo-500/20",
-              border: "border-blue-400/30 hover:border-blue-300",
-              badge: " Global",
-              highlights: ["Fully-funded options", "Prestigious institutions", "150+ countries"]
-            },
-            {
-              id: "National",
-              Icon: Icons.Flag,
-              title: "National",
-              subtitle: "Study in India",
-              desc: "Explore government and private scholarships for studies within India at top universities.",
-              gradient: "from-orange-400/20 to-amber-400/20",
-              border: "border-orange-400/30 hover:border-orange-300",
-              badge: " India",
-              highlights: ["Central & state schemes", "Merit & need based", "All levels covered"]
-            },
-          ].map((opt) => (
-            <button
-              key={opt.id}
-              onClick={() => onSelect(opt.id)}
-              onMouseEnter={() => setHovered(opt.id)}
-              onMouseLeave={() => setHovered(null)}
-              className={`relative bg-gradient-to-br ${opt.gradient} border-2 ${opt.border} rounded-2xl p-8 text-left transition-all duration-300 group
-                ${hovered === opt.id ? "scale-[1.02] shadow-2xl shadow-black/30" : "scale-100 shadow-lg shadow-black/20"}`}
-            >
-              {/* Badge */}
-              <div className="absolute top-5 right-5 text-sm font-bold text-white/80 bg-white/10 border border-white/20 rounded-full px-3 py-0.5">
-                {opt.badge}
-              </div>
-
-              {/* Icon */}
-              <div className="text-white/80 mb-5 group-hover:text-white transition-colors">
-                <opt.Icon />
-              </div>
-
-              {/* Text */}
-              <h2 className="text-2xl font-extrabold text-white mb-0.5">{opt.title}</h2>
-              <p className="text-blue-200 text-sm font-semibold mb-3">{opt.subtitle}</p>
-              <p className="text-blue-100/80 text-sm leading-relaxed mb-5">{opt.desc}</p>
-
-              {/* Highlights */}
-              <div className="flex flex-col gap-1.5">
-                {opt.highlights.map((h) => (
-                  <div key={h} className="flex items-center gap-2 text-sm text-blue-100/90">
-                    <span className="w-1.5 h-1.5 bg-blue-300 rounded-full shrink-0"></span>
-                    {h}
-                  </div>
-                ))}
-              </div>
-
-              {/* Arrow CTA */}
-              <div className="mt-6 flex items-center gap-2 text-white font-bold text-sm group-hover:gap-3 transition-all">
-                Select & Continue
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" /></svg>
-              </div>
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
 };
 
 /* ── Main Portal Wizard ───────────────────────────────────────── */
 const ScholarshipPortal = () => {
   const navigate = useNavigate();
 
-  const [scopeSelected, setScopeSelected] = useState(null);
-
   const [activeStep, setActiveStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-
-  // Clear any stale data left from previous sessions
-  useEffect(() => {
-    localStorage.removeItem("scholarshipSearchState");
-  }, []);
 
   const [data, setData] = useState({
     type: "",
@@ -145,12 +27,9 @@ const ScholarshipPortal = () => {
     field: "",
   });
 
-
-  const handleScopeSelect = (scopeType) => {
-    const updated = { ...data, type: scopeType };
-    setData(updated);
-    setScopeSelected(scopeType);
-  };
+  useEffect(() => {
+    localStorage.removeItem("scholarshipSearchState");
+  }, []);
 
   const steps = [
     { id: 1, title: "Citizenship" },
@@ -178,7 +57,7 @@ const ScholarshipPortal = () => {
     });
 
     return () => observer.disconnect();
-  }, [scopeSelected]);
+  }, []);
 
   const handleSubmit = () => {
     setError("");
@@ -200,12 +79,6 @@ const ScholarshipPortal = () => {
     }, 1500);
   };
 
-  // Show scope selector if scope not yet chosen
-  if (!scopeSelected) {
-    return <ScopeSelectorScreen onSelect={handleScopeSelect} />;
-  }
-
-  // Region options differ by scope
   const regionOptions = data.type === "International"
     ? ["USA", "UK", "Canada", "Australia", "Europe", "Japan", "Germany", "Singapore"]
     : indianStates;
@@ -225,25 +98,10 @@ const ScholarshipPortal = () => {
           ></div>
           <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-[#0b2259]/80 to-transparent pointer-events-none"></div>
 
-          <h2 className="text-3xl mb-4 text-white flex items-center relative z-10 tracking-tight">
-            <span className="font-extrabold mr-1.5">Scholarship</span> <span className="font-light opacity-80">Portal</span>
+          <h2 className="text-3xl mb-10 text-white flex items-center relative z-10 tracking-tight">
+            <span className="font-extrabold mr-1.5">Scholarship</span>
+            <span className="font-light opacity-80">Portal</span>
           </h2>
-
-          {/* Scope badge */}
-          <div
-            className="relative z-10 mb-8 flex items-center gap-2 bg-white/10 border border-white/20 rounded-xl px-4 py-2.5 cursor-pointer hover:bg-white/15 transition-colors group"
-            onClick={() => {
-              setScopeSelected(null);
-              setData({ ...data, type: "" });
-            }}
-          >
-            <span className="text-lg">{data.type === "International" ? "" : ""}</span>
-            <div>
-              <p className="text-white font-bold text-sm">{data.type} Scholarship</p>
-              <p className="text-blue-200 text-xs group-hover:text-blue-100 transition-colors">Click to change scope</p>
-            </div>
-            <svg className="w-4 h-4 text-white/50 ml-auto group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-          </div>
 
           <div className="flex flex-col gap-2 relative z-10">
             {steps.map((s) => {
@@ -253,16 +111,16 @@ const ScholarshipPortal = () => {
               return (
                 <div
                   key={s.id}
-                  className={`flex items-center gap-4 p-3 rounded-2xl cursor-pointer transition-all duration-300 ${isActive ? 'bg-[#2954b8]' : 'hover:bg-white/5'}`}
+                  className={`flex items-center gap-4 p-3 rounded-2xl cursor-pointer transition-all duration-300 ${isActive ? "bg-[#2954b8]" : "hover:bg-white/5"}`}
                   onClick={() => {
                     const el = sectionRefs.current[s.id];
-                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
                   }}
                 >
-                  <div className={`w-[52px] h-[52px] rounded-[14px] flex items-center justify-center transition-all duration-300 ${isActive ? 'bg-white text-[#153e9c] shadow-md' : 'bg-white/10 text-white/70'}`}>
+                  <div className={`w-[52px] h-[52px] rounded-[14px] flex items-center justify-center transition-all duration-300 ${isActive ? "bg-white text-[#153e9c] shadow-md" : "bg-white/10 text-white/70"}`}>
                     <Icon />
                   </div>
-                  <span className={`flex-1 text-[16px] transition-all duration-300 ${isActive ? 'text-white font-semibold' : 'text-white/70 font-medium'}`}>
+                  <span className={`flex-1 text-[16px] transition-all duration-300 ${isActive ? "text-white font-semibold" : "text-white/70 font-medium"}`}>
                     {s.title}
                   </span>
                   {isActive && <div className="w-2 h-2 bg-white rounded-full mr-1"></div>}
@@ -272,7 +130,10 @@ const ScholarshipPortal = () => {
           </div>
 
           <div className="mt-auto relative z-10 pt-10 pb-4">
-            <button className="flex items-center gap-3 text-white/80 hover:text-white transition-colors font-semibold text-[15px]" onClick={() => navigate('/')}>
+            <button
+              className="flex items-center gap-3 text-white/80 hover:text-white transition-colors font-semibold text-[15px]"
+              onClick={() => navigate("/")}
+            >
               <Icons.Exit />
               Exit Portal
             </button>
@@ -297,7 +158,7 @@ const ScholarshipPortal = () => {
             {/* STEP 1: Citizenship */}
             <section ref={(el) => (sectionRefs.current[1] = el)} data-step="1" className="scroll-mt-32">
               <div className="mb-6">
-                <h2 className="text-2xl font-bold text-slate-800 mb-2">Citizenship & Country</h2>
+                <h2 className="text-2xl font-bold text-slate-800 mb-2">Citizenship &amp; Country</h2>
                 <p className="text-slate-500 text-base">Select your current country of residence.</p>
               </div>
               <div className="bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm">
@@ -324,10 +185,21 @@ const ScholarshipPortal = () => {
                     </div>
                   </div>
                   <div>
-                    <label className="font-semibold mb-2 block text-slate-800">Passport Status</label>
-                    <div className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 bg-slate-50 text-slate-500 font-medium flex justify-between items-center text-[15px]">
-                      <span>Verified</span>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
+                    <label className="font-semibold mb-2 block text-slate-800">Scholarship Scope</label>
+                    <div className="grid grid-cols-2 gap-3">
+                      {["National", "International"].map((t) => (
+                        <button
+                          key={t}
+                          onClick={() => setData({ ...data, type: t, region: "" })}
+                          className={`py-3 rounded-lg border-2 text-sm font-semibold transition-all ${
+                            data.type === t
+                              ? "border-blue-600 bg-blue-600 text-white"
+                              : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
+                          }`}
+                        >
+                          {t}
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -346,25 +218,25 @@ const ScholarshipPortal = () => {
                     : "Which region are you targeting for studies?"}
                 </p>
               </div>
-              <div className="bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm flex flex-wrap gap-4">
-                {regionOptions.map((r) => {
-                  const isSelected = data.region === r;
-                  return (
-                    <button
-                      key={r}
-                      onClick={() => setData({ ...data, region: r })}
-                      className={`px-6 py-3 rounded-full text-base font-medium transition-all duration-200 border-2
-                        ${isSelected
-                          ? "border-blue-600 bg-blue-600 text-white shadow-md shadow-blue-200"
-                          : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50"
-                        }`}
-                    >
-                      {r}
-                    </button>
-                  );
-                })}
+              <div className="bg-white p-6 rounded-2xl border-2 border-slate-100 shadow-sm">
+                <div className="relative">
+                  <select
+                    value={data.region}
+                    onChange={(e) => setData({ ...data, region: e.target.value })}
+                    className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-500 outline-none transition-all text-[15px] font-medium text-slate-700 bg-white appearance-none cursor-pointer"
+                  >
+                    <option value="">Select a region...</option>
+                    {regionOptions.map((r) => (
+                      <option key={r} value={r}>{r}</option>
+                    ))}
+                  </select>
+                  <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                  </div>
+                </div>
               </div>
             </section>
+
 
             {/* STEP 3: Tier */}
             <section ref={(el) => (sectionRefs.current[3] = el)} data-step="3" className="scroll-mt-32 pt-4">
@@ -437,7 +309,7 @@ const ScholarshipPortal = () => {
                 <button
                   onClick={handleSubmit}
                   disabled={isLoading}
-                  className="group relative inline-flex items-center justify-center px-10 py-4 text-lg font-bold text-white transition-all duration-200 bg-gradient-to-r from-blue-600 to-indigo-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 hover:shadow-lg hover:-translate-y-1 w-full md:w-auto min-w-[240px] disabled:opacity-70 disabled:hover:translate-y-0 disabled:cursor-not-allowed"
+                  className="inline-flex items-center justify-center px-10 py-4 text-lg font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl transition-all duration-200 hover:shadow-lg hover:-translate-y-1 min-w-[240px] disabled:opacity-70 disabled:hover:translate-y-0 disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
                     <div className="flex items-center gap-3">
@@ -452,7 +324,7 @@ const ScholarshipPortal = () => {
                   )}
                 </button>
                 {error && <p className="mt-4 text-sm font-medium text-red-500">{error}</p>}
-                {!error && <p className="mt-4 text-sm text-slate-500">Your details are saved automatically.</p>}
+                {!error && <p className="mt-4 text-sm text-slate-500">Fill all fields above to search.</p>}
               </div>
             </section>
 
